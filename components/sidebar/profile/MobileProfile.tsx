@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import MobileButton from "@/app/_components/sidebar/MobileButton";
-import profile from "@/app/_data/profile";
+import MobileButton from "@/components/sidebar/MobileButton";
+import profile from "@/data/profile";
 
 export default function MobileProfile() {
   return (

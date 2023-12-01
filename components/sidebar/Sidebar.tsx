@@ -1,8 +1,8 @@
-import DesktopMenu from "./DesktopMenu";
-import Divider from "@/app/_components/utils/Divider";
-import ProfileHeader from "@/app/_components/sidebar/profile/ProfileHeader";
-import SidebarFooter from "@/app/_components/sidebar/SidebarFooter";
-import MobileMenu from "@/app/_components/sidebar/MobileMenu";
+import DesktopMenu from "@/components/sidebar/DesktopMenu";
+import Divider from "@/components/utils/Divider";
+import ProfileHeader from "@/components/sidebar/profile/ProfileHeader";
+import SidebarFooter from "@/components/sidebar/SidebarFooter";
+import MobileMenu from "@/components/sidebar/MobileMenu";
 
 export default function Sidebar() {
   return (

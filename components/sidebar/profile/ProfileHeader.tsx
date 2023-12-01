@@ -1,5 +1,5 @@
-import DesktopProfile from "@/app/_components/sidebar/profile/DesktopProfile";
-import MobileProfile from "@/app/_components/sidebar/profile/MobileProfile";
+import DesktopProfile from "@/components/sidebar/profile/DesktopProfile";
+import MobileProfile from "@/components/sidebar/profile/MobileProfile";
 
 export default function ProfileHeader() {
   return (

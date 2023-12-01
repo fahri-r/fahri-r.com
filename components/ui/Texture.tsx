@@ -1,4 +1,4 @@
-export function Texture() {
+export default function Texture() {
   return (
     <svg className="pointer-events-none fixed left-0 top-0 z-[999] h-screen w-full opacity-25 brightness-[60%] contrast-[60%]">
       <filter id="noise">

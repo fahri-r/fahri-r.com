@@ -2,7 +2,7 @@
 
 import { Equal, X } from "lucide-react";
 
-import { useHooks } from "@/app/_context/Provider";
+import { useHooks } from "@/context/Provider";
 
 export default function MobileButton() {
   const { showMenu, setShowMenu } = useHooks();

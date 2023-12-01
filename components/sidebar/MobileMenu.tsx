@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 
-import { cn } from "@/app/_lib/utils";
+import { cn } from "@/lib/utils";
 
-import { useHooks } from "@/app/_context/Provider";
-import menu from "@/app/_data/menu";
+import { useHooks } from "@/context/Provider";
+import menu from "@/data/menu";
 
 export default function MobileMenu() {
   const { showMenu, setShowMenu } = useHooks();

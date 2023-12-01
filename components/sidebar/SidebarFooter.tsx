@@ -1,4 +1,4 @@
-import Typography from "@/app/_components/utils/Typography";
+import Typography from "@/components/utils/Typography";
 
 export default function SidebarFooter() {
   return (

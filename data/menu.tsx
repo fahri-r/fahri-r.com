@@ -1,5 +1,5 @@
 import { Braces, Home, Mail, User2 } from "lucide-react";
-import MenuProps from "@/app/_types/menu";
+import MenuProps from "@/types/menu";
 
 const menu: MenuProps[] = [
   {

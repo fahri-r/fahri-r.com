@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-import { cn } from "@/app/_lib/utils";
+import { cn } from "@/lib/utils";
 
-import Title from "@/app/_components/utils/Title";
-import Typography from "@/app/_components/utils/Typography";
-import profile from "@/app/_data/profile";
+import Title from "@/components/utils/Title";
+import Typography from "@/components/utils/Typography";
+import profile from "@/data/profile";
 
 export default function DesktopProfile() {
   const [isScrolled, setIsScrolled] = useState(false);

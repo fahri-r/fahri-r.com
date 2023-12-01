@@ -1,5 +1,5 @@
-import Title from "@/app/_components/utils/Title";
-import profile from "@/app/_data/profile";
+import Title from "@/components/utils/Title";
+import profile from "@/data/profile";
 
 export default function Home() {
   return (

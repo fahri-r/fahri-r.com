@@ -1,4 +1,4 @@
-import ProfileProps from "@/app/_types/profile";
+import ProfileProps from "@/types/profile";
 
 const profile: ProfileProps = {
   name: "Fahri R",
