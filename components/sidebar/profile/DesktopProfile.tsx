@@ -38,9 +38,7 @@ export default function DesktopProfile() {
           <Image
             src={profile.imgUrl}
             alt={profile.name}
-            className="duration-500 ease-in-out hover:scale-105"
-            objectFit="cover"
-            objectPosition="top"
+            className="duration-500 ease-in-out hover:scale-105 object-cover object-top"
             fill
           />
         </figure>

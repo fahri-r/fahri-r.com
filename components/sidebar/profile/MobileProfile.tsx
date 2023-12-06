@@ -8,12 +8,10 @@ export default function MobileProfile() {
   return (
     <>
       <Link href="/">
-        <figure className="relative h-10 w-10 overflow-hidden rounded-full lg:hidden">
+        <figure className="relative object-contain h-10 w-10 overflow-hidden rounded-full lg:hidden object-cover object-top">
           <Image
             src={profile.imgUrl}
             alt={profile.name}
-            objectFit="cover"
-            objectPosition="top"
             fill
           />
         </figure>
