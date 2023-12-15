@@ -19,9 +19,4 @@ const getProperties = (response: any) => {
   return properties;
 };
 
-const getPropertyIdByValue = (value: string, properties: PropertyProps[]) => {
-  return properties.find((x) => x.value === value)!.id;
-};
-
-export { getPropertyIdByValue };
 export default getProperties;

@@ -18,7 +18,7 @@ export default function ProjectPage({ data }: any) {
 }
 
 export async function getServerSideProps(context: any) {
-  const slug = context.query.slug;
+  const slugParams = context.query.slug;
 
   const response = await getNotion();
 
@@ -28,28 +28,43 @@ export async function getServerSideProps(context: any) {
   );
 
   const properties = getProperties(response);
+  const [repository, site, tools, slug, status, date, category, content] =
+    properties;
 
-  const slugId = getPropertyIdByValue("Slug", properties);
-  const repositoryId = getPropertyIdByValue("Repository", properties);
-  const siteId = getPropertyIdByValue("Site", properties);
-  const categoryId = getPropertyIdByValue("Category", properties);
-  const toolsId = getPropertyIdByValue("Tools", properties);
-  const statusId = getPropertyIdByValue("Status", properties);
+  const getPageProperty = (id: string, property: any) => {
+    return property[1].value.properties[id]?.[0][0];
+  };
 
-  pageBlock.forEach((x) => {
+  pageBlock.forEach((block) => {
+    const contentBlock = block[1].value.content;
+
+    const imageBlock = Object.entries(response.block).filter(
+      (x) => contentBlock?.includes(x[0]) && x[1].value.type === "image"
+    );
+
+    const image = {
+      title: imageBlock[0][1].value.properties.title[0][0],
+      url: `${process.env.NOTION_HOST}/image/${encodeURIComponent(
+        imageBlock[0][1].value.properties.source[0][0]
+      )}?table=block&id=${imageBlock[0][0]}&spaceId=${
+        imageBlock[0][1].value.space_id
+      }&width=400&userId=&cache=v2`,
+    };
+
     pages.push({
-      id: uuidToId(x[0]),
-      title: x[1].value.properties.title[0][0],
-      slug: x[1].value.properties[slugId][0][0],
-      repository: x[1].value.properties[repositoryId]?.[0][0] ?? "",
-      site: x[1].value.properties[siteId]?.[0][0] ?? "",
-      category: x[1].value.properties[categoryId][0][0],
-      tools: x[1].value.properties[toolsId][0][0],
-      status: x[1].value.properties[statusId][0][0],
+      id: uuidToId(block[0]) ?? null,
+      title: getPageProperty(content.id, block) ?? null,
+      slug: getPageProperty(slug.id, block) ?? null,
+      repository: getPageProperty(repository.id, block) ?? null,
+      site: getPageProperty(site.id, block) ?? null,
+      category: getPageProperty(category.id, block) ?? null,
+      tools: getPageProperty(tools.id, block) ?? null,
+      status: getPageProperty(status.id, block) ?? null,
+      thumbnail: image,
     });
   });
 
-  const project = pages.find((item) => item.slug == slug);
+  const project = pages.find((item) => item.slug == slugParams);
 
   const notion = new NotionAPI();
   const data = await notion.getPage(project.id);

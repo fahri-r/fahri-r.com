@@ -1,11 +1,23 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import Typography from "../utils/Typography";
 
 export function ProjectItem(props: any) {
-  const { title, slug } = props;
+  const {
+    id,
+    title,
+    slug,
+    repository,
+    site,
+    category,
+    tools,
+    status,
+    thumbnail,
+  } = props;
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -34,11 +46,37 @@ export function ProjectItem(props: any) {
           `,
         }}
       />
-      <div className="relative flex flex-col">
+      <div className="relative flex flex-col w-full">
+        <figure className="relative w-full h-56">
+          <Image
+            src={thumbnail.url}
+            className="rounded-md object-cover object-top"
+            alt={thumbnail.title}
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
+            priority
+            fill
+          />
+        </figure>
         <div className="flex w-full flex-col space-y-4 px-3 py-4">
           <div className="flex flex-col justify-center space-y-2">
             <h3 className="font-mono text-xl text-primary">{title}</h3>
+            {/* <Typography size="sm" className="leading-[1.7]">
+              {smallDescription}
+            </Typography> */}
           </div>
+          {/* <div className="flex flex-wrap gap-3">
+            {techs.map((tech, index) => (
+              <Image
+                key={index}
+                src={tech.image}
+                width={22}
+                alt="Techs"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
+              />
+            ))}
+          </div> */}
         </div>
       </div>
     </Link>

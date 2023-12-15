@@ -4,7 +4,7 @@ const profile: ProfileProps = {
   name: "Fahri R",
   fullName: "Fahri Ramadhan",
   description:
-    "Muhammad Fahri Ramadhan is a full-stack developer based in Bandung, Indonesia with a passion for building digital services/stuff he wants. When not online, he likes to play video games. Currently, he study at International Logistics and Business University. <br/><br/> He hopes that one day he will become a good programmer and help many people.",
+    "Organized and self-motivated software engineer graduate with 1 years combined freelance and professional experience. Fluent in SQL, Javascript, and PHP programming languages. Possess practical working knowledge of relational databases using PostgreSQL and SQL Server. Constantly updating personal and professional technical skills with complementary collegiate courses and online bootcamps. Reliable and responsible team player.",
   job: "Software Engineer",
   dob: "12/07/2000",
   location: "Indonesia",

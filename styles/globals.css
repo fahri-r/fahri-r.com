@@ -32,10 +32,8 @@
   }
 }
 
-@layer utilities {
-  .notion-app {
-    @apply bg-transparent;
-  }
+.notion-app {
+  background: unset;
 }
 
 .notion-asset-wrapper-image,
@@ -95,4 +93,8 @@
 
 body {
   -webkit-tap-highlight-color: transparent;
+}
+
+.notion-asset-wrapper-image img:hover {
+  @apply scale-100
 }

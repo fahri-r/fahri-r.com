@@ -14,6 +14,9 @@ const config: Config = {
         background: "#08070B",
         input: "#131415",
       },
+      backgroundImage: {
+        "globe-pattern": "url('/images/globe-pattern.svg')",
+      },
       animation: {
         flip: "flip 6s infinite steps(2, end)",
         rotate: "rotate 3s linear infinite both",
@@ -46,6 +49,5 @@ const config: Config = {
     },
   },
   plugins: [],
-  important: true,
 };
 export default config;
