@@ -1,4 +1,3 @@
-import { NotionAPI } from "notion-client";
 import getNotion from "@/lib/getNotion";
 import getProperties from "@/lib/getProperties";
 import { uuidToId } from "notion-utils";
@@ -66,7 +65,7 @@ export async function getServerSideProps() {
       repository: getPageProperty(repository.id, block) ?? null,
       site: getPageProperty(site.id, block) ?? null,
       category: getPageProperty(category.id, block) ?? null,
-      tools: getPageProperty(tools.id, block) ?? null,
+      tools: getPageProperty(tools.id, block).split(",") ?? null,
       status: getPageProperty(status.id, block) ?? null,
       thumbnail: image,
     });

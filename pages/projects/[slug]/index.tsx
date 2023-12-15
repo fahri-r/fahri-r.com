@@ -1,19 +1,20 @@
 import getNotion from "@/lib/getNotion";
-import getProperties, { getPropertyIdByValue } from "@/lib/getProperties";
+import getProperties from "@/lib/getProperties";
 import { NotionAPI } from "notion-client";
 import { NotionRenderer } from "react-notion-x";
 import { uuidToId } from "notion-utils";
+import { AnimateEnter } from "@/components/utils/AnimateEnter";
 
 export default function ProjectPage({ data }: any) {
   return (
-    <div>
+    <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
       <NotionRenderer
         recordMap={data}
         fullPage={true}
         darkMode={true}
         disableHeader
       />
-    </div>
+    </AnimateEnter>
   );
 }
 
@@ -58,7 +59,7 @@ export async function getServerSideProps(context: any) {
       repository: getPageProperty(repository.id, block) ?? null,
       site: getPageProperty(site.id, block) ?? null,
       category: getPageProperty(category.id, block) ?? null,
-      tools: getPageProperty(tools.id, block) ?? null,
+      tools: getPageProperty(tools.id, block).split(",") ?? null,
       status: getPageProperty(status.id, block) ?? null,
       thumbnail: image,
     });

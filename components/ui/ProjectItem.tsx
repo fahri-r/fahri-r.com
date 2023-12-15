@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import Typography from "../utils/Typography";
+import { ArrowRight, ArrowRightCircle, MoveRight } from "lucide-react";
 
 export function ProjectItem(props: any) {
   const {
@@ -47,10 +48,20 @@ export function ProjectItem(props: any) {
         }}
       />
       <div className="relative flex flex-col w-full">
-        <figure className="relative w-full h-56">
+        <figure className="relative w-full h-44 xl:h-56 overflow-clip rounded-md">
+          <Typography
+            variant="primary"
+            className="absolute z-10 top-0 left-0 text-center w-full h-full group-hover:opacity-100 opacity-0 duration-500 flex items-center justify-center"
+          >
+            View Project
+            <ArrowRight
+              size={16}
+              className="transition-transform duration-150 group-hover:delay-200 group-hover:translate-x-2 ease-in"
+            />
+          </Typography>
           <Image
             src={thumbnail.url}
-            className="rounded-md object-cover object-top"
+            className="object-cover object-top group-hover:scale-110 group-hover:brightness-50 duration-500 ease-in-out"
             alt={thumbnail.title}
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
@@ -61,22 +72,18 @@ export function ProjectItem(props: any) {
         <div className="flex w-full flex-col space-y-4 px-3 py-4">
           <div className="flex flex-col justify-center space-y-2">
             <h3 className="font-mono text-xl text-primary">{title}</h3>
-            {/* <Typography size="sm" className="leading-[1.7]">
-              {smallDescription}
-            </Typography> */}
           </div>
-          {/* <div className="flex flex-wrap gap-3">
-            {techs.map((tech, index) => (
-              <Image
-                key={index}
-                src={tech.image}
-                width={22}
-                alt="Techs"
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
-              />
+          <div className="flex flex-wrap gap-3">
+            {tools.map((tool, i) => (
+              <Typography
+                key={i}
+                variant="muted"
+                className="select-none text-sm duration-300 hover:text-foreground"
+              >
+                {tool}
+              </Typography>
             ))}
-          </div> */}
+          </div>
         </div>
       </div>
     </Link>

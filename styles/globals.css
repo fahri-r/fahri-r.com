@@ -32,6 +32,14 @@
   }
 }
 
+.notion-page-no-cover {
+  margin: unset !important;
+}
+
+.notion-title b {
+  @apply font-normal text-4xl;
+}
+
 .notion-app {
   background: unset;
 }
@@ -54,7 +62,7 @@
 }
 
 .notion-text {
-  @apply font-poppins text-neutral-400;
+  @apply font-poppins text-foreground;
 }
 
 .notion-full-page {
@@ -96,5 +104,5 @@ body {
 }
 
 .notion-asset-wrapper-image img:hover {
-  @apply scale-100
+  @apply scale-100;
 }
