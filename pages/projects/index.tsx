@@ -1,48 +1,21 @@
 import { NotionAPI } from "notion-client";
-import { NotionRenderer } from "react-notion-x";
-import dynamic from "next/dynamic";
+import getNotion from "@/lib/getNotion";
+import getProperties, { getPropertyIdByValue } from "@/lib/getProperties";
+import { uuidToId } from "notion-utils";
+import { ProjectItem } from "@/components/ui/ProjectItem";
 
-const Code = dynamic(() =>
-  import("react-notion-x/build/third-party/code").then((m) => m.Code)
-);
-const Collection = dynamic(() =>
-  import("react-notion-x/build/third-party/collection").then(
-    (m) => m.Collection
-  )
-);
-const Equation = dynamic(() =>
-  import("react-notion-x/build/third-party/equation").then((m) => m.Equation)
-);
-const Pdf = dynamic(
-  () => import("react-notion-x/build/third-party/pdf").then((m) => m.Pdf),
-  {
-    ssr: false,
-  }
-);
-const Modal = dynamic(
-  () => import("react-notion-x/build/third-party/modal").then((m) => m.Modal),
-  {
-    ssr: false,
-  }
-);
-
-export default function ProjectPage({ data }: any) {
+export default function ProjectPage({ data, pages }: any) {
   return (
     <>
-      <NotionRenderer
-        recordMap={data}
-        fullPage={false}
-        darkMode={true}
-        rootDomain="https://fahri-r.com/projects"
-        components={{
-          Code,
-          Collection,
-          Equation,
-          Modal,
-          Pdf,
-        }}
-        disableHeader
-      />
+      <div className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
+        <ul className="grid place-items-center gap-4 md:grid-cols-2">
+          {pages.map((props) => (
+            <li key={props.id} className="w-full">
+              <ProjectItem {...props} />
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   );
 }
@@ -51,9 +24,40 @@ export async function getServerSideProps() {
   const pageId = process.env.NOTION_PAGE_ID!;
   const notion = new NotionAPI();
   const data = await notion.getPage(pageId);
+
+  const response = await getNotion();
+
+  const pages: any[] = [];
+  const pageBlock = Object.entries(response.block).filter(
+    (x) => x[1].value.type === "page"
+  );
+
+  const properties = getProperties(response);
+
+  const slugId = getPropertyIdByValue("Slug", properties);
+  const repositoryId = getPropertyIdByValue("Repository", properties);
+  const siteId = getPropertyIdByValue("Site", properties);
+  const categoryId = getPropertyIdByValue("Category", properties);
+  const toolsId = getPropertyIdByValue("Tools", properties);
+  const statusId = getPropertyIdByValue("Status", properties);
+
+  pageBlock.forEach((x) => {
+    pages.push({
+      id: uuidToId(x[0]),
+      title: x[1].value.properties.title[0][0],
+      slug: x[1].value.properties[slugId][0][0],
+      repository: x[1].value.properties[repositoryId]?.[0][0] ?? "",
+      site: x[1].value.properties[siteId]?.[0][0] ?? "",
+      category: x[1].value.properties[categoryId][0][0],
+      tools: x[1].value.properties[toolsId][0][0],
+      status: x[1].value.properties[statusId][0][0],
+    });
+  });
+
   return {
     props: {
       data,
+      pages,
     },
   };
 }
