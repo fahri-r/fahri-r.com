@@ -1,4 +1,5 @@
-import Social from "./social";
+import SkillProps from "./skill";
+import SocialProps from "./social";
 
 export default interface ProfileProps {
   name: string;
@@ -6,6 +7,7 @@ export default interface ProfileProps {
   job: string;
   dob: string;
   location: string;
-  socials: Social[];
+  socials: SocialProps[];
+  skills: SkillProps[];
   imgUrl: string;
 }
