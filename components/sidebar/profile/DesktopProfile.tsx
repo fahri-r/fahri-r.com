@@ -48,7 +48,7 @@ export default function DesktopProfile() {
           {profile.name}
         </Title>
         <a
-          href={`https://github.com/${profile.github}`}
+          href={profile.socials.find((social) => social.name == "GitHub")?.href}
           target="_blank"
           rel="noreferrer"
           className="block w-fit"
@@ -57,7 +57,11 @@ export default function DesktopProfile() {
             variant="muted"
             className="select-none text-sm duration-300 hover:text-foreground"
           >
-            @{profile.github}
+            @
+            {
+              profile.socials.find((social) => social.name == "GitHub")
+                ?.username
+            }
           </Typography>
         </a>
       </div>

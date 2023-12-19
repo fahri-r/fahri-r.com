@@ -3,18 +3,20 @@ import getProperties from "@/lib/getProperties";
 import { NotionAPI } from "notion-client";
 import { NotionRenderer } from "react-notion-x";
 import { uuidToId } from "notion-utils";
-import { AnimateEnter } from "@/components/utils/AnimateEnter";
+import { ExtendedRecordMap } from "notion-types";
 
-export default function ProjectPage({ data }: any) {
+interface ProjectDetailPageProps {
+  project: ExtendedRecordMap;
+}
+
+export default function ProjectDetailPage({ project }: ProjectDetailPageProps) {
   return (
-    <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
       <NotionRenderer
-        recordMap={data}
+        recordMap={project}
         fullPage={true}
         darkMode={true}
         disableHeader
       />
-    </AnimateEnter>
   );
 }
 
@@ -65,13 +67,13 @@ export async function getServerSideProps(context: any) {
     });
   });
 
-  const project = pages.find((item) => item.slug == slugParams);
+  const data = pages.find((item) => item.slug == slugParams);
 
   const notion = new NotionAPI();
-  const data = await notion.getPage(project.id);
+  const project = await notion.getPage(data.id);
   return {
     props: {
-      data,
+      project,
     },
   };
 }

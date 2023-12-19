@@ -2,13 +2,17 @@ import getNotion from "@/lib/getNotion";
 import getProperties from "@/lib/getProperties";
 import { uuidToId } from "notion-utils";
 import { ProjectItem } from "@/components/ui/ProjectItem";
-import { AnimateEnter } from "@/components/utils/AnimateEnter";
 import Title from "@/components/utils/Title";
 import Typography from "@/components/utils/Typography";
+import ProjectProps from "@/types/project";
 
-export default function ProjectPage({ pages }: any) {
+interface ProjectPageProps {
+  projects: ProjectProps[];
+}
+
+export default function ProjectPage({ projects }: ProjectPageProps) {
   return (
-    <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
+    <>
       <section>
         <Title variant="title">Projects</Title>
         <Typography className="my-6 leading-relaxed">
@@ -16,20 +20,20 @@ export default function ProjectPage({ pages }: any) {
         </Typography>
       </section>
       <ul className="grid place-items-center gap-4 md:grid-cols-2">
-        {pages.map((props) => (
+        {projects.map((props: ProjectProps) => (
           <li key={props.id} className="w-full">
             <ProjectItem {...props} />
           </li>
         ))}
       </ul>
-    </AnimateEnter>
+    </>
   );
 }
 
 export async function getServerSideProps() {
   const response = await getNotion();
 
-  const pages: any[] = [];
+  const projects: ProjectProps[] = [];
   const pageBlock = Object.entries(response.block).filter(
     (x) => x[1].value.type === "page"
   );
@@ -58,22 +62,22 @@ export async function getServerSideProps() {
       }&width=400&userId=&cache=v2`,
     };
 
-    pages.push({
-      id: uuidToId(block[0]) ?? null,
-      title: getPageProperty(content.id, block) ?? null,
-      slug: getPageProperty(slug.id, block) ?? null,
+    projects.push({
+      id: uuidToId(block[0]),
+      title: getPageProperty(content.id, block),
+      slug: getPageProperty(slug.id, block),
       repository: getPageProperty(repository.id, block) ?? null,
       site: getPageProperty(site.id, block) ?? null,
-      category: getPageProperty(category.id, block) ?? null,
-      tools: getPageProperty(tools.id, block).split(",") ?? null,
-      status: getPageProperty(status.id, block) ?? null,
+      category: getPageProperty(category.id, block),
+      tools: getPageProperty(tools.id, block).split(","),
+      status: getPageProperty(status.id, block),
       thumbnail: image,
     });
   });
 
   return {
     props: {
-      pages,
+      projects,
     },
   };
 }

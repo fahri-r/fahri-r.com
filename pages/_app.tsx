@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import Provider from "@/context/Provider";
 import Texture from "@/components/ui/Texture";
 import Sidebar from "@/components/sidebar/Sidebar";
+import { AnimateEnter } from "@/components/utils/AnimateEnter";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -32,7 +33,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <div className="mx-auto flex max-w-6xl flex-col px-8 lg:flex-row lg:gap-10 lg:py-24">
         <Provider>
           <Sidebar />
-          <Component {...pageProps} />
+          <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
+            <Component {...pageProps} />
+          </AnimateEnter>
           <Texture />
         </Provider>
       </div>
