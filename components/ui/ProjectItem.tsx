@@ -5,9 +5,10 @@ import Link from "next/link";
 
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import Typography from "../utils/Typography";
-import { ArrowRight, ArrowRightCircle, MoveRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import ProjectProps from "@/types/project";
 
-export function ProjectItem(props: any) {
+export function ProjectItem(props: ProjectProps) {
   const {
     id,
     title,
@@ -74,7 +75,7 @@ export function ProjectItem(props: any) {
             <h3 className="font-mono text-xl text-primary">{title}</h3>
           </div>
           <div className="flex flex-wrap gap-3">
-            {tools.map((tool: string, i: number) => (
+            {tools.map((tool, i) => (
               <Typography
                 key={i}
                 variant="muted"

@@ -12,7 +12,7 @@ interface ProjectPageProps {
   projects: ProjectProps[];
 }
 
-const PAGE_TITLE = "Project";
+const PAGE_TITLE = "Projects";
 const PAGE_DESCRIPTION =
   "Several projects that I have worked on, both private and open source.";
 
