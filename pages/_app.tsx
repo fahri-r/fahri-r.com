@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import Provider from "@/context/Provider";
 import Texture from "@/components/ui/Texture";
 import Sidebar from "@/components/sidebar/Sidebar";
+import { AnimateEnter } from "@/components/utils/AnimateEnter";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -29,13 +30,13 @@ export default function App({ Component, pageProps }: AppProps) {
         kanit.variable
       )}
     >
-      <div className="mx-auto flex max-w-6xl flex-col px-8 lg:flex-row lg:gap-10 lg:py-24">
+      <AnimateEnter className="mx-auto flex max-w-6xl flex-col px-8 lg:flex-row lg:gap-10 lg:py-24">
         <Provider>
           <Sidebar />
           <Component {...pageProps} />
           <Texture />
         </Provider>
-      </div>
+      </AnimateEnter>
     </body>
   );
 }
