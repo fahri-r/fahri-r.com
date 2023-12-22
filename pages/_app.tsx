@@ -34,9 +34,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <Provider>
           <Sidebar />
           <Component {...pageProps} />
-          <Texture />
         </Provider>
       </AnimateEnter>
+      <Texture />
     </body>
   );
 }

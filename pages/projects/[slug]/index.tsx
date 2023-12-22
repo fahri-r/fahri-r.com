@@ -6,22 +6,31 @@ import Image from "next/image";
 import Link from "next/link";
 import { AnimateEnter } from "@/components/utils/AnimateEnter";
 import { fetchCache } from "@/lib/redisCache";
+import { NextSeo } from "next-seo";
+import profile from "@/data/profile";
 
 interface ProjectDetailPageProps {
   project: ExtendedRecordMap;
+  title: string;
 }
 
-export default function ProjectDetailPage({ project }: ProjectDetailPageProps) {
+export default function ProjectDetailPage({
+  project,
+  title,
+}: ProjectDetailPageProps) {
   return (
-    <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
-      <NotionRenderer
-        components={{ nextImage: Image, nextLink: Link }}
-        recordMap={project}
-        fullPage={true}
-        darkMode={true}
-        disableHeader
-      />
-    </AnimateEnter>
+    <>
+      <NextSeo title={`${title} - ${profile.name}`} />
+      <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
+        <NotionRenderer
+          components={{ nextImage: Image, nextLink: Link }}
+          recordMap={project}
+          fullPage={true}
+          darkMode={true}
+          disableHeader
+        />
+      </AnimateEnter>
+    </>
   );
 }
 
@@ -48,6 +57,7 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       project,
+      title: data.title,
     },
   };
 }

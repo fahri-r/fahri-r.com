@@ -14,7 +14,7 @@ const menu: MenuProps[] = [
   },
   {
     path: "/projects",
-    name: "Project",
+    name: "Projects",
     icon: <Braces size={16} />,
   },
   {

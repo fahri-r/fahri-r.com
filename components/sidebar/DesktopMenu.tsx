@@ -16,14 +16,22 @@ export default function DesktopMenu() {
           key={i}
           href={path}
           className={cn(
-            "flex items-center gap-2 rounded-lg px-2.5 py-2 text-foreground duration-300 hover:bg-neutral-800",
+            "flex items-center gap-2 rounded-lg px-2.5 py-2 text-foreground duration-300 hover:bg-neutral-800 group hover:scale-105",
             {
-              "bg-neutral-800 text-primary": pathname === path,
+              "bg-neutral-800 text-primary hover:scale-100": pathname === path,
             }
           )}
         >
-          <span>{icon}</span>
-          <span className="text-sm">{name}</span>
+          <span
+            className={cn("group-hover:-rotate-12 duration-300", {
+              "-rotate-12": pathname === path,
+            })}
+          >
+            {icon}
+          </span>
+          <span className="text-sm">
+            {name}
+          </span>
         </Link>
       ))}
     </nav>
