@@ -5,6 +5,7 @@ import getPages from "@/lib/notion/getPages";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimateEnter } from "@/components/utils/AnimateEnter";
+import { fetchCache } from "@/lib/redisCache";
 
 interface ProjectDetailPageProps {
   project: ExtendedRecordMap;
@@ -27,7 +28,12 @@ export default function ProjectDetailPage({ project }: ProjectDetailPageProps) {
 export async function getServerSideProps(context: any) {
   const slug = context.query.slug;
 
-  const pages = await getPages();
+  const fetchData = async () => {
+    const response = await getPages();
+    return response;
+  };
+
+  const pages = await fetchCache("projects", fetchData, 60 * 60 * 24);
 
   const data = pages.find((item) => item.slug == slug);
 

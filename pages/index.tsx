@@ -5,6 +5,7 @@ import Title from "@/components/utils/Title";
 import Typography from "@/components/utils/Typography";
 import profile from "@/data/profile";
 import getPages from "@/lib/notion/getPages";
+import { fetchCache } from "@/lib/redisCache";
 import ProjectProps from "@/types/project";
 import { Globe } from "lucide-react";
 import Link from "next/link";
@@ -69,7 +70,13 @@ export default function Home({ projects }: any) {
 }
 
 export async function getServerSideProps() {
-  const projects = await getPages();
+  const fetchData = async () => {
+    const response = await getPages();
+    return response;
+  };
+
+  const projects = await fetchCache("projects", fetchData, 60 * 60 * 24);
+
   return {
     props: {
       projects,

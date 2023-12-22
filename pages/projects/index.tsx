@@ -4,6 +4,7 @@ import Typography from "@/components/utils/Typography";
 import ProjectProps from "@/types/project";
 import getPages from "@/lib/notion/getPages";
 import { AnimateEnter } from "@/components/utils/AnimateEnter";
+import { fetchCache } from "@/lib/redisCache";
 
 interface ProjectPageProps {
   projects: ProjectProps[];
@@ -30,7 +31,12 @@ export default function ProjectPage({ projects }: ProjectPageProps) {
 }
 
 export async function getServerSideProps() {
-  const projects = await getPages();
+  const fetchData = async () => {
+    const response = await getPages();
+    return response;
+  };
+
+  const projects = await fetchCache("projects", fetchData, 60 * 60 * 24);
 
   return {
     props: {
