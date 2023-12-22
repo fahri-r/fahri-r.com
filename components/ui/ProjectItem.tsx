@@ -74,7 +74,7 @@ export function ProjectItem(props: any) {
             <h3 className="font-mono text-xl text-primary">{title}</h3>
           </div>
           <div className="flex flex-wrap gap-3">
-            {tools.map((tool, i) => (
+            {tools.map((tool: string, i: number) => (
               <Typography
                 key={i}
                 variant="muted"

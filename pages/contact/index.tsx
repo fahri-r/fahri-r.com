@@ -55,7 +55,7 @@ const ContactPage = () => {
       <section className="space-y-6">
         <Title variant="title">Contact</Title>
         <Typography className="leading-relaxed">
-          Feel free to get in touch and let's have a discussion about how we can
+          Feel free to get in touch and let&apos;s have a discussion about how we can
           work together.
         </Typography>
         <div>

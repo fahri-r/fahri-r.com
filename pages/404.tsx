@@ -17,7 +17,7 @@ export default function NotFound() {
       <section className="flex flex-col items-center justify-center p-8">
         <div className="flex flex-col gap-4 text-center">
           <Typography>
-            Whoops, there doesn't seem to be anything here!
+            Whoops, there doesn&apos;t seem to be anything here!
           </Typography>
           <div className="flex items-center justify-center gap-4">
             <Link href="/">

@@ -47,10 +47,10 @@ export default function Home({ projects }: any) {
       <Divider />
       <section className="flex flex-col gap-4 rounded-lg border border-neutral-800 bg-neutral-900 bg-globe-pattern bg-right bg-no-repeat p-5 max-md:bg-none">
         <Title variant="title" size="xl">
-          Let's work together!
+          Let&apos;s work together!
         </Title>
         <Typography className="max-w-xl leading-relaxed">
-          I'm open for freelance projects, feel free to email me to see how can
+          I&apos;m open for freelance projects, feel free to email me to see how can
           we collaborate.
         </Typography>
         <Link href="/contact" className="w-fit">
