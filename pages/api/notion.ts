@@ -1,19 +1,18 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import getNotion from "@/lib/getNotion";
-import getProperties from "@/lib/getProperties";
+import getNotion from "@/lib/notion/getNotion";
+import getProperties from "@/lib/notion/getProperties";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { uuidToId } from "notion-utils";
+import { NotionMap, Block, BaseBlock } from "notion-types";
 
-interface PageProps {
-  id: string;
-  title: string;
-  slug: string;
-  repository?: string;
-  site?: string;
-  tools: string;
-  status: string;
-  category: string;
+interface getBlockByTypeProps {
+  block: NotionMap<Block>;
+  type: string;
 }
+
+const getBlockByType = ({ block, type }: getBlockByTypeProps) => {
+  return Object.entries(block).filter((x) => x[1].value.type === type);
+};
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,12 +21,13 @@ export default async function handler(
   const response = await getNotion();
 
   const pages: any[] = [];
-  const pageBlock = Object.entries(response.block).filter(
-    (x) => x[1].value.type === "page"
-  );
+  const pageBlock = getBlockByType({ block: response.block, type: "page" });
+  const imageBlock = getBlockByType({
+    block: response.block,
+    type: "image",
+  });
 
-  const properties = getProperties(response);
-  console.log(properties);
+  const properties = getProperties({ response });
   const [repository, site, tools, slug, status, date, category, content] =
     properties;
 
@@ -36,38 +36,51 @@ export default async function handler(
   };
 
   pageBlock.forEach((block) => {
-    const contentBlock = block[1].value.content;
+    const blockId = block[1].value.content;
 
-    const imageBlock = Object.entries(response.block).filter(
-      (x) => contentBlock?.includes(x[0]) && x[1].value.type === "image"
-    );
-    console.log(imageBlock);
+    const imageById = imageBlock.find((block) =>
+      blockId!.includes(block[0])
+    )![1].value;
 
-    const image = {
-      title: imageBlock[0][1].value.properties.title[0][0],
-      url: `${process.env.NOTION_HOST}/image/${encodeURIComponent(
-        imageBlock[0][1].value.properties.source[0][0]
-      )}?table=block&id=${imageBlock[0][0]}&spaceId=${
-        imageBlock[0][1].value.space_id
-      }&width=2000&userId=&cache=v2`,
-    };
+    const image = mapImage({ block: imageById });
 
     pages.push({
-      id: uuidToId(block[0]),
-      title: getPageProperty(content.id, block),
-      slug: getPageProperty(slug.id, block),
-      repository: getPageProperty(repository.id, block),
-      site: getPageProperty(site.id, block),
-      category: getPageProperty(category.id, block),
-      tools: getPageProperty(tools.id, block),
-      status: getPageProperty(status.id, block),
+      id: uuidToId(block[0]) ?? null,
+      title: getPageProperty(content.id, block) ?? null,
+      slug: getPageProperty(slug.id, block) ?? null,
+      repository: getPageProperty(repository.id, block) ?? null,
+      site: getPageProperty(site.id, block) ?? null,
+      category: getPageProperty(category.id, block) ?? null,
+      tools: getPageProperty(tools.id, block).split(",") ?? null,
+      status: getPageProperty(status.id, block) ?? null,
       thumbnail: image,
     });
   });
 
-  res
-    .status(200)
-    .json(
-      Object.entries(response.block).filter((x) => x[1].value.type === "image")
-    );
+  res.status(200).json(pages);
 }
+
+const mapImage = ({
+  block,
+  width = 400,
+}: {
+  block: BaseBlock;
+  width?: number;
+}) => {
+  const { properties, space_id, id } = block;
+
+  const srcUrl = encodeURIComponent(properties.source[0][0]);
+
+  const urlObj = new URL(`${process.env.NOTION_HOST}/image/${srcUrl}`);
+
+  urlObj.searchParams.set("table", "block");
+  urlObj.searchParams.set("id", id);
+  urlObj.searchParams.set("spaceId", space_id!);
+  urlObj.searchParams.set("width", width.toString());
+  urlObj.searchParams.set("cache", "v2");
+
+  return {
+    title: properties.title[0][0],
+    url: urlObj.toString(),
+  };
+};

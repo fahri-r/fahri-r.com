@@ -3,8 +3,9 @@ import Divider from "@/components/utils/Divider";
 import Title from "@/components/utils/Title";
 import Typography from "@/components/utils/Typography";
 import profile from "@/data/profile";
-import getNotion from "@/lib/getNotion";
-import getProperties from "@/lib/getProperties";
+import getNotion from "@/lib/notion/getNotion";
+import getPages from "@/lib/notion/getPages";
+import getProperties from "@/lib/notion/getProperties";
 import ProjectProps from "@/types/project";
 import { Globe } from "lucide-react";
 import Link from "next/link";
@@ -70,50 +71,7 @@ export default function Home({ projects }: any) {
 }
 
 export async function getServerSideProps() {
-  const response = await getNotion();
-
-  const projects: ProjectProps[] = [];
-  const pageBlock = Object.entries(response.block).filter(
-    (x) => x[1].value.type === "page"
-  );
-
-  const properties = getProperties(response);
-  const [repository, site, tools, slug, status, date, category, content] =
-    properties;
-
-  const getPageProperty = (id: string, property: any) => {
-    return property[1].value.properties[id]?.[0][0];
-  };
-
-  pageBlock.forEach((block) => {
-    const contentBlock = block[1].value.content;
-
-    const imageBlock = Object.entries(response.block).filter(
-      (x) => contentBlock?.includes(x[0]) && x[1].value.type === "image"
-    );
-
-    const image = {
-      title: imageBlock[0][1].value.properties.title[0][0],
-      url: `${process.env.NOTION_HOST}/image/${encodeURIComponent(
-        imageBlock[0][1].value.properties.source[0][0]
-      )}?table=block&id=${imageBlock[0][0]}&spaceId=${
-        imageBlock[0][1].value.space_id
-      }&width=400&userId=&cache=v2`,
-    };
-
-    projects.push({
-      id: uuidToId(block[0]),
-      title: getPageProperty(content.id, block),
-      slug: getPageProperty(slug.id, block),
-      repository: getPageProperty(repository.id, block) ?? null,
-      site: getPageProperty(site.id, block) ?? null,
-      category: getPageProperty(category.id, block),
-      tools: getPageProperty(tools.id, block).split(","),
-      status: getPageProperty(status.id, block),
-      thumbnail: image,
-    });
-  });
-
+  const projects = await getPages();
   return {
     props: {
       projects,

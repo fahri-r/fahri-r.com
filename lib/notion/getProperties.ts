@@ -1,9 +1,15 @@
+import { ExtendedRecordMap } from "notion-types";
+
 interface PropertyProps {
   id: string;
   value: string;
 }
 
-const getProperties = (response: any) => {
+interface getPropertiesProps {
+  response: ExtendedRecordMap;
+}
+
+const getProperties = ({ response }: getPropertiesProps): PropertyProps[] => {
   const pageSchemas =
     response.collection[Object.keys(response.collection)[0]].value.schema;
 
