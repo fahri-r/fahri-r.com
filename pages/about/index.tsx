@@ -1,3 +1,4 @@
+import { AnimateEnter } from "@/components/utils/AnimateEnter";
 import Divider from "@/components/utils/Divider";
 import Title from "@/components/utils/Title";
 import Typography from "@/components/utils/Typography";
@@ -8,7 +9,7 @@ import GitHubCalendar from "react-github-calendar";
 
 const AboutPage = () => {
   return (
-    <>
+    <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
       <section className="w-full">
         <Title variant="title">About</Title>
         <div className="my-6">
@@ -64,7 +65,7 @@ const AboutPage = () => {
           ))}
         </ul>
       </section>
-    </>
+    </AnimateEnter>
   );
 };
 

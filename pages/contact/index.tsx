@@ -10,6 +10,7 @@ import Lottie from "lottie-react";
 import { useRef } from "react";
 import emailIcon from "@/public/icons/email.json";
 import profile from "@/data/profile";
+import { AnimateEnter } from "@/components/utils/AnimateEnter";
 
 const ContactPage = () => {
   const {
@@ -50,7 +51,7 @@ const ContactPage = () => {
 
   const emailRef = useRef<any>();
   return (
-    <>
+    <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
       <section className="space-y-6">
         <Title variant="title">Contact</Title>
         <Typography className="leading-relaxed">
@@ -177,7 +178,7 @@ const ContactPage = () => {
         </div>
         <Toast />
       </section>
-    </>
+    </AnimateEnter>
   );
 };
 

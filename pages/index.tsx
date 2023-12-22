@@ -1,19 +1,17 @@
 import { ProjectItem } from "@/components/ui/ProjectItem";
+import { AnimateEnter } from "@/components/utils/AnimateEnter";
 import Divider from "@/components/utils/Divider";
 import Title from "@/components/utils/Title";
 import Typography from "@/components/utils/Typography";
 import profile from "@/data/profile";
-import getNotion from "@/lib/notion/getNotion";
 import getPages from "@/lib/notion/getPages";
-import getProperties from "@/lib/notion/getProperties";
 import ProjectProps from "@/types/project";
 import { Globe } from "lucide-react";
 import Link from "next/link";
-import { uuidToId } from "notion-utils";
 
 export default function Home({ projects }: any) {
   return (
-    <>
+    <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
       <section>
         <Title variant="title">{profile.name}</Title>
         <Typography variant="muted" className="mt-2 flex items-center gap-2">
@@ -66,7 +64,7 @@ export default function Home({ projects }: any) {
           </button>
         </Link>
       </section>
-    </>
+    </AnimateEnter>
   );
 }
 

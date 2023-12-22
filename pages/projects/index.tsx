@@ -3,6 +3,7 @@ import Title from "@/components/utils/Title";
 import Typography from "@/components/utils/Typography";
 import ProjectProps from "@/types/project";
 import getPages from "@/lib/notion/getPages";
+import { AnimateEnter } from "@/components/utils/AnimateEnter";
 
 interface ProjectPageProps {
   projects: ProjectProps[];
@@ -10,7 +11,7 @@ interface ProjectPageProps {
 
 export default function ProjectPage({ projects }: ProjectPageProps) {
   return (
-    <>
+    <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
       <section>
         <Title variant="title">Projects</Title>
         <Typography className="my-6 leading-relaxed">
@@ -24,7 +25,7 @@ export default function ProjectPage({ projects }: ProjectPageProps) {
           </li>
         ))}
       </ul>
-    </>
+    </AnimateEnter>
   );
 }
 
