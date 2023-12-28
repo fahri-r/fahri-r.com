@@ -14,7 +14,7 @@ export default function Sidebar() {
   return (
     <header
       className={cn(
-        "sticky h-20 top-0 z-10 flex w-full self-start bg-background lg:h-auto lg:w-1/2 lg:max-w-[230px] flex-col lg:bg-transparent py-8 duration-300",
+        "sticky h-20 top-0 z-50 flex w-full self-start bg-background lg:h-auto lg:w-1/2 lg:max-w-[230px] flex-col lg:bg-transparent py-8 duration-300",
         { "h-screen": showMenu }
       )}
     >

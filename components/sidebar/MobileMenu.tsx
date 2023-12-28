@@ -34,9 +34,13 @@ export default function MobileMenu() {
           <Link
             key={i}
             href={path}
-            className={cn("rounded-lg px-2.5 flex gap-4 py-2.5 text-sm text-primary", {
-              "bg-neutral-800 text-primary hover:scale-100": pathname === path,
-            })}
+            className={cn(
+              "rounded-lg px-2.5 flex gap-4 py-2.5 text-sm text-primary",
+              {
+                "bg-neutral-800 text-primary hover:scale-100":
+                  pathname === path,
+              }
+            )}
             onClick={handleCloseMenu}
           >
             <span className={pathname === path ? "-rotate-12" : ""}>

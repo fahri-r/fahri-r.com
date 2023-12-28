@@ -165,7 +165,8 @@ const ContactPage = () => {
                 <Form.Submit asChild>
                   <Button
                     type="submit"
-                    disabled={submitting}
+                    // disabled={submitting}
+                    disabled={true}
                     className="disabled:bg-primary/70 col-span-2"
                   >
                     <span>Send Message</span>

@@ -1,3 +1,4 @@
+import ExperienceProps from "./experience";
 import SkillProps from "./skill";
 import SocialProps from "./social";
 
@@ -10,4 +11,5 @@ export default interface ProfileProps {
   socials: SocialProps[];
   skills: SkillProps[];
   imgUrl: string;
+  experiences: ExperienceProps[];
 }

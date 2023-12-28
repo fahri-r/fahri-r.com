@@ -10,6 +10,11 @@ import node from "@/public/images/skills/nodejs.svg";
 import tailwind from "@/public/images/skills/tailwindcss.svg";
 import mui from "@/public/images/skills/mui.svg";
 import mysql from "@/public/images/skills/mysql.svg";
+import adonisjs from "@/public/images/skills/adonisjs.svg";
+import laravel from "@/public/images/skills/laravel.svg";
+import microsoftsqlserver from "@/public/images/skills/microsoftsqlserver.svg";
+import godot from "@/public/images/skills/godot.svg";
+import php from "@/public/images/skills/php.svg";
 
 const profile: ProfileProps = {
   name: "Fahri Ramadhan",
@@ -39,6 +44,56 @@ const profile: ProfileProps = {
       href: "mailto:00.fahri.r@gmail.com",
       name: "Email",
       icon: <Mail size={16} />,
+    },
+  ],
+  experiences: [
+    {
+      name: "PT. Ever Green Hans (Freelance)",
+      role: "Software Developer",
+      entry: {
+        month: 6,
+        year: 2023,
+      },
+      resign: {
+        month: 8,
+        year: 2023,
+      },
+    },
+    {
+      name: "HIPMI Kabupaten Bekasi (Freelance)",
+      role: "Frontend Web Developer",
+      entry: {
+        month: 3,
+        year: 2023,
+      },
+      resign: {
+        month: 3,
+        year: 2023,
+      },
+    },
+    {
+      name: "Injabar UNPAD (Freelance)",
+      role: "Fullstack Web Developer",
+      entry: {
+        month: 12,
+        year: 2022,
+      },
+      resign: {
+        month: 2,
+        year: 2023,
+      },
+    },
+    {
+      name: "PT. Bhairawa Tantra Nusantara",
+      role: "Website Developer",
+      entry: {
+        month: 8,
+        year: 2022,
+      },
+      resign: {
+        month: 6,
+        year: 2023,
+      },
     },
   ],
   skills: [
@@ -81,6 +136,26 @@ const profile: ProfileProps = {
     {
       src: css,
       name: "CSS",
+    },
+    {
+      src: adonisjs,
+      name: "AdonisJS",
+    },
+    {
+      src: php,
+      name: "PHP",
+    },
+    {
+      src: laravel,
+      name: "Laravel",
+    },
+    {
+      src: microsoftsqlserver,
+      name: "Microsoft SQL Server",
+    },
+    {
+      src: godot,
+      name: "Godot",
     },
   ],
   imgUrl: "/images/avatar.jpg",
