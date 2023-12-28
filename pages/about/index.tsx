@@ -1,14 +1,10 @@
 import { CareerItem } from "@/components/ui/CareerItem";
 import { DownloadButton } from "@/components/ui/DownloadButton";
-import { ProjectItem } from "@/components/ui/ProjectItem";
 import { AnimateEnter } from "@/components/utils/AnimateEnter";
 import Divider from "@/components/utils/Divider";
 import Title from "@/components/utils/Title";
 import Typography from "@/components/utils/Typography";
 import profile from "@/data/profile";
-import getPages from "@/lib/notion/getPages";
-import { fetchCache } from "@/lib/redisCache";
-import ProjectProps from "@/types/project";
 import { Briefcase, Code2, Github } from "lucide-react";
 import { NextSeo } from "next-seo";
 import Image from "next/image";
@@ -33,7 +29,7 @@ const AboutPage = () => {
                 Hi there! Thanks for visiting my personal website.
               </Typography>
               <Typography className="leading-relaxed">
-                I'm Fahri. I'm{" "}
+                I&apos;m Fahri. I&apos;m{" "}
                 {Math.floor(
                   (new Date().valueOf() - new Date(profile.dob).valueOf()) /
                     1000 /
@@ -46,7 +42,7 @@ const AboutPage = () => {
               </Typography>
               <Typography className="leading-relaxed">
                 Over more than four years of study in the field of software
-                development, I've gained significant experience in creating
+                development, I&apos;ve gained significant experience in creating
                 digital solutions. My current focus is on the exploration of
                 design systems, the elaboration of innovative interfaces and the
                 ability to transform code into truly exceptional user
@@ -55,7 +51,7 @@ const AboutPage = () => {
               <Typography className="leading-relaxed">
                 I constantly strive to keep up to date with the latest market
                 trends, demonstrating a commitment to making a difference in
-                every project I'm involved in.
+                every project I&apos;m involved in.
               </Typography>
               <Typography className="leading-relaxed">
                 Looking forward to the possibility of collaboration!
