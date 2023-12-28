@@ -1,5 +1,6 @@
 import { CareerItem } from "@/components/ui/CareerItem";
 import { DownloadButton } from "@/components/ui/DownloadButton";
+import { EducationItem } from "@/components/ui/EducationItem";
 import { AnimateEnter } from "@/components/utils/AnimateEnter";
 import Divider from "@/components/utils/Divider";
 import Title from "@/components/utils/Title";
@@ -125,6 +126,25 @@ const AboutPage = () => {
                 </Typography>
               </li>
             ))}
+          </ul>
+        </section>
+        <Divider />
+        <section>
+          <div className="space-y-2">
+            <Title
+              variant="title"
+              size="xl"
+              className="flex items-center gap-2"
+            >
+              <Briefcase size={18} />
+              Education
+            </Title>
+            <Typography>My professional career journey.</Typography>
+          </div>
+          <ul className="mt-4 grid place-items-center gap-4">
+            <li className="w-full">
+              <EducationItem />
+            </li>
           </ul>
         </section>
       </AnimateEnter>
