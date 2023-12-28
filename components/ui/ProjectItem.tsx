@@ -79,7 +79,7 @@ export function ProjectItem(props: ProjectProps) {
               <Typography
                 key={i}
                 variant="muted"
-                className="select-none text-sm duration-300 hover:text-foreground"
+                className="select-none text-sm duration-300"
               >
                 {tool}
               </Typography>

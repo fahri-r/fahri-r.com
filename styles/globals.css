@@ -55,6 +55,7 @@
 
 .notion-page {
   @apply px-0;
+  @apply w-full;
 }
 
 .notion-title {
