@@ -54,12 +54,11 @@
 }
 
 .notion-page {
-  @apply px-0;
-  @apply w-full;
+  @apply px-0 w-full;
 }
 
 .notion-title {
-  @apply font-mono;
+  @apply font-mono mb-4;
 }
 
 .notion-text {
