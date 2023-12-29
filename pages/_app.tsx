@@ -8,6 +8,7 @@ import Provider from "@/context/Provider";
 import Texture from "@/components/ui/Texture";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { AnimateEnter } from "@/components/utils/AnimateEnter";
+import { Toast } from "@/components/ui/Toast";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -36,6 +37,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </Provider>
       </AnimateEnter>
+      <Toast />
       <Texture />
     </body>
   );

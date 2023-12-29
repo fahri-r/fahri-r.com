@@ -6,22 +6,20 @@ import toast from "react-hot-toast";
 
 import { Button } from "../utils/Button";
 import { Download } from "lucide-react";
+import { ToastMessage } from "./Toast";
 
 const DownloadButton = () => {
-  const downloadRef = useRef<any>();
-
   return (
     <a
       href="/Muhamad Fahri Ramadhan Resume.pdf"
       download
-      onClick={
-        () => {}
-        // toast.success(
-        //   <ToastMessage
-        //     title="Instalado"
-        //     message="Currículo baixado com sucesso."
-        //   />
-        // )
+      onClick={() =>
+        toast.success(
+          <ToastMessage
+            title="Download"
+            message="Resume downloaded successfully."
+          />
+        )
       }
     >
       <Button variant="dark" size="lg" className="flex items-center gap-2">

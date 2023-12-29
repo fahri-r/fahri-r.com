@@ -1,4 +1,4 @@
-import Toast from "@/components/ui/Toast";
+import { Toast, ToastMessage } from "@/components/ui/Toast";
 import Divider from "@/components/utils/Divider";
 import Title from "@/components/utils/Title";
 import Typography from "@/components/utils/Typography";
@@ -44,7 +44,9 @@ const ContactPage = () => {
       }),
     })
       .then(() => {
-        toast.success("Success");
+        toast.success(
+          <ToastMessage title="Sent" message="E-mail sent successfully." />
+        );
 
         setName("");
         setEmail("");
@@ -52,11 +54,15 @@ const ContactPage = () => {
         setSubmitting(false);
       })
       .catch(() => {
-        toast.error("Failed");
+        toast.error(
+          <ToastMessage
+            title="Not Sent"
+            message="There was an error sending this e-mail."
+          />
+        );
       });
   }
 
-  const emailRef = useRef<any>();
   return (
     <>
       <NextSeo
@@ -180,7 +186,6 @@ const ContactPage = () => {
               </div>
             </Form.Root>
           </div>
-          <Toast />
         </section>
       </AnimateEnter>
     </>

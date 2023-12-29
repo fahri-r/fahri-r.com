@@ -1,5 +1,10 @@
 import { Toaster } from "react-hot-toast";
 
+type ToastMessageProps = {
+  title: string;
+  message: string;
+};
+
 const Toast = () => {
   return (
     <Toaster
@@ -19,4 +24,15 @@ const Toast = () => {
   );
 };
 
-export default Toast;
+const ToastMessage = (props: ToastMessageProps) => {
+  const { title, message } = props;
+
+  return (
+    <div className="flex flex-col">
+      <div>{title}</div>
+      <div className="text-sm text-neutral-400">{message}</div>
+    </div>
+  );
+};
+
+export { Toast, ToastMessage };
