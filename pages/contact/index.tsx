@@ -34,6 +34,9 @@ const ContactPage = () => {
 
     await fetch("/api/send", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         email,
         name,
@@ -168,8 +171,7 @@ const ContactPage = () => {
                 <Form.Submit asChild>
                   <Button
                     type="submit"
-                    // disabled={submitting}
-                    disabled={true}
+                    disabled={submitting}
                     className="disabled:bg-primary/70 col-span-2"
                   >
                     <span>Send Message</span>
