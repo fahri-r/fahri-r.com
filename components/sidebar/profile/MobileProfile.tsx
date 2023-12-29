@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import Title from "@/components/utils/Title";
 
 export default function MobileProfile() {
-  const { showMenu, setShowMenu } = useHooks();
+  const { showMenu } = useHooks();
 
   return (
     <>

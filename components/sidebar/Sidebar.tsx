@@ -3,13 +3,11 @@ import Divider from "@/components/utils/Divider";
 import ProfileHeader from "@/components/sidebar/profile/ProfileHeader";
 import SidebarFooter from "@/components/sidebar/SidebarFooter";
 import MobileMenu from "@/components/sidebar/MobileMenu";
-import menu from "@/data/menu";
-import Link from "next/link";
 import { useHooks } from "@/context/Provider";
 import { cn } from "@/lib/utils";
 
 export default function Sidebar() {
-  const { showMenu, setShowMenu } = useHooks();
+  const { showMenu } = useHooks();
 
   return (
     <header

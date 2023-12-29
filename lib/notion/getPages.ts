@@ -13,7 +13,10 @@ const getPages = async (): Promise<ProjectProps[]> => {
     properties;
 
   const getPageProperty = (id: string, property: any) => {
-    return property[1].value.properties[id]?.[0][0];
+    return (
+      property[1].value.properties[id]?.[0][1]?.[0][1]?.start_date ??
+      property[1].value.properties[id]?.[0][0]
+    );
   };
 
   const pages: ProjectProps[] = [];
@@ -41,11 +44,18 @@ const getPages = async (): Promise<ProjectProps[]> => {
       category: getPageProperty(category.id, block),
       tools: getPageProperty(tools.id, block).split(","),
       status: getPageProperty(status.id, block),
+      date: getPageProperty(date?.id, block),
       thumbnail: image,
     });
   });
 
-  return pages;
+  return pages.sort((a, b) => {
+    let da = new Date(a.date),
+      db = new Date(b.date);
+    return db - da;
+  });
+
+  // return pages;
 };
 
 export default getPages;

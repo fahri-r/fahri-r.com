@@ -10,4 +10,5 @@ export default interface ProjectProps {
   tools: string[];
   status: string;
   thumbnail: ThumbnailProps;
+  date: Date;
 }

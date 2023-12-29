@@ -11,12 +11,8 @@ const initialValues = {
   setEmail: () => undefined,
   message: "",
   setMessage: () => undefined,
-  visible: true,
-  setVisible: () => undefined,
   submitting: true,
   setSubmitting: () => undefined,
-  isVisible: false,
-  setIsVisible: () => undefined,
 };
 
 const AppContext = createContext<ContextProps>(initialValues);
