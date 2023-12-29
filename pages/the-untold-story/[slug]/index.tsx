@@ -36,10 +36,17 @@ export async function getServerSideProps(context: any) {
   const slug = context.query.slug;
 
   const notion = new NotionAPI();
-  const project = await notion.getPage(slug);
-  return {
-    props: {
-      project,
-    },
-  };
+  try {
+    const project = await notion.getPage(slug);
+
+    return {
+      props: {
+        project,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 }

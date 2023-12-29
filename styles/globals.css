@@ -42,6 +42,11 @@
 
 .notion-app {
   background: unset;
+  min-height: unset;
+}
+
+.notion-page-scroller {
+  min-height: unset;
 }
 
 .notion-asset-wrapper-image,

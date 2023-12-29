@@ -13,7 +13,7 @@ export function EducationItem(props: EducationProps) {
       <a
         target="_blank"
         rel="noreferrer"
-        className="relative flex flex-col items-center rounded-xl  border border-neutral-800 bg-neutral-900 p-2"
+        className="relative flex flex-col items-center rounded-xl  border border-neutral-800 bg-neutral-900 p-2 hover:brightness-125 duration-300"
       >
         <div className="relative flex w-full">
           <figure className="relative w-1/4 h-32 overflow-clip rounded-md">
