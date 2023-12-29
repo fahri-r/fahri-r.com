@@ -23,6 +23,26 @@ const profile: ProfileProps = {
   job: "Software Engineer",
   dob: "12/07/2000",
   location: "Indonesia",
+  education: [
+    {
+      institution: "Universitas Logistik dan Bisnis Internasional",
+      degree: "Bachelor's degree",
+      major: "Informatics Engineering, (S.Tr.Kom)",
+      entry: 2019,
+      resign: 2023,
+      logo: "/images/education/ulbi.png",
+      site: "https://www.ulbi.ac.id/",
+    },
+    {
+      institution: "SMA Negeri 1 Sumedang",
+      degree: "Senior High School",
+      major: "Science",
+      entry: 2016,
+      resign: 2019,
+      logo: "/images/education/sma1.png",
+      site: "https://www.smansasumedang.sch.id/",
+    },
+  ],
   socials: [
     {
       href: "https://github.com/fahri-r",

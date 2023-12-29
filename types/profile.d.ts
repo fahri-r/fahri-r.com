@@ -12,4 +12,5 @@ export default interface ProfileProps {
   skills: SkillProps[];
   imgUrl: string;
   experiences: ExperienceProps[];
+  education: EducationProps[];
 }

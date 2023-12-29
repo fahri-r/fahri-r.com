@@ -8,11 +8,13 @@ import { NextSeo } from "next-seo";
 import profile from "@/data/profile";
 import Title from "@/components/utils/Title";
 
-interface ProjectDetailPageProps {
+interface TheUntoldStoryPageProps {
   project: ExtendedRecordMap;
 }
 
-export default function ProjectDetailPage({ project }: ProjectDetailPageProps) {
+export default function TheUntoldStoryPage({
+  project,
+}: TheUntoldStoryPageProps) {
   return (
     <>
       <NextSeo title={`The Untold Story - ${profile.name}`} />

@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import Title from "@/components/utils/Title";
 import Typography from "@/components/utils/Typography";
 import profile from "@/data/profile";
+import Link from "next/link";
 
 export default function DesktopProfile() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -47,23 +48,25 @@ export default function DesktopProfile() {
         <Title variant="title" className="text-md lg:text-xl">
           {profile.name}
         </Title>
-        <a
-          href={profile.socials.find((social) => social.name == "GitHub")?.href}
-          target="_blank"
-          rel="noreferrer"
-          className="block w-fit"
+        <Link
+          href={
+            profile.socials.find((social) => social.name == "GitHub")?.href!
+          }
+          legacyBehavior
         >
-          <Typography
-            variant="muted"
-            className="select-none text-sm duration-300 hover:text-foreground"
-          >
-            @
-            {
-              profile.socials.find((social) => social.name == "GitHub")
-                ?.username
-            }
-          </Typography>
-        </a>
+          <a target="_blank" rel="noreferrer" className="block w-fit">
+            <Typography
+              variant="muted"
+              className="select-none text-sm duration-300 hover:text-foreground"
+            >
+              @
+              {
+                profile.socials.find((social) => social.name == "GitHub")
+                  ?.username
+              }
+            </Typography>
+          </a>
+        </Link>
       </div>
       <div className="mb-1 mt-3 flex items-center gap-2 max-lg:hidden">
         <div>

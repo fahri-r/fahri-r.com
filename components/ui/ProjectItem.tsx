@@ -9,17 +9,7 @@ import { ArrowRight } from "lucide-react";
 import ProjectProps from "@/types/project";
 
 export function ProjectItem(props: ProjectProps) {
-  const {
-    id,
-    title,
-    slug,
-    repository,
-    site,
-    category,
-    tools,
-    status,
-    thumbnail,
-  } = props;
+  const { title, slug, tools, thumbnail } = props;
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);

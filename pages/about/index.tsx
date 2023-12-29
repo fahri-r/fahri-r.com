@@ -139,12 +139,14 @@ const AboutPage = () => {
               <Briefcase size={18} />
               Education
             </Title>
-            <Typography>My professional career journey.</Typography>
+            <Typography>My educational journey.</Typography>
           </div>
           <ul className="mt-4 grid place-items-center gap-4">
-            <li className="w-full">
-              <EducationItem />
-            </li>
+            {profile.education.map((props, i) => (
+              <li key={i} className="w-full">
+                <EducationItem {...props} />
+              </li>
+            ))}
           </ul>
         </section>
       </AnimateEnter>

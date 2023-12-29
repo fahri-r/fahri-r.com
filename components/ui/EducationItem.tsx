@@ -2,51 +2,53 @@
 
 import Image from "next/image";
 import Link from "next/link";
-
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import Typography from "../utils/Typography";
-import { ArrowRight } from "lucide-react";
-import ProjectProps from "@/types/project";
+import { Dot } from "lucide-react";
 
-export function EducationItem() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+export function EducationItem(props: EducationProps) {
+  const { institution, logo, degree, major, entry, resign, site } = props;
 
   return (
-    <Link
-      href={`/projects/tes`}
-      className="relative flex flex-col items-center rounded-xl  border border-neutral-800 bg-neutral-900 p-2"
-    >
-      <div className="relative flex w-full">
-        <figure className="relative w-1/4 h-32 overflow-clip rounded-md">
-          <Image
-            src={"/images/education/ulbi.png"}
-            className="object-contain object-top duration-500 ease-in-out p-2"
-            alt={"tes"}
-            placeholder="blur"
-            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
-            priority
-            fill
-          />
-        </figure>
-        <div className="flex w-full flex-col space-y-4 px-3 py-4">
-          <div className="flex flex-col justify-center space-y-2">
-            <h3 className="font-mono text-xl text-primary">Tes</h3>
+    <Link href={site} legacyBehavior>
+      <a
+        target="_blank"
+        rel="noreferrer"
+        className="relative flex flex-col items-center rounded-xl  border border-neutral-800 bg-neutral-900 p-2"
+      >
+        <div className="relative flex w-full">
+          <figure className="relative w-1/4 h-32 overflow-clip rounded-md">
+            <Image
+              src={logo}
+              className="object-contain object-top duration-500 ease-in-out p-2"
+              alt={institution}
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
+              priority
+              fill
+            />
+          </figure>
+          <div className="flex w-full flex-col space-y-4 px-3 py-4">
+            <div className="flex flex-col justify-center space-y-2">
+              <h3 className="font-mono text-xl text-primary">{institution}</h3>
+            </div>
+            <div className="flex gap-1.5 text-neutral-400 items-center">
+              <Typography variant="muted" className="text-sm">
+                {degree}
+              </Typography>
+              <Dot />
+              <Typography variant="muted" className="text-sm">
+                {major}
+              </Typography>
+            </div>
+            <Typography
+              variant="muted"
+              className="text-sm duration-300 flex items-center"
+            >
+              {entry} - {resign}
+            </Typography>
           </div>
-          <Typography
-            variant="muted"
-            className="text-sm duration-300 flex items-center"
-          >
-            Tes
-          </Typography>
-          <Typography
-            variant="muted"
-            className="text-sm duration-300 flex items-center"
-          >
-            Tahun
-          </Typography>
         </div>
-      </div>
+      </a>
     </Link>
   );
 }

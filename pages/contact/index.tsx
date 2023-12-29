@@ -10,6 +10,7 @@ import { useRef } from "react";
 import profile from "@/data/profile";
 import { AnimateEnter } from "@/components/utils/AnimateEnter";
 import { NextSeo } from "next-seo";
+import Link from "next/link";
 
 const PAGE_TITLE = "Contact";
 const PAGE_DESCRIPTION =
@@ -72,12 +73,14 @@ const ContactPage = () => {
             </Title>
             <div className="mb-6 mt-4 flex flex-wrap gap-3">
               {profile.socials.map(({ href, icon, name }, i) => (
-                <a key={i} href={href} target="_blank" rel="noreferrer">
-                  <Button variant="dark" size="social">
-                    {icon}
-                    <span>{name}</span>
-                  </Button>
-                </a>
+                <Link key={i} href={href} legacyBehavior>
+                  <a target="_blank" rel="noreferrer">
+                    <Button variant="dark" size="social">
+                      {icon}
+                      <span>{name}</span>
+                    </Button>
+                  </a>
+                </Link>
               ))}
             </div>
           </div>
