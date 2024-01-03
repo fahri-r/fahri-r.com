@@ -27,9 +27,9 @@
     @apply select-none;
   }
 
-  li {
+  /* li {
     @apply list-none;
-  }
+  } */
 }
 
 .notion-page-no-cover {
@@ -92,9 +92,9 @@
   @apply rounded-md border-0;
 }
 
-.notion-page-icon-inline {
+/* .notion-page-icon-inline {
   @apply hidden;
-}
+} */
 
 .notion-page-title-text {
   @apply font-mono text-xl;
