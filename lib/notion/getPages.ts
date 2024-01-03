@@ -50,9 +50,9 @@ const getPages = async (): Promise<ProjectProps[]> => {
   });
 
   return pages.sort((a, b) => {
-    let da = new Date(a.date),
-      db = new Date(b.date);
-    return db - da;
+    let da: Date = new Date(a.date),
+      db: Date = new Date(b.date);
+    return db.getTime() - da.getTime();
   });
 
   // return pages;
