@@ -37,7 +37,7 @@ const AboutPage = () => {
                     (60 * 60 * 24) /
                     365.25
                 ).toString()}{" "}
-                years old software living in South Jakarta. I have a degree in
+                years old software engineer living in South Jakarta. I have a degree in
                 Informatics Engineering from Universitas Logistik dan Bisnis
                 Internasional.
               </Typography>
