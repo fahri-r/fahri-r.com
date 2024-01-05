@@ -32,7 +32,7 @@ export default function MobileProfile() {
         </Title>
       </div>
       <div className="flex gap-2">
-        <CommandButton />
+        <CommandButton className="lg:hidden" />
         <MobileButton />
       </div>
     </>
