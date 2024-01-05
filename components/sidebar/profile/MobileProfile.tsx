@@ -6,6 +6,7 @@ import profile from "@/data/profile";
 import { useHooks } from "@/context/Provider";
 import { cn } from "@/lib/utils";
 import Title from "@/components/utils/Title";
+import CommandButton from "@/components/command/CommandButton";
 
 export default function MobileProfile() {
   const { showMenu } = useHooks();
@@ -30,7 +31,10 @@ export default function MobileProfile() {
           {profile.name}
         </Title>
       </div>
-      <MobileButton />
+      <div className="flex gap-2">
+        <CommandButton />
+        <MobileButton />
+      </div>
     </>
   );
 }
