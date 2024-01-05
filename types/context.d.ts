@@ -1,4 +1,6 @@
 export default interface ContextProps {
+  showCommand: boolean;
+  setShowCommand: React.Dispatch<React.SetStateAction<boolean>>;
   showMenu: boolean;
   setShowMenu: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;

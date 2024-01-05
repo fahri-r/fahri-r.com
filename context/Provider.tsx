@@ -5,6 +5,7 @@ import { useState, useContext } from "react";
 import AppContext from "@/context/AppContext";
 
 export default function Provider({ children }: { children: React.ReactNode }) {
+  const [showCommand, setShowCommand] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -12,6 +13,8 @@ export default function Provider({ children }: { children: React.ReactNode }) {
   const [submitting, setSubmitting] = useState(false);
 
   const value = {
+    showCommand,
+    setShowCommand,
     showMenu,
     setShowMenu,
     name,

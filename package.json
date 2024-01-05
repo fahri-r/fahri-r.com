@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-form": "^0.0.3",
     "@react-email/components": "0.0.12",
     "clsx": "^2.0.0",
+    "cmdk": "^0.2.0",
     "framer-motion": "^10.16.16",
     "ioredis": "^5.3.2",
     "lucide-react": "^0.294.0",

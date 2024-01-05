@@ -15,6 +15,7 @@ const button = tv({
       default: "rounded-lg",
       lg: "p-3 rounded-lg",
       social: "py-2 px-2.5 rounded-lg",
+      icon: "w-8 h-8 p-0 rounded-md",
     },
   },
   defaultVariants: {

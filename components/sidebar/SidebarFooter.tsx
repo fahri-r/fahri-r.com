@@ -1,5 +1,6 @@
 import Typography from "@/components/utils/Typography";
 import Link from "next/link";
+import CommandButton from "../command/CommandButton";
 
 export default function SidebarFooter() {
   return (
@@ -12,6 +13,7 @@ export default function SidebarFooter() {
           </a>
         </Link>
       </Typography>
+      <CommandButton />
     </div>
   );
 }

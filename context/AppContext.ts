@@ -3,6 +3,8 @@ import { createContext } from "react";
 import ContextProps from "@/types/context";
 
 const initialValues = {
+  showCommand: false,
+  setShowCommand: () => undefined,
   showMenu: false,
   setShowMenu: () => undefined,
   name: "",
