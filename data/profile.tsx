@@ -68,14 +68,14 @@ const profile: ProfileProps = {
   ],
   experiences: [
     {
-      name: "PT. Ever Green Hans (Freelance)",
+      name: "PT. Ever Green Hans",
       role: "Software Developer",
       entry: {
         month: 6,
         year: 2023,
       },
       resign: {
-        month: 8,
+        month: 12,
         year: 2023,
       },
     },
