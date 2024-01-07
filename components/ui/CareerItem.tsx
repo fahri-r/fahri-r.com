@@ -6,8 +6,8 @@ import ExperienceProps from "@/types/experience";
 export function CareerItem(props: ExperienceProps) {
   const { role, name, entry, resign } = props;
 
-  const dateOut = resign ? new Date(resign.year, resign.month) : "Present";
-  const dateIn = new Date(entry.year, entry.month);
+  const dateOut = resign ? new Date(resign.year, resign.month - 1) : "Present";
+  const dateIn = new Date(entry.year, entry.month - 1);
 
   return (
     <div className="group relative flex flex-col items-center rounded-xl  border border-neutral-800 bg-neutral-900 p-2">
