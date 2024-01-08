@@ -39,7 +39,7 @@ export default function Command() {
   };
 
   useEffect(() => {
-    if (!open) {
+    if (!showCommand) {
       setTimeout(() => {
         setSearch("");
       }, 1000);
