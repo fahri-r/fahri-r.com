@@ -2,17 +2,20 @@ import { Command } from "lucide-react";
 import { Button } from "../utils/Button";
 import { useHooks } from "@/context/Provider";
 
-const CommandButton = ({ className }: any) => {
-  const { setShowCommand } = useHooks();
+const CommandButton = ({ className, size }: any) => {
+  const { setShowCommand, setShowMenu } = useHooks();
 
   return (
     <Button
       className={className}
       variant="ghost"
       size="icon"
-      onClick={() => setShowCommand(true)}
+      onClick={() => {
+        setShowCommand(true);
+        setShowMenu(false);
+      }}
     >
-      <Command size={16} />
+      <Command size={size ?? 16} />
     </Button>
   );
 };

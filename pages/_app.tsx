@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
         kanit.variable
       )}
     >
-      <AnimateEnter className="mx-auto flex max-w-6xl flex-col px-8 lg:flex-row lg:gap-10 lg:py-24">
+      <AnimateEnter className="mx-auto flex max-w-6xl flex-col px-8 py-5 lg:flex-row lg:gap-10 lg:py-24">
         <Provider>
           <Command />
           <Sidebar />

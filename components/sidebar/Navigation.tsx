@@ -6,11 +6,11 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import menu from "@/data/menu";
 
-export default function DesktopMenu() {
+export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <nav className="hidden flex-col gap-1 lg:flex">
+    <nav className="hidden flex-col gap-1 lg:flex w-full">
       {menu.map(({ path, name, icon }, i) => (
         <Link
           key={i}

@@ -1,14 +1,14 @@
-"use client";
-
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 
 import { useHooks } from "@/context/Provider";
+
 import menu from "@/data/menu";
 import { usePathname } from "next/navigation";
+import Divider from "../utils/Divider";
 
-export default function MobileMenu() {
+const MobileMenu = () => {
   const { showMenu, setShowMenu } = useHooks();
   const pathname = usePathname();
 
@@ -19,20 +19,20 @@ export default function MobileMenu() {
   };
 
   return (
-    <div
-      className={cn("flex flex-col rounded-lg duration-300 lg:hidden", {
-        "visible top-0 opacity-100": showMenu,
-        "invisible opacity-0": !showMenu,
-      })}
-    >
-      <ul
-        className={`${
-          showMenu ? "pointer-events-auto" : "pointer-events-none"
-        }`}
+    <>
+      {showMenu && <Divider className="my-3" />}
+      <div
+        className={cn(
+          "flex flex-col bg-background duration-300 w-full space-y-1",
+          {
+            "block top-0 scale-100 opacity-100": showMenu,
+            "hidden scale-50 opacity-0": !showMenu,
+          }
+        )}
       >
-        {menu.map(({ path, icon, name }, i) => (
+        {menu.map(({ path, icon, name }) => (
           <Link
-            key={i}
+            key={name}
             href={path}
             className={cn(
               "rounded-lg px-2.5 flex gap-4 py-2.5 text-sm text-primary",
@@ -50,7 +50,9 @@ export default function MobileMenu() {
             {name}
           </Link>
         ))}
-      </ul>
-    </div>
+      </div>
+    </>
   );
-}
+};
+
+export default MobileMenu;

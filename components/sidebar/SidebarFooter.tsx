@@ -4,7 +4,7 @@ import CommandButton from "../ui/CommandButton";
 
 export default function SidebarFooter() {
   return (
-    <div className="hidden items-center justify-between gap-2 lg:flex">
+    <div className="flex items-center justify-between gap-2 w-full">
       <Typography variant="muted" className="text-xs font-medium">
         © {new Date().getFullYear()} with ❤ by{" "}
         <Link href={"https://github.com/fahri-r/fahri-r.com"} legacyBehavior>

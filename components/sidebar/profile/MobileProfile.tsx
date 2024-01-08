@@ -17,7 +17,7 @@ export default function MobileProfile() {
         <Link href="/">
           <figure
             className={cn(
-              "relative object-contain h-10 w-10 overflow-hidden rounded-full lg:hidden object-cover object-top duration-300",
+              "relative object-contain h-10 w-10 overflow-hidden rounded-full lg:hidden object-cover object-top duration-500",
               { "h-24 w-24": showMenu }
             )}
           >
@@ -31,8 +31,12 @@ export default function MobileProfile() {
           {profile.name}
         </Title>
       </div>
-      <div className="flex gap-2">
-        <CommandButton className="lg:hidden" />
+      <div
+        className={cn("flex gap-2 duration-500", {
+          "flex-col-reverse items-center justify-between pt-2 h-full": showMenu,
+        })}
+      >
+        <CommandButton className="lg:hidden" size={20} />
         <MobileButton />
       </div>
     </>
