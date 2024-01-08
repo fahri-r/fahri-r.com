@@ -12,17 +12,25 @@ import MenuProps from "@/types/menu";
 import menu from "@/data/menu";
 import { useEffect, useState } from "react";
 import { useHooks } from "@/context/Provider";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import social from "@/data/social";
 
 type Groups = Array<{
   heading: string;
+  external: boolean;
   actions: Array<MenuProps>;
 }>;
 
 const INITIAL_GROUPS: Groups = [
   {
     heading: "Pages",
+    external: false,
     actions: menu,
+  },
+  {
+    heading: "Socials",
+    external: true,
+    actions: social,
   },
 ];
 
@@ -30,13 +38,6 @@ export default function Command() {
   const { showCommand, setShowCommand } = useHooks();
   const [search, setSearch] = useState("");
   const [groups, setGroups] = useState(INITIAL_GROUPS);
-
-  const router = useRouter();
-
-  const forwardToRoute = (route: string) => {
-    router.push(route);
-    setShowCommand(false);
-  };
 
   useEffect(() => {
     if (!showCommand) {
@@ -69,6 +70,7 @@ export default function Command() {
             ...prevGroups,
             {
               heading: group.heading,
+              external: group.external,
               actions: filteredAction,
             },
           ]);
@@ -94,29 +96,33 @@ export default function Command() {
             <span className="sr-only">Close</span>
           </DialogClose>
         </DialogHeader>
-        {groups.length < 1 && (
-          <div className="py-6 text-center text-sm text-foreground">
-            No result found.
-          </div>
-        )}
-        {groups.map((group, i) => (
-          <div key={i} className="overflow-hidden px-3 py-2">
-            <div className="px-2 py-2 text-xs font-medium text-neutral-400">
-              {group.heading}
+        <div className="max-h-[300px] overflow-y-auto overflow-x-hidden">
+          {groups.length < 1 && (
+            <div className="py-6 text-center text-sm text-foreground">
+              No result found.
             </div>
-            {group.actions.map((action, i) => (
-              <div
-                key={i}
-                onSelect={() => forwardToRoute(action.path)}
-                className="relative flex cursor-pointer select-none items-center gap-2.5 rounded-md px-2 py-3 text-sm font-medium text-neutral-400 outline-none duration-300 hover:bg-neutral-800 hover:text-neutral-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-              >
-                {action.icon}
-                {action.name}
+          )}
+          {groups.map((group, i) => (
+            <div key={i} className="overflow-hidden px-3 py-2">
+              <div className="px-2 py-2 text-xs font-medium text-neutral-500">
+                {group.heading}
               </div>
-            ))}
-          </div>
-        ))}
-        <DialogFooter className="flex justify-end items-center text-xs py-3 px-3 border-t border-neutral-800">
+              {group.actions.map((action, i) => (
+                <Link
+                  target={group.external ? "_blank" : "_self"}
+                  key={i}
+                  href={action.path}
+                  onClick={() => setShowCommand(false)}
+                  className="relative flex cursor-pointer select-none items-center gap-2.5 rounded-md px-2 py-3 text-sm font-medium text-neutral-400 outline-none duration-300 hover:bg-neutral-800 hover:text-neutral-50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                >
+                  {action.icon}
+                  {action.name}
+                </Link>
+              ))}
+            </div>
+          ))}
+        </div>
+        <DialogFooter className="flex justify-end items-center text-xs py-3 px-3 border-t border-neutral-800 text-neutral-400">
           <span className="px-1 py-1/2 rounded-sm bg-neutral-800">ctrl</span>
           <span>+</span>
           <span className="px-1 py-1/2 rounded-sm bg-neutral-800">k</span>
