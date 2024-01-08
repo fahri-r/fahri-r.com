@@ -1,4 +1,4 @@
-import { Toast, ToastMessage } from "@/components/ui/Toast";
+import { ToastMessage } from "@/components/utils/Toast";
 import Divider from "@/components/utils/Divider";
 import Title from "@/components/utils/Title";
 import Typography from "@/components/utils/Typography";
@@ -6,7 +6,6 @@ import { useHooks } from "@/context/Provider";
 import toast from "react-hot-toast";
 import * as Form from "@radix-ui/react-form";
 import { Button } from "@/components/utils/Button";
-import { useRef } from "react";
 import profile from "@/data/profile";
 import { AnimateEnter } from "@/components/utils/AnimateEnter";
 import { NextSeo } from "next-seo";

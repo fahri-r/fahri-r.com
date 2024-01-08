@@ -1,6 +1,6 @@
 import Typography from "@/components/utils/Typography";
 import Link from "next/link";
-import CommandButton from "../command/CommandButton";
+import CommandButton from "../ui/CommandButton";
 
 export default function SidebarFooter() {
   return (

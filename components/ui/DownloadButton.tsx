@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 import { Button } from "../utils/Button";
 import { Download } from "lucide-react";
-import { ToastMessage } from "./Toast";
+import { ToastMessage } from "../utils/Toast";
 
 const DownloadButton = () => {
   return (

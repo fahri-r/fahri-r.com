@@ -6,7 +6,7 @@ import profile from "@/data/profile";
 import { useHooks } from "@/context/Provider";
 import { cn } from "@/lib/utils";
 import Title from "@/components/utils/Title";
-import CommandButton from "@/components/command/CommandButton";
+import CommandButton from "@/components/ui/CommandButton";
 
 export default function MobileProfile() {
   const { showMenu } = useHooks();

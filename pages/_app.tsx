@@ -8,8 +8,8 @@ import Provider from "@/context/Provider";
 import Texture from "@/components/ui/Texture";
 import Sidebar from "@/components/sidebar/Sidebar";
 import { AnimateEnter } from "@/components/utils/AnimateEnter";
-import { Toast } from "@/components/ui/Toast";
-import { Command } from "@/components/command/Command";
+import { Toast } from "@/components/utils/Toast";
+import Command from "@/components/ui/Command";
 
 const poppins = Poppins({
   subsets: ["latin"],

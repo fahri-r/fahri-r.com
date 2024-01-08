@@ -5,22 +5,22 @@ const menu: MenuProps[] = [
   {
     path: "/",
     name: "Home",
-    icon: <Home size={16} />,
+    icon: <Home size={20} />,
   },
   {
     path: "/about",
     name: "About",
-    icon: <User2 size={16} />,
+    icon: <User2 size={20} />,
   },
   {
     path: "/projects",
     name: "Projects",
-    icon: <Braces size={16} />,
+    icon: <Braces size={20} />,
   },
   {
     path: "/contact",
     name: "Contact",
-    icon: <Mail size={16} />,
+    icon: <Mail size={20} />,
   },
 ];
 
