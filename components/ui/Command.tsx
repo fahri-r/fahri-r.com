@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, X } from "lucide-react";
+import { CommandIcon, Search, X } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -99,7 +99,7 @@ export default function Command() {
         <div className="max-h-[300px] overflow-y-auto overflow-x-hidden">
           {groups.length < 1 && (
             <div className="py-6 text-center text-sm text-foreground">
-              No result found.
+              {`No result found about "${search}" in this website.`}
             </div>
           )}
           {groups.map((group, i) => (
@@ -123,9 +123,13 @@ export default function Command() {
           ))}
         </div>
         <DialogFooter className="flex justify-end items-center text-xs py-3 px-3 border-t border-neutral-800 text-neutral-400">
-          <span className="px-1 py-1/2 rounded-sm bg-neutral-800">ctrl</span>
+          <div className="p-1 rounded-sm bg-neutral-800 h-5 w-5">
+            <CommandIcon size={12} />
+          </div>
           <span>+</span>
-          <span className="px-1 py-1/2 rounded-sm bg-neutral-800">k</span>
+          <div className="flex items-center justify-center p-1 rounded-sm bg-neutral-800 h-5 w-5">
+            k
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>
