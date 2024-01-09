@@ -36,13 +36,13 @@ function Home({ projects }: { projects: any }) {
           <span>View All Projects</span>
         </Link>
       </div>
-      {/* <ul className="mt-6 grid place-items-center gap-4 md:grid-cols-2">
+      <ul className="mt-6 grid place-items-center gap-4 md:grid-cols-2">
         {projects.slice(0, 2).map((props: ProjectProps) => (
           <li key={props.id} className="w-full">
             <ProjectItem {...props} />
           </li>
         ))}
-      </ul> */}
+      </ul>
       <Divider />
       <section className="flex flex-col gap-4 rounded-lg border border-neutral-800 bg-neutral-900 bg-globe-pattern bg-right bg-no-repeat p-5 max-md:bg-none">
         <Title variant="title" size="xl">
