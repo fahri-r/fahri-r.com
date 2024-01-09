@@ -4,7 +4,7 @@ import { useRef } from "react";
 
 import toast from "react-hot-toast";
 
-import { Button } from "../../../common/components/elements/Button";
+import Button from "../../../common/components/elements/Button";
 import { Download } from "lucide-react";
 import { ToastMessage } from "../../../common/components/elements/Toast";
 

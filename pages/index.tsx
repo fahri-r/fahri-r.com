@@ -1,10 +1,15 @@
 import profile from "@/common/constant/profile";
 import getPages from "@/common/libs/notion/getPages";
 import { fetchCache } from "@/common/libs/redisCache";
+import ProjectProps from "@/common/types/project";
 import Home from "@/modules/home";
 import { NextSeo } from "next-seo";
 
-export default function HomePage({ projects }: any) {
+type HomePageProps = {
+  projects: ProjectProps[];
+};
+
+export default function HomePage({ projects }: HomePageProps) {
   return (
     <>
       <NextSeo title={`${profile.name} - Personal Website`} />

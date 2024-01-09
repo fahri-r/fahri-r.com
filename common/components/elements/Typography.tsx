@@ -21,11 +21,8 @@ const typography = tv({
 
 type TypographyProps = ComponentProps<"p"> & VariantProps<typeof typography>;
 
-export default function Typography({
-  variant,
-  size,
-  className,
-  ...props
-}: TypographyProps) {
+function Typography({ variant, size, className, ...props }: TypographyProps) {
   return <p className={typography({ variant, size, className })} {...props} />;
 }
+
+export default Typography;

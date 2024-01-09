@@ -1,4 +1,6 @@
-export default interface ThumbnailProps {
+type ThumbnailProps = {
   title: string;
   url: string;
-}
+};
+
+export default ThumbnailProps;

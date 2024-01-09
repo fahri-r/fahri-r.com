@@ -1,6 +1,6 @@
 import React from "react";
 import { ExtendedRecordMap } from "notion-types";
-import { AnimateEnter } from "@/common/components/elements/AnimateEnter";
+import AnimateEnter from "@/common/components/elements/AnimateEnter";
 import { NotionRenderer } from "react-notion-x";
 import Title from "@/common/components/elements/Title";
 import Image from "next/image";

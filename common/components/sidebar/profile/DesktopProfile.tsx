@@ -10,7 +10,7 @@ import Typography from "@/common/components/elements/Typography";
 import profile from "@/common/constant/profile";
 import Link from "next/link";
 
-export default function DesktopProfile() {
+function DesktopProfile() {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -81,3 +81,5 @@ export default function DesktopProfile() {
     </>
   );
 }
+
+export default DesktopProfile;

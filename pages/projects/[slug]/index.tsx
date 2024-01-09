@@ -7,10 +7,10 @@ import profile from "@/common/constant/profile";
 import ProjectProps from "@/common/types/project";
 import { GetServerSidePropsContext } from "next";
 
-interface ProjectDetailPageProps {
+type ProjectDetailPageProps = {
   recordMap: ExtendedRecordMap;
   project: ProjectProps;
-}
+};
 
 export default function ProjectDetailPage({
   recordMap,

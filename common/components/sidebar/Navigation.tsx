@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/common/libs/utils";
 import menu from "@/common/constant/menu";
 
-export default function Navigation() {
+function Navigation() {
   const pathname = usePathname();
 
   return (
@@ -29,11 +29,11 @@ export default function Navigation() {
           >
             {icon}
           </span>
-          <span className="text-sm">
-            {name}
-          </span>
+          <span className="text-sm">{name}</span>
         </Link>
       ))}
     </nav>
   );
 }
+
+export default Navigation;

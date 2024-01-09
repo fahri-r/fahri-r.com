@@ -18,7 +18,7 @@ type EmailTemplate = {
   email: string;
 };
 
-const EmailTemplate = (props: EmailTemplate) => {
+function EmailTemplate(props: EmailTemplate) {
   const { name, message, email } = props;
 
   const previewText = name;
@@ -54,6 +54,6 @@ const EmailTemplate = (props: EmailTemplate) => {
       </Tailwind>
     </Html>
   );
-};
+}
 
-export { EmailTemplate };
+export default EmailTemplate;

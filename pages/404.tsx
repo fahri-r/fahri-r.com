@@ -1,15 +1,9 @@
-import { Metadata } from "next";
 import Link from "next/link";
 
 import { MoveLeft } from "lucide-react";
 import Typography from "@/common/components/elements/Typography";
-import { Button } from "@/common/components/elements/Button";
-import { AnimateEnter } from "@/common/components/elements/AnimateEnter";
-
-export const metadata: Metadata = {
-  title: "Not Found",
-  description: "A página que você está tentando acessar não existe.",
-};
+import Button from "@/common/components/elements/Button";
+import AnimateEnter from "@/common/components/elements/AnimateEnter";
 
 export default function NotFound() {
   return (

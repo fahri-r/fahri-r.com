@@ -2,7 +2,7 @@ import Typography from "@/common/components/elements/Typography";
 import Link from "next/link";
 import CommandButton from "../command/CommandButton";
 
-export default function SidebarFooter() {
+function SidebarFooter() {
   return (
     <div className="flex items-center justify-between gap-2 w-full">
       <Typography variant="muted" className="text-xs font-medium">
@@ -17,3 +17,5 @@ export default function SidebarFooter() {
     </div>
   );
 }
+
+export default SidebarFooter;

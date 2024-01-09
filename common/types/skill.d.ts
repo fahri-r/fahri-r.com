@@ -1,6 +1,8 @@
 import { StaticImageData } from "next/image";
 
-export default interface SkillProps {
+type SkillProps = {
   src: StaticImageData;
   name: string;
-}
+};
+
+export default SkillProps;

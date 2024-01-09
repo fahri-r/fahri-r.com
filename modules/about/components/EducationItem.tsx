@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Typography from "../../../common/components/elements/Typography";
 import { Dot } from "lucide-react";
+import EducationProps from "@/common/types/education";
 
 export function EducationItem(props: EducationProps) {
   const { institution, logo, degree, major, entry, resign, site } = props;

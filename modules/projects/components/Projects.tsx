@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimateEnter } from "@/common/components/elements/AnimateEnter";
+import AnimateEnter from "@/common/components/elements/AnimateEnter";
 import Title from "@/common/components/elements/Title";
 import Typography from "@/common/components/elements/Typography";
 import ProjectProps from "@/common/types/project";

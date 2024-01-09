@@ -8,7 +8,7 @@ import { cn } from "@/common/libs/utils";
 import Title from "@/common/components/elements/Title";
 import CommandButton from "@/common/components/command/CommandButton";
 
-export default function MobileProfile() {
+function MobileProfile() {
   const { showMenu } = useHooks();
 
   return (
@@ -42,3 +42,5 @@ export default function MobileProfile() {
     </>
   );
 }
+
+export default MobileProfile;

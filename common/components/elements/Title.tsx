@@ -21,6 +21,8 @@ const title = tv({
 
 type TitleProps = ComponentProps<"h1"> & VariantProps<typeof title>;
 
-export default function Title({ variant, size, className, ...props }: TitleProps) {
+function Title({ variant, size, className, ...props }: TitleProps) {
   return <h1 className={title({ variant, size, className })} {...props} />;
 }
+
+export default Title;

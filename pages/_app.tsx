@@ -7,7 +7,7 @@ import { cn } from "@/common/libs/utils";
 import Provider from "@/common/context/Provider";
 import Texture from "@/common/components/elements/Texture";
 import Sidebar from "@/common/components/sidebar/Sidebar";
-import { AnimateEnter } from "@/common/components/elements/AnimateEnter";
+import AnimateEnter from "@/common/components/elements/AnimateEnter";
 import { Toast } from "@/common/components/elements/Toast";
 import Command from "@/common/components/command/Command";
 

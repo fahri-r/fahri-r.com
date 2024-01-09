@@ -1,8 +1,9 @@
+import EducationProps from "./education";
 import ExperienceProps from "./experience";
 import SkillProps from "./skill";
 import SocialProps from "./social";
 
-export default interface ProfileProps {
+type ProfileProps = {
   name: string;
   description: string;
   job: string;
@@ -13,4 +14,6 @@ export default interface ProfileProps {
   imgUrl: string;
   experiences: ExperienceProps[];
   education: EducationProps[];
-}
+};
+
+export default ProfileProps;

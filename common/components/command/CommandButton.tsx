@@ -1,8 +1,8 @@
 import { Command } from "lucide-react";
-import { Button } from "../elements/Button";
+import Button from "../elements/Button";
 import { useHooks } from "@/common/context/Provider";
 
-const CommandButton = ({ className, size }: any) => {
+function CommandButton({ className, size }: any) {
   const { setShowCommand, setShowMenu } = useHooks();
 
   return (
@@ -18,6 +18,6 @@ const CommandButton = ({ className, size }: any) => {
       <Command size={size ?? 16} />
     </Button>
   );
-};
+}
 
 export default CommandButton;

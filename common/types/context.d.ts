@@ -1,4 +1,4 @@
-export default interface ContextProps {
+type ContextProps = {
   showCommand: boolean;
   setShowCommand: React.Dispatch<React.SetStateAction<boolean>>;
   showMenu: boolean;
@@ -11,4 +11,6 @@ export default interface ContextProps {
   setMessage: React.Dispatch<React.SetStateAction<string>>;
   submitting: boolean;
   setSubmitting: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
+
+export default ContextProps;

@@ -1,4 +1,4 @@
-import { AnimateEnter } from "@/common/components/elements/AnimateEnter";
+import AnimateEnter from "@/common/components/elements/AnimateEnter";
 import Divider from "@/common/components/elements/Divider";
 import Title from "@/common/components/elements/Title";
 import Typography from "@/common/components/elements/Typography";

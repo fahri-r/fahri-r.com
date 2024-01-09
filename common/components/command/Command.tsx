@@ -34,7 +34,7 @@ const INITIAL_GROUPS: Groups = [
   },
 ];
 
-export default function Command() {
+function Command() {
   const { showCommand, setShowCommand } = useHooks();
   const [search, setSearch] = useState("");
   const [groups, setGroups] = useState(INITIAL_GROUPS);
@@ -141,3 +141,5 @@ export default function Command() {
     </Dialog>
   );
 }
+
+export default Command;

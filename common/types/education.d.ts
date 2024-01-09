@@ -1,4 +1,4 @@
-interface EducationProps {
+type EducationProps = {
   institution: string;
   degree: string;
   major: string;
@@ -6,4 +6,6 @@ interface EducationProps {
   resign: number;
   logo: string;
   site: string;
-}
+};
+
+export default EducationProps;

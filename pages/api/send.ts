@@ -1,9 +1,9 @@
 import { Resend } from "resend";
-import { EmailTemplate } from "@/common/components/elements/EmailTemplate";
+import EmailTemplate from "@/common/components/elements/EmailTemplate";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export default async function handler(req: any, res: any) {
+async function handler(req: any, res: any) {
   switch (req.method) {
     case "POST":
       const { name, email, message } = req.body;
@@ -30,3 +30,5 @@ export default async function handler(req: any, res: any) {
       break;
   }
 }
+
+export default handler;

@@ -1,11 +1,13 @@
-export default interface ExperienceProps {
+type ExperienceProps = {
   name: string;
   role: string;
   entry: WorkDateProps;
   resign?: WorkDateProps;
-}
+};
 
-interface WorkDateProps {
+type WorkDateProps = {
   month: number;
   year: number;
-}
+};
+
+export default ExperienceProps;

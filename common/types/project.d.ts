@@ -1,6 +1,6 @@
 import ThumbnailProps from "./thumbnail";
 
-export default interface ProjectProps {
+type ProjectProps = {
   id: string;
   title: string;
   slug: string;
@@ -11,4 +11,6 @@ export default interface ProjectProps {
   status: string;
   thumbnail: ThumbnailProps;
   date: Date;
-}
+};
+
+export default ProjectProps;

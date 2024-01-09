@@ -8,7 +8,7 @@ import menu from "@/common/constant/menu";
 import { usePathname } from "next/navigation";
 import Divider from "../elements/Divider";
 
-const MobileMenu = () => {
+function MobileMenu() {
   const { showMenu, setShowMenu } = useHooks();
   const pathname = usePathname();
 
@@ -53,6 +53,6 @@ const MobileMenu = () => {
       </div>
     </>
   );
-};
+}
 
 export default MobileMenu;

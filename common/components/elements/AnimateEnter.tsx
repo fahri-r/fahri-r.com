@@ -13,7 +13,7 @@ const animation = {
   },
 };
 
-export function AnimateEnter({ children, className }: any) {
+function AnimateEnter({ children, className }: any) {
   return (
     <LazyMotion features={domAnimation}>
       <motion.main
@@ -28,3 +28,5 @@ export function AnimateEnter({ children, className }: any) {
     </LazyMotion>
   );
 }
+
+export default AnimateEnter;

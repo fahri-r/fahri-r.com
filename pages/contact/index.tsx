@@ -6,7 +6,7 @@ const PAGE_TITLE = "Contact";
 const PAGE_DESCRIPTION =
   "Feel free to get in touch and let's have a discussion about how we can work together.";
 
-const ContactPage = () => {
+export default function ContactPage() {
   return (
     <>
       <NextSeo
@@ -16,6 +16,4 @@ const ContactPage = () => {
       <Contact />
     </>
   );
-};
-
-export default ContactPage;
+}

@@ -7,7 +7,7 @@ import useIsMobile from "@/common/hooks/useIsMobile";
 import { cn } from "@/common/libs/utils";
 import { useHooks } from "@/common/context/Provider";
 
-export default function Sidebar() {
+function Sidebar() {
   const isMobile = useIsMobile();
   const { showMenu } = useHooks();
 
@@ -32,3 +32,5 @@ export default function Sidebar() {
     </header>
   );
 }
+
+export default Sidebar;
