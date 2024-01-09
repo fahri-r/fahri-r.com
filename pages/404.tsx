@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 import { MoveLeft } from "lucide-react";
-import Typography from "@/components/utils/Typography";
-import { Button } from "@/components/utils/Button";
-import { AnimateEnter } from "@/components/utils/AnimateEnter";
+import Typography from "@/common/components/elements/Typography";
+import { Button } from "@/common/components/elements/Button";
+import { AnimateEnter } from "@/common/components/elements/AnimateEnter";
 
 export const metadata: Metadata = {
   title: "Not Found",

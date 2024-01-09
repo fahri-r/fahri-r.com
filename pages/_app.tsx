@@ -1,15 +1,15 @@
 import "react-notion-x/src/styles.css";
-import "@/styles/globals.css";
+import "@/common/styles/globals.css";
 
 import type { AppProps } from "next/app";
 import { Poppins, Kanit } from "next/font/google";
-import { cn } from "@/lib/utils";
-import Provider from "@/context/Provider";
-import Texture from "@/components/ui/Texture";
-import Sidebar from "@/components/sidebar/Sidebar";
-import { AnimateEnter } from "@/components/utils/AnimateEnter";
-import { Toast } from "@/components/utils/Toast";
-import Command from "@/components/ui/Command";
+import { cn } from "@/common/libs/utils";
+import Provider from "@/common/context/Provider";
+import Texture from "@/common/components/elements/Texture";
+import Sidebar from "@/common/components/sidebar/Sidebar";
+import { AnimateEnter } from "@/common/components/elements/AnimateEnter";
+import { Toast } from "@/common/components/elements/Toast";
+import Command from "@/common/components/command/Command";
 
 const poppins = Poppins({
   subsets: ["latin"],
