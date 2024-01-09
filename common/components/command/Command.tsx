@@ -52,9 +52,15 @@ export default function Command() {
         setShowCommand((prevState) => !prevState);
       }
     };
-
     document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
+
+    if (showCommand) {
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      document.removeEventListener("keydown", down);
+      document.body.style.overflow = "unset";
+    };
   }, [showCommand]);
 
   useEffect(() => {
