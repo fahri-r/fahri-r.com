@@ -6,6 +6,7 @@ import { NextSeo } from "next-seo";
 import profile from "@/common/constant/profile";
 import ProjectProps from "@/common/types/project";
 import { GetServerSidePropsContext } from "next";
+import ProjectDetail from "@/modules/projects/components/ProjectDetail";
 
 type ProjectDetailPageProps = {
   recordMap: ExtendedRecordMap;
@@ -19,7 +20,7 @@ export default function ProjectDetailPage({
   return (
     <>
       <NextSeo title={`${project.title} - ${profile.name}`} />
-      <ProjectDetailPage recordMap={recordMap} project={project} />
+      <ProjectDetail recordMap={recordMap} project={project} />
     </>
   );
 }
