@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import BlogPostCard from "@/common/components/dev/components/BlogPostCard";
 import BLOG from "@/blog.config";
 import Link from "next/link";
+import { ProjectItem } from "@/common/components/dev/ProjectItem";
 
 /**
  * 首页布局
@@ -35,11 +36,11 @@ const Index = (props) => {
   };
   return (
     <div className={`w-full md:pr-12 mb-12`}>
-      <div id="posts-wrapper">
+      <ul className="grid place-items-center gap-4 md:grid-cols-2">
         {posts?.map((post) => (
-          <BlogPostCard key={post.id} post={post} />
+          <ProjectItem key={post.id} post={post} />
         ))}
-      </div>
+      </ul>
 
       <div className="flex justify-between text-xs">
         {/* <Link

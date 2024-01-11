@@ -20,7 +20,7 @@ export async function getNotion(pageId) {
     id: pageId,
     type: postInfo,
     category: '',
-    tags: [],
+    tools: [],
     title: postInfo?.properties?.title?.[0],
     status: 'Published',
     createdTime: formatDate(new Date(postInfo.created_time).toString(), BLOG.LANG),

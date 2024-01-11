@@ -8,24 +8,12 @@ import { idToUuid } from "notion-utils";
 import { deepClone } from "../utils";
 import { getAllCategories } from "./getAllCategories";
 import getAllPageIds from "./getAllPageIds";
-import { getAllTags } from "./getAllTags";
+import { getAllTools } from "./getAllTools";
 import getPageProperties from "./getPageProperties";
 import { mapImgUrl, compressImage } from "./mapImage";
 import { getConfigMapFromConfigPage } from "./getNotionConfig";
 
-/**
- * 获取博客数据
- * @param {*} pageId
- * @param {*} from
- * @param latestPostCount 截取最新文章数量
- * @param categoryCount
- * @param tagsCount 截取标签数量
- * @param pageType 过滤的文章类型，数组格式 ['Page','Post']
- * @returns
- *
- */
 export async function getGlobalData({ pageId = BLOG.NOTION_PAGE_ID, from }) {
-  console.log(pageId)
   // 从notion获取
   const data = await getNotionPageData({ pageId, from });
   const db = deepClone(data);
@@ -82,91 +70,14 @@ export async function getNotionPageData({ pageId, from }) {
   return db;
 }
 
-/**
- * 获取用户自定义单页菜单
- * @param notionPageData
- * @returns {Promise<[]|*[]>}
- */
-function getCustomNav({ allPages }) {
-  const customNav = [];
-  if (allPages && allPages.length > 0) {
-    allPages.forEach((p) => {
-      if (p?.slug?.indexOf("http") === 0) {
-        customNav.push({
-          icon: p.icon || null,
-          name: p.title,
-          to: p.slug,
-          target: "_blank",
-          show: true,
-        });
-      } else {
-        customNav.push({
-          icon: p.icon || null,
-          name: p.title,
-          to: "/" + p.slug,
-          target: "_self",
-          show: true,
-        });
-      }
-    });
-  }
-  return customNav;
-}
-
-/**
- * 获取自定义菜单
- * @param {*} allPages
- * @returns
- */
-function getCustomMenu({ collectionData }) {
-  const menuPages = collectionData.filter(
-    (post) =>
-      (post?.type === BLOG.NOTION_PROPERTY_NAME.type_menu ||
-        post?.type === BLOG.NOTION_PROPERTY_NAME.type_sub_menu) &&
-      post.status === "Published"
-  );
-  const menus = [];
-  if (menuPages && menuPages.length > 0) {
-    menuPages.forEach((e) => {
-      e.show = true;
-      if (e?.slug?.indexOf("http") === 0) {
-        e.target = "_blank";
-      }
-      if (e.type === BLOG.NOTION_PROPERTY_NAME.type_menu) {
-        menus.push(e);
-      } else if (e.type === BLOG.NOTION_PROPERTY_NAME.type_sub_menu) {
-        const parentMenu = menus[menus.length - 1];
-        if (parentMenu) {
-          if (parentMenu.subMenus) {
-            parentMenu.subMenus.push(e);
-          } else {
-            parentMenu.subMenus = [e];
-          }
-        }
-      }
-    });
-  }
-  return menus;
-}
-
-/**
- * 获取标签选项
- * @param schema
- * @returns {undefined}
- */
-function getTagOptions(schema) {
+function getToolOptions(schema) {
   if (!schema) return {};
-  const tagSchema = Object.values(schema).find(
-    (e) => e.name === BLOG.NOTION_PROPERTY_NAME.tags
+  const toolSchema = Object.values(schema).find(
+    (e) => e.name === BLOG.NOTION_PROPERTY_NAME.tools
   );
-  return tagSchema?.options || [];
+  return toolSchema?.options || [];
 }
 
-/**
- * 获取分类选项
- * @param schema
- * @returns {{}|*|*[]}
- */
 function getCategoryOptions(schema) {
   if (!schema) return {};
   const categorySchema = Object.values(schema).find(
@@ -175,12 +86,6 @@ function getCategoryOptions(schema) {
   return categorySchema?.options || [];
 }
 
-/**
- * 站点信息
- * @param notionPageData
- * @param from
- * @returns {Promise<{title,description,pageCover,icon}>}
- */
 function getSiteInfo({ collection, block }) {
   const title = collection?.name?.[0][0] || BLOG.TITLE;
   const description = collection?.description
@@ -204,12 +109,6 @@ function getSiteInfo({ collection, block }) {
   return { title, description, pageCover, icon };
 }
 
-/**
- * 获取导航用的精减文章列表
- * gitbook主题用到，只保留文章的标题分类标签分类信息，精减掉摘要密码日期等数据
- * 导航页面的条件，必须是Posts
- * @param {*} param0
- */
 export function getNavPages({ allPages }) {
   const allNavPages = allPages?.filter((post) => {
     return (
@@ -226,7 +125,7 @@ export function getNavPages({ allPages }) {
     title: item.title || "",
     pageCoverThumbnail: item.pageCoverThumbnail || "",
     category: item.category || null,
-    tags: item.tags || null,
+    tools: item.tools || null,
     summary: item.summary || null,
     slug: item.slug,
     pageIcon: item.pageIcon || "",
@@ -234,9 +133,6 @@ export function getNavPages({ allPages }) {
   }));
 }
 
-/**
- * 获取公告
- */
 async function getNotice(post) {
   if (!post) {
     return null;
@@ -287,10 +183,6 @@ const EmptyData = (pageId) => {
   return empty;
 };
 
-/**
- * 调用NotionAPI获取Page数据
- * @returns {Promise<JSX.Element|null|*>}
- */
 async function getDataBaseInfoByNotionAPI({ pageId, from }) {
   const pageRecordMap = await getPostBlocks(pageId, from);
   if (!pageRecordMap) {
@@ -345,7 +237,7 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
         block,
         schema,
         null,
-        getTagOptions(schema)
+        getToolOptions(schema)
       )) || null;
     if (properties) {
       collectionData.push(properties);
@@ -369,8 +261,12 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
   });
 
   // 站点配置优先读取配置表格，否则读取blog.config.js 文件
-  const NOTION_CONFIG =
-    (await getConfigMapFromConfigPage(collectionData)) || {};
+  const NOTION_CONFIG = {
+    CUSTOM_MENU: "true",
+    CUSTOM_RIGHT_CLICK_CONTEXT_MENU: "false",
+    LANG: "en-US",
+  };
+  // (await getConfigMapFromConfigPage(collectionData)) || {};
 
   // Sort by date
   if (BLOG.POSTS_SORT_BY === "date") {
@@ -379,38 +275,31 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
     });
   }
 
-  const notice = await getNotice(
-    collectionData.filter((post) => {
-      return (
-        post &&
-        post?.type &&
-        post?.type === "Notice" &&
-        post.status === "Published"
-      );
-    })?.[0]
-  );
+  // const notice = await getNotice(
+  //   collectionData.filter((post) => {
+  //     return (
+  //       post &&
+  //       post?.type &&
+  //       post?.type === "Notice" &&
+  //       post.status === "Published"
+  //     );
+  //   })?.[0]
+  // );
+  // console.log(JSON.stringify(notice))
   const categoryOptions = getAllCategories({
     allPages,
     categoryOptions: getCategoryOptions(schema),
   });
-  const tagOptions = getAllTags({
+  const toolOptions = getAllTools({
     allPages,
-    tagOptions: getTagOptions(schema),
+    toolOptions: getToolOptions(schema),
   });
-  // 旧的菜单
-  const customNav = getCustomNav({
-    allPages: collectionData.filter(
-      (post) => post?.type === "Page" && post.status === "Published"
-    ),
-  });
-  // 新的菜单
-  const customMenu = await getCustomMenu({ collectionData });
   const latestPosts = getLatestPosts({ allPages, from, latestPostCount: 6 });
   const allNavPages = getNavPages({ allPages });
 
   return {
     NOTION_CONFIG,
-    notice,
+    // notice,
     siteInfo,
     allPages,
     allNavPages,
@@ -421,11 +310,9 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
     viewIds,
     block,
     schema,
-    tagOptions,
+    toolOptions,
     categoryOptions,
     rawMetadata,
-    customNav,
-    customMenu,
     postCount,
     pageIds,
     latestPosts,
