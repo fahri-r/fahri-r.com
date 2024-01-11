@@ -2,7 +2,7 @@ import { siteConfig } from "@/common/libs/dev/config";
 import CONFIG from "../config";
 import Link from "next/link";
 // import TwikooCommentCount from "@/common/components/TwikooCommentCount";
-// import LazyImage from "@/common/components/LazyImage";
+import LazyImage from "@/common/components/dev/LazyImage";
 
 const BlogPostCard = ({ post }) => {
   const showPageCover =
@@ -60,16 +60,16 @@ const BlogPostCard = ({ post }) => {
       {/* 图片封面 */}
       {showPageCover && (
         <div className="md:w-5/12 w-full h-44 overflow-hidden p-1">
-          {/* <Link
+          <Link
             href={`${siteConfig("SUB_PATH", "")}/${post.slug}`}
             passHref
             legacyBehavior
-          > */}
-            {/* <LazyImage
+          >
+            <LazyImage
               src={post?.pageCoverThumbnail}
               className="w-full bg-cover hover:scale-110 duration-200"
-            /> */}
-          {/* </Link> */}
+            />
+          </Link>
         </div>
       )}
     </article>
