@@ -3,13 +3,9 @@ import "katex/dist/katex.min.css";
 import { mapImgUrl } from "@/common/libs/dev/notion/mapImage";
 import { NotionRenderer } from "react-notion-x";
 import NotionPageTitle from "./NotionPageTitle";
-
-// Notion渲染
-// const NotionRenderer = dynamic(() => import('react-notion-x').then(async (m) => {
-//   return m.NotionRenderer
-// }), {
-//   ssr: false
-// })
+import Title from "../elements/Title";
+import Link from "next/link";
+import { Eye, Github } from "lucide-react";
 
 const Code = dynamic(
   () =>
@@ -44,14 +40,6 @@ const TweetEmbed = dynamic(() => import("react-tweet-embed"), {
   ssr: false,
 });
 
-const Collection = dynamic(
-  () =>
-    import("react-notion-x/build/third-party/collection").then(
-      (m) => m.Collection
-    ),
-  { ssr: true }
-);
-
 const Modal = dynamic(
   () => import("react-notion-x/build/third-party/modal").then((m) => m.Modal),
   { ssr: false }
@@ -62,7 +50,6 @@ const Tweet = ({ id }) => {
 };
 
 const NotionPage = ({ post, className }) => {
-
   if (!post || !post.blockMap) {
     return <>{post?.summary || ""}</>;
   }
@@ -71,15 +58,55 @@ const NotionPage = ({ post, className }) => {
     <div
       id="notion-article"
       className={`mx-auto overflow-hidden ${className || ""}`}
-    >
+    ><div className="flex flex-col space-y-4">
+    <Title variant="title" className="space-y-2 font-normal">
+      {post.title}
+    </Title>
+
+    {(post.site || post.repository) && (
+      <div className="flex text-base font-normal font-mono gap-2 items-center">
+        {post.repository && (
+          <Link href={post.repository} legacyBehavior>
+            <a
+              className="flex items-center gap-2"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Github size={18} />
+              <span className="text-emerald-500 duration-300 hover:text-emerald-400">
+                Source code
+              </span>
+            </a>
+          </Link>
+        )}
+
+        {post.site && post.repository && (
+          <div className="mx-1 h-4 w-px bg-neutral-800" />
+        )}
+
+        {post.site && (
+          <Link href={post.site} legacyBehavior>
+            <a
+              className="flex items-center gap-2"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Eye size={18} />
+              <span className="text-emerald-500 duration-300 hover:text-emerald-400">
+                Site
+              </span>
+            </a>
+          </Link>
+        )}
+      </div>
+    )}
+  </div>
       <NotionRenderer
-        pageTitle={<NotionPageTitle post={post} />}
         recordMap={post.blockMap}
         mapPageUrl={mapPageUrl}
         mapImageUrl={mapImgUrl}
         components={{
           Code,
-          Collection,
           Equation,
           Modal,
           Pdf,

@@ -1,9 +1,12 @@
+"use client";
+
 import React from "react";
 import Title from "../elements/Title";
 import Link from "next/link";
 import { Eye, Github } from "lucide-react";
 
 function NotionPageTitle({ post }: { post: any }) {
+  console.log(post)
   return (
     <div className="flex flex-col space-y-4">
       <Title variant="title" className="space-y-2 font-normal">

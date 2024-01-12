@@ -64,7 +64,7 @@ function ProjectDetail({
   return (
     <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
       <NotionRenderer
-        pageTitle={pageTitle}
+        // pageTitle={pageTitle}
         components={{ nextImage: Image, nextLink: Link }}
         recordMap={recordMap}
         fullPage={true}
