@@ -6,13 +6,6 @@ import {
 } from "@/common/libs/dev/cache/cache_manager";
 import { deepClone, delay } from "../utils";
 
-/**
- * 获取文章内容
- * @param {*} id
- * @param {*} from
- * @param {*} slice
- * @returns
- */
 export async function getPostBlocks(id, from, slice) {
   const cacheKey = "page_block_" + id;
   let pageBlock = await getDataFromCache(cacheKey);
@@ -33,11 +26,6 @@ export async function getPostBlocks(id, from, slice) {
   return pageBlock;
 }
 
-/**
- * 调用接口，失败会重试
- * @param {*} id
- * @param {*} retryAttempts
- */
 export async function getPageWithRetry(id, from, retryAttempts = 3) {
   if (retryAttempts && retryAttempts > 0) {
     console.log(
@@ -72,34 +60,24 @@ export async function getPageWithRetry(id, from, retryAttempts = 3) {
   }
 }
 
-/**
- * 获取到的blockMap删除不需要的字段
- * 并且对于页面内容进行特殊处理，比如文件url格式化
- * @param {*} id 页面ID
- * @param {*} pageBlock 页面元素
- * @param {*} slice 截取数量
- * @returns
- */
 function filterPostBlocks(id, pageBlock, slice) {
   const clonePageBlock = deepClone(pageBlock);
   let count = 0;
 
-  // 循环遍历文档的每个block
   for (const i in clonePageBlock?.block) {
     const b = clonePageBlock?.block[i];
     if (slice && slice > 0 && count > slice) {
       delete clonePageBlock?.block[i];
       continue;
     }
-    // 当BlockId等于PageId时移除
+
     if (b?.value?.id === id) {
-      // 此block含有敏感信息
       delete b?.value?.properties;
       continue;
     }
 
     count++;
-    // 处理 c++、c#、汇编等语言名字映射
+
     if (b?.value?.type === "code") {
       if (b?.value?.properties?.language?.[0][0] === "C++") {
         b.value.properties.language[0][0] = "cpp";
@@ -112,7 +90,6 @@ function filterPostBlocks(id, pageBlock, slice) {
       }
     }
 
-    // 如果是文件，或嵌入式PDF，需要重新加密签名
     if (
       (b?.value?.type === "file" ||
         b?.value?.type === "pdf" ||
@@ -137,7 +114,6 @@ function filterPostBlocks(id, pageBlock, slice) {
     delete b?.value?.space_id;
   }
 
-  // 去掉不用的字段
   if (id === BLOG.NOTION_PAGE_ID) {
     return clonePageBlock;
   }

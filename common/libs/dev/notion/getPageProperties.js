@@ -2,7 +2,6 @@ import { getTextContent, getDateValue } from "notion-utils";
 import { NotionAPI } from "notion-client";
 import BLOG from "@/blog.config";
 import formatDate from "../formatDate";
-// import { createHash } from 'crypto'
 import md5 from "js-md5";
 import { mapImgUrl } from "./mapImage";
 
@@ -67,7 +66,6 @@ export default async function getPageProperties(
     }
   }
 
-  // 映射键：用户自定义表头名
   const fieldNames = BLOG.NOTION_PROPERTY_NAME;
   if (fieldNames) {
     Object.keys(fieldNames).forEach((key) => {
@@ -76,11 +74,9 @@ export default async function getPageProperties(
     });
   }
 
-  // type\status\category 是单选下拉框 取数组第一个
   properties.status = properties.status?.[0] || "";
   properties.category = properties.category?.[0] || "";
 
-  // 映射值：用户个性化type和status字段的下拉框选项，在此映射回代码的英文标识
   mapProperties(properties);
 
   properties.publishDate = new Date(
@@ -114,7 +110,6 @@ export default async function getPageProperties(
     }) || [];
   delete properties.content;
 
-  // 处理URL
   // if (properties.type === BLOG.NOTION_PROPERTY_NAME.type_post) {
   //   properties.slug = BLOG.POST_URL_PREFIX
   //     ? generateCustomizeUrl(properties)
@@ -125,12 +120,10 @@ export default async function getPageProperties(
   //   properties.type === BLOG.NOTION_PROPERTY_NAME.type_menu ||
   //   properties.type === BLOG.NOTION_PROPERTY_NAME.type_sub_menu
   // ) {
-  //   // 菜单路径为空、作为可展开菜单使用
   //   properties.to = properties.slug ?? "#";
   //   properties.name = properties.title ?? "";
   // }
 
-  // 开启伪静态路径
   if (JSON.parse(BLOG.PSEUDO_STATIC)) {
     if (
       !properties?.slug?.endsWith(".html") &&
@@ -139,16 +132,13 @@ export default async function getPageProperties(
       properties.slug += ".html";
     }
   }
-  // 密码字段md5
+
   properties.password = properties.password
     ? md5(properties.slug + properties.password)
     : "";
   return properties;
 }
 
-/**
- * 映射用户自定义表头
- */
 function mapProperties(properties) {
   if (properties?.status === BLOG.NOTION_PROPERTY_NAME.status_publish) {
     properties.status = "Published";
@@ -158,13 +148,6 @@ function mapProperties(properties) {
   }
 }
 
-/**
- * 获取自定义URL
- * 可以根据变量生成URL
- * 支持：%year%/%month%/%day%/%slug%
- * @param {*} postProperties
- * @returns
- */
 function generateCustomizeUrl(postProperties) {
   let fullPrefix = "";
   const allSlugPatterns = BLOG.POST_URL_PREFIX.split("/");
@@ -193,10 +176,10 @@ function generateCustomizeUrl(postProperties) {
     }
   });
   if (fullPrefix.startsWith("/")) {
-    fullPrefix = fullPrefix.substring(1); // 去掉头部的"/"
+    fullPrefix = fullPrefix.substring(1);
   }
   if (fullPrefix.endsWith("/")) {
-    fullPrefix = fullPrefix.substring(0, fullPrefix.length - 1); // 去掉尾部部的"/"
+    fullPrefix = fullPrefix.substring(0, fullPrefix.length - 1);
   }
   return `${fullPrefix}/${postProperties.slug ?? postProperties.id}`;
 }

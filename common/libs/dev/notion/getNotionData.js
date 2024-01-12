@@ -13,10 +13,9 @@ import getPageProperties from "./getPageProperties";
 import { mapImgUrl, compressImage } from "./mapImage";
 
 export async function getGlobalData({ pageId = BLOG.NOTION_PAGE_ID, from }) {
-  // 从notion获取
   const data = await getNotionPageData({ pageId, from });
   const db = deepClone(data);
-  // 不返回的敏感数据
+
   delete db.block;
   delete db.schema;
   delete db.rawMetadata;
@@ -29,15 +28,8 @@ export async function getGlobalData({ pageId = BLOG.NOTION_PAGE_ID, from }) {
   return db;
 }
 
-/**
- * 获取最新文章 根据最后修改时间倒序排列
- * @param {*}} param0
- * @returns
- */
 function getLatestPosts({ allPages, from, latestPostCount }) {
-  const allPosts = allPages?.filter(
-    (page) => page.status === "Published"
-  );
+  const allPosts = allPages?.filter((page) => page.status === "Published");
 
   const latestPosts = Object.create(allPosts).sort((a, b) => {
     const dateA = new Date(a?.lastEditedDate || a?.publishDate);
@@ -47,14 +39,7 @@ function getLatestPosts({ allPages, from, latestPostCount }) {
   return latestPosts.slice(0, latestPostCount);
 }
 
-/**
- * 获取指定notion的collection数据
- * @param pageId
- * @param from 请求来源
- * @returns {Promise<JSX.Element|*|*[]>}
- */
 export async function getNotionPageData({ pageId, from }) {
-  // 尝试从缓存获取
   const cacheKey = "page_block_" + pageId;
   const data = await getDataFromCache(cacheKey);
   if (data && data.pageIds?.length > 0) {
@@ -62,7 +47,6 @@ export async function getNotionPageData({ pageId, from }) {
     return data;
   }
   const db = await getDataBaseInfoByNotionAPI({ pageId, from });
-  // 存入缓存
   if (db) {
     await setDataToCache(cacheKey, db);
   }
@@ -97,10 +81,8 @@ function getSiteInfo({ collection, block }) {
     ? mapImgUrl(collection?.icon, collection, "collection")
     : BLOG.AVATAR;
 
-  // 用户头像压缩一下
   icon = compressImage(icon);
 
-  // 站点图标不能是emoji情
   const emojiPattern = /\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g;
   if (!icon || emojiPattern.test(icon)) {
     icon = BLOG.AVATAR;
@@ -141,7 +123,6 @@ async function getNotice(post) {
   return post;
 }
 
-// 没有数据时返回
 const EmptyData = (pageId) => {
   const empty = {
     notice: null,
@@ -191,7 +172,7 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
   pageId = idToUuid(pageId);
   const block = pageRecordMap.block || {};
   const rawMetadata = block[pageId]?.value;
-  // Check Type Page-Database和Inline-Database
+
   if (
     rawMetadata?.type !== "collection_view_page" &&
     rawMetadata?.type !== "collection_view"
@@ -243,10 +224,8 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
     }
   }
 
-  // 文章计数
   let postCount = 0;
 
-  // 查找所有的Post和Page
   const allPages = collectionData.filter((post) => {
     if (post.status === "Published") {
       postCount++;
@@ -259,7 +238,6 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
     );
   });
 
-  // Sort by date
   if (BLOG.POSTS_SORT_BY === "date") {
     allPages.sort((a, b) => {
       return b?.publishDate - a?.publishDate;

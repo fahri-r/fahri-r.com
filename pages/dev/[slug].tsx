@@ -5,12 +5,6 @@ import { getGlobalData } from "@/common/libs/dev/notion/getNotionData";
 import getNotion from "@/common/libs/notion/getNotion";
 import { idToUuid } from "notion-utils";
 
-/**
- * 根据notion的slug访问页面
- * 解析二级目录 /article/about
- * @param {*} props
- * @returns
- */
 const PrefixSlug = (props) => {
   return <NotionPage post={props.post} className={""} />;
 };
@@ -43,12 +37,11 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params: { slug } }) {
   const from = `slug-props-${slug}`;
   const props = await getGlobalData({ from });
-  // 在列表内查找文章
+
   props.post = props?.allPages?.find((p) => {
     return p.slug === slug || p.id === idToUuid(slug);
   });
 
-  // 处理非列表内文章的内信息
   if (!props?.post) {
     const pageId = slug.slice(-1)[0];
     if (pageId.length >= 32) {
@@ -57,18 +50,15 @@ export async function getStaticProps({ params: { slug } }) {
     }
   }
 
-  // 无法获取文章
   if (!props?.post) {
     props.post = null;
     return { props, revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND) };
   }
 
-  // 文章内容加载
   if (!props?.posts?.blockMap) {
     props.post.blockMap = await getPostBlocks(props.post.id, from);
   }
 
-  // 推荐关联文章处理
   const allPosts = props.allPages?.filter(
     (page) => page.type === "Post" && page.status === "Published"
   );
