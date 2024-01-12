@@ -77,7 +77,6 @@ export default async function getPageProperties(
   }
 
   // type\status\category 是单选下拉框 取数组第一个
-  properties.type = properties.type?.[0] || "";
   properties.status = properties.status?.[0] || "";
   properties.category = properties.category?.[0] || "";
 
@@ -116,20 +115,20 @@ export default async function getPageProperties(
   delete properties.content;
 
   // 处理URL
-  if (properties.type === BLOG.NOTION_PROPERTY_NAME.type_post) {
-    properties.slug = BLOG.POST_URL_PREFIX
-      ? generateCustomizeUrl(properties)
-      : properties.slug ?? properties.id;
-  } else if (properties.type === BLOG.NOTION_PROPERTY_NAME.type_page) {
-    properties.slug = properties.slug ?? properties.id;
-  } else if (
-    properties.type === BLOG.NOTION_PROPERTY_NAME.type_menu ||
-    properties.type === BLOG.NOTION_PROPERTY_NAME.type_sub_menu
-  ) {
-    // 菜单路径为空、作为可展开菜单使用
-    properties.to = properties.slug ?? "#";
-    properties.name = properties.title ?? "";
-  }
+  // if (properties.type === BLOG.NOTION_PROPERTY_NAME.type_post) {
+  //   properties.slug = BLOG.POST_URL_PREFIX
+  //     ? generateCustomizeUrl(properties)
+  //     : properties.slug ?? properties.id;
+  // } else if (properties.type === BLOG.NOTION_PROPERTY_NAME.type_page) {
+  //   properties.slug = properties.slug ?? properties.id;
+  // } else if (
+  //   properties.type === BLOG.NOTION_PROPERTY_NAME.type_menu ||
+  //   properties.type === BLOG.NOTION_PROPERTY_NAME.type_sub_menu
+  // ) {
+  //   // 菜单路径为空、作为可展开菜单使用
+  //   properties.to = properties.slug ?? "#";
+  //   properties.name = properties.title ?? "";
+  // }
 
   // 开启伪静态路径
   if (JSON.parse(BLOG.PSEUDO_STATIC)) {

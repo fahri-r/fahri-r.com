@@ -11,7 +11,6 @@ import getAllPageIds from "./getAllPageIds";
 import { getAllTools } from "./getAllTools";
 import getPageProperties from "./getPageProperties";
 import { mapImgUrl, compressImage } from "./mapImage";
-import { getConfigMapFromConfigPage } from "./getNotionConfig";
 
 export async function getGlobalData({ pageId = BLOG.NOTION_PAGE_ID, from }) {
   // 从notion获取
@@ -37,7 +36,7 @@ export async function getGlobalData({ pageId = BLOG.NOTION_PAGE_ID, from }) {
  */
 function getLatestPosts({ allPages, from, latestPostCount }) {
   const allPosts = allPages?.filter(
-    (page) => page.type === "Post" && page.status === "Published"
+    (page) => page.status === "Published"
   );
 
   const latestPosts = Object.create(allPosts).sort((a, b) => {
@@ -249,7 +248,7 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
 
   // 查找所有的Post和Page
   const allPages = collectionData.filter((post) => {
-    if (post?.type === "Post" && post.status === "Published") {
+    if (post.status === "Published") {
       postCount++;
     }
     return (
@@ -260,14 +259,6 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
     );
   });
 
-  // 站点配置优先读取配置表格，否则读取blog.config.js 文件
-  const NOTION_CONFIG = {
-    CUSTOM_MENU: "true",
-    CUSTOM_RIGHT_CLICK_CONTEXT_MENU: "false",
-    LANG: "en-US",
-  };
-  // (await getConfigMapFromConfigPage(collectionData)) || {};
-
   // Sort by date
   if (BLOG.POSTS_SORT_BY === "date") {
     allPages.sort((a, b) => {
@@ -275,17 +266,6 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
     });
   }
 
-  // const notice = await getNotice(
-  //   collectionData.filter((post) => {
-  //     return (
-  //       post &&
-  //       post?.type &&
-  //       post?.type === "Notice" &&
-  //       post.status === "Published"
-  //     );
-  //   })?.[0]
-  // );
-  // console.log(JSON.stringify(notice))
   const categoryOptions = getAllCategories({
     allPages,
     categoryOptions: getCategoryOptions(schema),
@@ -298,8 +278,6 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
   const allNavPages = getNavPages({ allPages });
 
   return {
-    NOTION_CONFIG,
-    // notice,
     siteInfo,
     allPages,
     allNavPages,

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
@@ -10,8 +9,7 @@ import ProjectProps from "@/common/types/project";
 import LazyImage from "./LazyImage";
 
 export function ProjectItem(props: any) {
-  console.log(props.post)
-  const { pageCoverThumbnail, slug, tools, title, tags } = props.post;
+  const { pageCoverThumbnail, slug, tools, title } = props.post;
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -25,7 +23,7 @@ export function ProjectItem(props: any) {
         mouseX.set(e.clientX - left);
         mouseY.set(e.clientY - top);
       }}
-      className="group relative flex flex-col items-center rounded-xl border border-zinc-800 p-2"
+      className="group relative flex flex-col items-center rounded-xl border border-zinc-800 p-2 w-full"
     >
       <div className="absolute right-5 top-0 h-px w-80 bg-gradient-to-l from-transparent via-primary/30 via-10% to-transparent" />
       <motion.div
@@ -54,7 +52,7 @@ export function ProjectItem(props: any) {
           </Typography>
           <LazyImage
             src={pageCoverThumbnail}
-            className="object-cover object-top group-hover:scale-110 group-hover:brightness-50 duration-500 ease-in-out"
+            className="object-cover object-top group-hover:scale-110 group-hover:brightness-50 duration-500 ease-in-out text-primary"
             alt={title}
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
@@ -67,7 +65,7 @@ export function ProjectItem(props: any) {
             <h3 className="font-mono text-xl text-primary">{title}</h3>
           </div>
           <div className="flex flex-wrap gap-3">
-            {tags?.map((tool, i) => (
+            {tools?.map((tool, i) => (
               <Typography
                 key={i}
                 variant="muted"

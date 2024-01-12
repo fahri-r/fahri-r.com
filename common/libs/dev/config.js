@@ -26,7 +26,6 @@ export const siteConfig = (key, defaultVal = null, extendConfig = null) => {
   let siteInfo = null
 
   if (global) {
-    val = global.NOTION_CONFIG?.[key]
     siteInfo = global.siteInfo
     // console.log('当前变量', key, val)
   }
