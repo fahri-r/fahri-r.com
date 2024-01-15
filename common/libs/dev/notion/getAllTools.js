@@ -1,8 +1,9 @@
+import BLOG from "@/blog.config";
 import { isIterable } from "../utils";
 
 export function getAllTools({ allPages, sliceCount = 0, toolOptions }) {
   const allPosts = allPages?.filter(
-    (page) => page.status === "Published"
+    (page) => page.status === BLOG.NOTION_PROPERTY_NAME.status_publish
   );
 
   if (!allPosts || !toolOptions) {

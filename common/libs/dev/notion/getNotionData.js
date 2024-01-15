@@ -29,7 +29,9 @@ export async function getGlobalData({ pageId = BLOG.NOTION_PAGE_ID, from }) {
 }
 
 function getLatestPosts({ allPages, from, latestPostCount }) {
-  const allPosts = allPages?.filter((page) => page.status === "Published");
+  const allPosts = allPages?.filter(
+    (page) => page.status === BLOG.NOTION_PROPERTY_NAME.status_publish
+  );
 
   const latestPosts = Object.create(allPosts).sort((a, b) => {
     const dateA = new Date(a?.lastEditedDate || a?.publishDate);
@@ -97,7 +99,7 @@ export function getNavPages({ allPages }) {
       post?.slug &&
       !post?.slug?.startsWith("http") &&
       post?.type === "Post" &&
-      post?.status === "Published"
+      post?.status === BLOG.NOTION_PROPERTY_NAME.status_publish
     );
   });
 
@@ -227,14 +229,14 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
   let postCount = 0;
 
   const allPages = collectionData.filter((post) => {
-    if (post.status === "Published") {
+    if (post.status === BLOG.NOTION_PROPERTY_NAME.status_publish) {
       postCount++;
     }
     return (
       post &&
       post?.slug &&
       !post?.slug?.startsWith("http") &&
-      (post?.status === "Invisible" || post?.status === "Published")
+      (post?.status === "Invisible" || post?.status === BLOG.NOTION_PROPERTY_NAME.status_publish)
     );
   });
 

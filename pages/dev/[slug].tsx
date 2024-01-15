@@ -60,7 +60,7 @@ export async function getStaticProps({ params: { slug } }) {
   }
 
   const allPosts = props.allPages?.filter(
-    (page) => page.type === "Post" && page.status === "Published"
+    (page) => page.type === "Post" && page.status === BLOG.NOTION_PROPERTY_NAME.status_publish
   );
   if (allPosts && allPosts.length > 0) {
     const index = allPosts.indexOf(props.post);

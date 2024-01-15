@@ -52,7 +52,7 @@ export function ProjectItem(props: any) {
           </Typography>
           <LazyImage
             src={pageCoverThumbnail}
-            className="object-cover object-top group-hover:scale-110 group-hover:brightness-50 duration-500 ease-in-out text-primary"
+            className="object-cover object-top group-hover:scale-110 group-hover:brightness-50 duration-500 ease-in-out text-primary h-fit"
             alt={title}
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"

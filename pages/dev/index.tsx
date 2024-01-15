@@ -20,7 +20,7 @@ export async function getStaticProps() {
   const from = "index";
   const props = await getGlobalData({ from });
 
-  props.posts = props.allPages?.filter((page) => page.status === "Published");
+  props.posts = props.allPages?.filter((page) => page.status === BLOG.NOTION_PROPERTY_NAME.status_publish);
 
   return {
     props,

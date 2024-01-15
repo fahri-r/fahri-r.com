@@ -1,3 +1,4 @@
+import BLOG from "@/blog.config";
 import { isIterable } from "../utils";
 
 export function getAllCategories({
@@ -5,11 +6,14 @@ export function getAllCategories({
   categoryOptions,
   sliceCount = 0,
 }) {
-  const allPosts = allPages?.filter((page) => page.status === "Published");
+  const allPosts = allPages?.filter(
+    (page) => page.status === BLOG.NOTION_PROPERTY_NAME.status_publish
+  );
+
   if (!allPosts || !categoryOptions) {
     return [];
   }
-  // 计数
+
   let categories = allPosts?.map((p) => p.category);
   categories = [...categories.flat()];
   const categoryObj = {};
@@ -30,7 +34,6 @@ export function getAllCategories({
     }
   }
 
-  // list.sort((a, b) => b.count - a.count)
   if (sliceCount && sliceCount > 0) {
     return list.slice(0, sliceCount);
   } else {

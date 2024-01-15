@@ -2,7 +2,6 @@ import { getTextContent, getDateValue } from "notion-utils";
 import { NotionAPI } from "notion-client";
 import BLOG from "@/blog.config";
 import formatDate from "../formatDate";
-import md5 from "js-md5";
 import { mapImgUrl } from "./mapImage";
 
 export default async function getPageProperties(
@@ -77,8 +76,6 @@ export default async function getPageProperties(
   properties.status = properties.status?.[0] || "";
   properties.category = properties.category?.[0] || "";
 
-  mapProperties(properties);
-
   properties.publishDate = new Date(
     properties?.date?.start_date || value.created_time
   ).getTime();
@@ -110,76 +107,5 @@ export default async function getPageProperties(
     }) || [];
   delete properties.content;
 
-  // if (properties.type === BLOG.NOTION_PROPERTY_NAME.type_post) {
-  //   properties.slug = BLOG.POST_URL_PREFIX
-  //     ? generateCustomizeUrl(properties)
-  //     : properties.slug ?? properties.id;
-  // } else if (properties.type === BLOG.NOTION_PROPERTY_NAME.type_page) {
-  //   properties.slug = properties.slug ?? properties.id;
-  // } else if (
-  //   properties.type === BLOG.NOTION_PROPERTY_NAME.type_menu ||
-  //   properties.type === BLOG.NOTION_PROPERTY_NAME.type_sub_menu
-  // ) {
-  //   properties.to = properties.slug ?? "#";
-  //   properties.name = properties.title ?? "";
-  // }
-
-  if (JSON.parse(BLOG.PSEUDO_STATIC)) {
-    if (
-      !properties?.slug?.endsWith(".html") &&
-      !properties?.slug?.startsWith("http")
-    ) {
-      properties.slug += ".html";
-    }
-  }
-
-  properties.password = properties.password
-    ? md5(properties.slug + properties.password)
-    : "";
   return properties;
-}
-
-function mapProperties(properties) {
-  if (properties?.status === BLOG.NOTION_PROPERTY_NAME.status_publish) {
-    properties.status = "Published";
-  }
-  if (properties?.status === BLOG.NOTION_PROPERTY_NAME.status_draft) {
-    properties.status = "Draft";
-  }
-}
-
-function generateCustomizeUrl(postProperties) {
-  let fullPrefix = "";
-  const allSlugPatterns = BLOG.POST_URL_PREFIX.split("/");
-  allSlugPatterns.forEach((pattern, idx) => {
-    if (pattern === "%year%" && postProperties?.publishDay) {
-      const formatPostCreatedDate = new Date(postProperties?.publishDay);
-      fullPrefix += formatPostCreatedDate.getUTCFullYear();
-    } else if (pattern === "%month%" && postProperties?.publishDay) {
-      const formatPostCreatedDate = new Date(postProperties?.publishDay);
-      fullPrefix += String(formatPostCreatedDate.getUTCMonth() + 1).padStart(
-        2,
-        0
-      );
-    } else if (pattern === "%day%" && postProperties?.publishDay) {
-      const formatPostCreatedDate = new Date(postProperties?.publishDay);
-      fullPrefix += String(formatPostCreatedDate.getUTCDate()).padStart(2, 0);
-    } else if (pattern === "%slug%") {
-      fullPrefix += postProperties.slug ?? postProperties.id;
-    } else if (!pattern.includes("%")) {
-      fullPrefix += pattern;
-    } else {
-      return;
-    }
-    if (idx !== allSlugPatterns.length - 1) {
-      fullPrefix += "/";
-    }
-  });
-  if (fullPrefix.startsWith("/")) {
-    fullPrefix = fullPrefix.substring(1);
-  }
-  if (fullPrefix.endsWith("/")) {
-    fullPrefix = fullPrefix.substring(0, fullPrefix.length - 1);
-  }
-  return `${fullPrefix}/${postProperties.slug ?? postProperties.id}`;
 }
