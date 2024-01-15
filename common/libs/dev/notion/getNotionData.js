@@ -72,57 +72,11 @@ function getCategoryOptions(schema) {
 }
 
 function getSiteInfo({ collection, block }) {
-  const title = collection?.name?.[0][0] || BLOG.TITLE;
-  const description = collection?.description
-    ? Object.assign(collection).description[0][0]
-    : BLOG.DESCRIPTION;
+  const title = collection?.name?.[0][0];
   const pageCover = collection?.cover
     ? mapImgUrl(collection?.cover, block[idToUuid(BLOG.NOTION_PAGE_ID)]?.value)
-    : BLOG.HOME_BANNER_IMAGE;
-  let icon = collection?.icon
-    ? mapImgUrl(collection?.icon, collection, "collection")
-    : BLOG.AVATAR;
-
-  icon = compressImage(icon);
-
-  const emojiPattern = /\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g;
-  if (!icon || emojiPattern.test(icon)) {
-    icon = BLOG.AVATAR;
-  }
-  return { title, description, pageCover, icon };
-}
-
-export function getNavPages({ allPages }) {
-  const allNavPages = allPages?.filter((post) => {
-    return (
-      post &&
-      post?.slug &&
-      !post?.slug?.startsWith("http") &&
-      post?.type === "Post" &&
-      post?.status === BLOG.NOTION_PROPERTY_NAME.status_publish
-    );
-  });
-
-  return allNavPages.map((item) => ({
-    id: item.id,
-    title: item.title || "",
-    pageCoverThumbnail: item.pageCoverThumbnail || "",
-    category: item.category || null,
-    tools: item.tools || null,
-    summary: item.summary || null,
-    slug: item.slug,
-    pageIcon: item.pageIcon || "",
-    lastEditedDate: item.lastEditedDate,
-  }));
-}
-
-async function getNotice(post) {
-  if (!post) {
-    return null;
-  }
-
-  post.blockMap = await getPostBlocks(post.id, "data-notice");
-  return post;
+    : "";
+  return { title, pageCover };
 }
 
 const EmptyData = (pageId) => {
@@ -236,7 +190,8 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
       post &&
       post?.slug &&
       !post?.slug?.startsWith("http") &&
-      (post?.status === "Invisible" || post?.status === BLOG.NOTION_PROPERTY_NAME.status_publish)
+      (post?.status === "Invisible" ||
+        post?.status === BLOG.NOTION_PROPERTY_NAME.status_publish)
     );
   });
 
@@ -255,12 +210,10 @@ async function getDataBaseInfoByNotionAPI({ pageId, from }) {
     toolOptions: getToolOptions(schema),
   });
   const latestPosts = getLatestPosts({ allPages, from, latestPostCount: 6 });
-  const allNavPages = getNavPages({ allPages });
 
   return {
     siteInfo,
     allPages,
-    allNavPages,
     collection,
     collectionQuery,
     collectionId,

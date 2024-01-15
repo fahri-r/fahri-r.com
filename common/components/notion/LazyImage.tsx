@@ -2,11 +2,6 @@ import { siteConfig } from "@/common/libs/dev/config";
 import Head from "next/head";
 import React, { useEffect, useRef, useState } from "react";
 
-/**
- * 图片懒加载
- * @param {*} param0
- * @returns
- */
 export default function LazyImage({
   priority,
   id,
@@ -29,7 +24,7 @@ export default function LazyImage({
   const handleImageLoad = () => {
     setImageLoaded(true);
     if (typeof onLoad === "function") {
-      onLoad(); // 触发传递的onLoad回调函数
+      onLoad();
     }
   };
 
@@ -44,7 +39,7 @@ export default function LazyImage({
           }
         });
       },
-      { rootMargin: "50px 0px" } // Adjust the rootMargin as needed to trigger the loading earlier or later
+      { rootMargin: "50px 0px" }
     );
 
     if (imageRef.current) {
@@ -58,7 +53,6 @@ export default function LazyImage({
     };
   }, [src]);
 
-  // 动态添加width、height和className属性，仅在它们为有效值时添加
   const imgProps = {
     ref: imageRef,
     src: imageLoaded ? src : placeholderSrc,
@@ -89,9 +83,7 @@ export default function LazyImage({
   }
   return (
     <>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img {...imgProps} />
-      {/* 预加载 */}
       {priority && (
         <Head>
           <link rel="preload" as="image" src={src} />

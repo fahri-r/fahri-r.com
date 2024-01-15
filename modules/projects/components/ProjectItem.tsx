@@ -1,15 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import Typography from "../../../common/components/elements/Typography";
 import { ArrowRight } from "lucide-react";
-import ProjectProps from "@/common/types/project";
+import LazyImage from "../../../common/components/notion/LazyImage";
+import PostProps from "@/common/types/notion/post";
 
-export function ProjectItem(props: ProjectProps) {
-  const { title, slug, tools, thumbnail } = props;
+export function ProjectItem(props: PostProps) {
+  const { pageCoverThumbnail, slug, tools, title } = props;
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -23,7 +23,7 @@ export function ProjectItem(props: ProjectProps) {
         mouseX.set(e.clientX - left);
         mouseY.set(e.clientY - top);
       }}
-      className="group relative flex flex-col items-center rounded-xl border border-zinc-800 p-2"
+      className="group relative flex flex-col items-center rounded-xl border border-zinc-800 p-2 w-full"
     >
       <div className="absolute right-5 top-0 h-px w-80 bg-gradient-to-l from-transparent via-primary/30 via-10% to-transparent" />
       <motion.div
@@ -50,10 +50,10 @@ export function ProjectItem(props: ProjectProps) {
               className="transition-transform duration-150 group-hover:delay-200 group-hover:translate-x-2 ease-in"
             />
           </Typography>
-          <Image
-            src={thumbnail.url}
-            className="object-cover object-top group-hover:scale-110 group-hover:brightness-50 duration-500 ease-in-out"
-            alt={thumbnail.title}
+          <LazyImage
+            src={pageCoverThumbnail}
+            className="object-cover object-top group-hover:scale-110 group-hover:brightness-50 duration-500 ease-in-out text-primary h-fit"
+            alt={title}
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
             priority

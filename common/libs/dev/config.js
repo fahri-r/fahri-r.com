@@ -17,23 +17,6 @@ export const siteConfig = (key, defaultVal = null, extendConfig = null) => {
     siteInfo = global.siteInfo;
   }
 
-  if (!val) {
-    switch (key) {
-      case "HOME_BANNER_IMAGE":
-        val = siteInfo?.pageCover;
-        break;
-      case "AVATAR":
-        val = siteInfo?.icon;
-        break;
-      case "TITLE":
-        val = siteInfo?.title;
-        break;
-      case "DESCRIPTION":
-        val = siteInfo?.description;
-        break;
-    }
-  }
-
   if (!val && extendConfig) {
     val = extendConfig[key];
   }

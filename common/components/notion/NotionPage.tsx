@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Eye, Github } from "lucide-react";
 import TweetEmbed from "react-tweet-embed";
 import Image from "next/image";
+import NotionPageDetailProps from "@/common/types/notion/notion-post-detail";
 
 const Code = dynamic(
   () =>
@@ -37,16 +38,11 @@ const Tweet = ({ id }: { id: string }) => {
   return <TweetEmbed tweetId={id} />;
 };
 
-const NotionPage = ({ post, className }) => {
-  if (!post || !post.blockMap) {
-    return <>{post?.summary || ""}</>;
-  }
+const NotionPage = (props: NotionPageDetailProps) => {
+  const { post } = props;
 
   return (
-    <div
-      id="notion-article"
-      className={`mx-auto overflow-hidden ${className || ""}`}
-    >
+    <div id="notion-article" className={`mx-auto overflow-hidden`}>
       <div className="flex flex-col space-y-4">
         <Title variant="title" className="space-y-2 font-normal">
           {post.title}
@@ -108,7 +104,7 @@ const NotionPage = ({ post, className }) => {
   );
 };
 
-const mapPageUrl = (id) => {
+const mapPageUrl = (id: string) => {
   // return 'https://www.notion.so/' + id.replace(/-/g, '')
   return "/" + id.replace(/-/g, "");
 };
