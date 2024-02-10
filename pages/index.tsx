@@ -1,12 +1,12 @@
 import profile from "@/common/constant/profile";
 import getPages from "@/common/libs/notion/getPages";
 import { fetchCache } from "@/common/libs/redisCache";
-import ProjectProps from "@/common/types/project";
+import PostProps from "@/common/types/notion/post";
 import Home from "@/modules/home";
 import { NextSeo } from "next-seo";
 
 type HomePageProps = {
-  projects: ProjectProps[];
+  projects: PostProps[];
 };
 
 export default function HomePage({ projects }: HomePageProps) {

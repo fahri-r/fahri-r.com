@@ -8,8 +8,9 @@ import { Globe } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { ProjectItem } from "@/modules/projects/components/ProjectItem";
+import PostProps from "@/common/types/notion/post";
 
-function Home({ projects }: { projects: any }) {
+function Home({ projects }: { projects: PostProps[] }) {
   return (
     <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
       <section>
@@ -37,7 +38,7 @@ function Home({ projects }: { projects: any }) {
         </Link>
       </div>
       <ul className="mt-6 grid place-items-center gap-4 md:grid-cols-2">
-        {projects.slice(0, 2).map((props: ProjectProps) => (
+        {projects.slice(0, 2).map((props: PostProps) => (
           <li key={props.id} className="w-full">
             <ProjectItem {...props} />
           </li>

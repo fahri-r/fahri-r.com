@@ -26,10 +26,7 @@ export default function ProjectDetailPage(props: NotionPageDetailProps) {
 
   return (
     <>
-      <NextSeo
-        title={`${post.title} - ${profile.name}`}
-        // description={PAGE_DESCRIPTION}
-      />
+      <NextSeo title={`${post.title} - ${profile.name}`} />
       <NotionPage {...props} />
     </>
   );

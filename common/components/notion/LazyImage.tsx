@@ -1,7 +1,20 @@
 import { siteConfig } from "@/common/libs/dev/config";
 import Head from "next/head";
-import React, { useEffect, useRef, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 
+type LazyImageProps = {
+  priority: boolean;
+  id?: string;
+  src: string;
+  alt: string;
+  placeholderSrc?: string;
+  className?: string;
+  width?: string | number;
+  height?: string | number;
+  title?: string;
+  style?: CSSProperties;
+  onLoad?: () => void;
+};
 export default function LazyImage({
   priority,
   id,
@@ -12,9 +25,9 @@ export default function LazyImage({
   width,
   height,
   title,
-  onLoad,
   style,
-}) {
+  onLoad,
+}: LazyImageProps) {
   const imageRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
   if (!placeholderSrc) {
@@ -33,7 +46,7 @@ export default function LazyImage({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const lazyImage = entry.target;
+            const lazyImage = entry.target as HTMLImageElement;
             lazyImage.src = src;
             observer.unobserve(lazyImage);
           }
@@ -58,6 +71,12 @@ export default function LazyImage({
     src: imageLoaded ? src : placeholderSrc,
     alt: alt,
     onLoad: handleImageLoad,
+    id,
+    title,
+    width,
+    height,
+    className,
+    style,
   };
 
   if (id) {
@@ -86,7 +105,7 @@ export default function LazyImage({
       <img {...imgProps} placeholder="blur" />
       {priority && (
         <Head>
-          <link rel="preload" as="image" src={src} />
+          <link rel="preload" as="image" href={src} />
         </Head>
       )}
     </>
