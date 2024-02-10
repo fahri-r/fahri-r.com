@@ -8,9 +8,22 @@ import NotionPageDetailProps from "@/common/types/notion/notion-post-detail";
 import PostProps from "@/common/types/notion/post";
 import { NextSeo } from "next-seo";
 import profile from "@/common/constant/profile";
+import { useRouter } from "next/router";
+import ProjectSkeleton from "@/modules/projects/components/ProjectSkeleton";
 
 export default function ProjectDetailPage(props: NotionPageDetailProps) {
+  const router = useRouter();
   const { post } = props;
+
+  if (router.isFallback) {
+    return (
+      <>
+        <NextSeo title={`${profile.name} - Personal Website`} />
+        <ProjectSkeleton />
+      </>
+    );
+  }
+
   return (
     <>
       <NextSeo

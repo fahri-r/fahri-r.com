@@ -10,14 +10,14 @@ export async function getPostBlocks(id, from, slice) {
   const cacheKey = "page_block_" + id;
   let pageBlock = await getDataFromCache(cacheKey);
   if (pageBlock) {
-    console.log("[缓存]:", `from:${from}`, cacheKey);
+    console.log("[Cache]:", `from:${from}`, cacheKey);
     return filterPostBlocks(id, pageBlock, slice);
   }
 
   const start = new Date().getTime();
   pageBlock = await getPageWithRetry(id, from);
   const end = new Date().getTime();
-  console.log("[API耗时]", `${end - start}ms`);
+  console.log("[API took]", `${end - start}ms`);
 
   if (pageBlock) {
     await setDataToCache(cacheKey, pageBlock);
@@ -41,21 +41,21 @@ export async function getPageWithRetry(id, from, retryAttempts = 3) {
         userTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
       });
       const pageData = await api.getPage(id);
-      console.info("[响应成功]:", `from:${from}`);
+      console.info("[Success]:", `from:${from}`);
       return pageData;
     } catch (e) {
-      console.warn("[响应异常]:", e);
+      console.warn("[Warn]:", e);
       await delay(1000);
       const cacheKey = "page_block_" + id;
       const pageBlock = await getDataFromCache(cacheKey);
       if (pageBlock) {
-        console.log("[重试缓存]", `from:${from}`, `id:${id}`);
+        console.log("[Retry cache]", `from:${from}`, `id:${id}`);
         return pageBlock;
       }
       return await getPageWithRetry(id, from, retryAttempts - 1);
     }
   } else {
-    console.error("[请求失败]:", `from:${from}`, `id:${id}`);
+    console.error("[Fail]:", `from:${from}`, `id:${id}`);
     return null;
   }
 }

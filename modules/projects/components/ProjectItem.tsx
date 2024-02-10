@@ -52,12 +52,9 @@ export function ProjectItem(props: PostProps) {
           </Typography>
           <LazyImage
             src={pageCoverThumbnail}
-            className="object-cover object-top group-hover:scale-110 group-hover:brightness-50 duration-500 ease-in-out text-primary h-fit"
+            className="object-cover object-top group-hover:scale-110 group-hover:brightness-50 duration-500 ease-in-out text-primary h-full w-full"
             alt={title}
-            placeholder="blur"
-            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
-            priority
-            fill
+            priority={true}
           />
         </figure>
         <div className="flex w-full flex-col space-y-4 px-3 py-4">
