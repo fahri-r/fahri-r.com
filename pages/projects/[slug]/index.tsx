@@ -10,6 +10,7 @@ import { NextSeo } from "next-seo";
 import profile from "@/common/constant/profile";
 import { useRouter } from "next/router";
 import ProjectSkeleton from "@/modules/projects/components/ProjectSkeleton";
+import AnimateEnter from "@/common/components/elements/AnimateEnter";
 
 export default function ProjectDetailPage(props: NotionPageDetailProps) {
   const router = useRouter();
@@ -19,7 +20,9 @@ export default function ProjectDetailPage(props: NotionPageDetailProps) {
     return (
       <>
         <NextSeo title={`${profile.name} - Personal Website`} />
-        <ProjectSkeleton />
+        <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
+          <ProjectSkeleton />
+        </AnimateEnter>
       </>
     );
   }
