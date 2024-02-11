@@ -1,6 +1,7 @@
 import Redis from "ioredis";
 
 export const redis = new Redis(process.env.REDIS_URL);
+const expireIn = process.env.CACHE_EXPIRED_TIME
 
 export async function getCache(key) {
   const result = await redis.get(key).catch((err) => {
@@ -15,11 +16,11 @@ export async function getCache(key) {
 export async function setCache(key, data) {
   data.block_id = key;
   const jsonObj = JSON.stringify(data);
-  const insertRes = await redis.set(key, jsonObj, "EX", 100000).catch((err) => {
+  const insertRes = await redis.set(key, jsonObj, "EX", expireIn).catch((err) => {
     console.error(err);
   });
-  console.log("Insert cache: ", key, insertRes);
 
+  console.log("Insert cache: ", key, insertRes);
   return data;
 }
 

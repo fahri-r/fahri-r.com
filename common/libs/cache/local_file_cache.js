@@ -1,7 +1,7 @@
 import fs from "fs";
 
 const path = require("path");
-const cacheInvalidSeconds = 1000000000 * 1000;
+const cacheInvalidSeconds = process.env.CACHE_EXPIRED_TIME;
 const jsonFile = path.resolve("./data.json");
 
 export async function getCache(key) {
