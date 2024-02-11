@@ -29,10 +29,10 @@ export async function getPostBlocks(id, from, slice) {
 export async function getPageWithRetry(id, from, retryAttempts = 3) {
   if (retryAttempts && retryAttempts > 0) {
     console.log(
-      "[请求API]",
+      "[Request API]",
       `from:${from}`,
       `id:${id}`,
-      retryAttempts < 3 ? `剩余重试次数:${retryAttempts}` : ""
+      retryAttempts < 3 ? `Retry remaining: ${retryAttempts}` : ""
     );
     try {
       const authToken = BLOG.NOTION_ACCESS_TOKEN || null;

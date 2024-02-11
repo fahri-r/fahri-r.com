@@ -27,7 +27,9 @@ export function CareerItem(props: ExperienceProps) {
             className="text-sm duration-300 flex items-center"
           >
             {moment(dateIn).format("MMM yyyy")} -{" "}
-            {moment(dateOut).format("MMM yyyy")}
+            {dateOut instanceof Date
+              ? moment(dateOut).format("MMM yyyy")
+              : dateOut}
           </Typography>
         </div>
       </div>

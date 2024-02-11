@@ -113,7 +113,7 @@
   min-height: unset;
 }
 
-.notion-app img {
+.notion-page img {
   @apply rounded-md overflow-hidden;
 }
 

@@ -68,6 +68,14 @@ const profile: ProfileProps = {
   ],
   experiences: [
     {
+      name: "CODE.ID",
+      role: "Fullstack Developer",
+      entry: {
+        month: 2,
+        year: 2024,
+      },
+    },
+    {
       name: "PT. Ever Green Hans",
       role: "Software Developer",
       entry: {
