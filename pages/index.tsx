@@ -1,34 +1,33 @@
+import BLOG from "@/blog.config";
 import profile from "@/common/constant/profile";
-import getPages from "@/common/libs/notion/getPages";
-import { fetchCache } from "@/common/libs/redisCache";
+import { getGlobalData } from "@/common/libs/notion/getNotionData";
+import NotionPageProps from "@/common/types/notion/notion-posts";
 import PostProps from "@/common/types/notion/post";
 import Home from "@/modules/home";
 import { NextSeo } from "next-seo";
 
-type HomePageProps = {
-  projects: PostProps[];
-};
+export default function HomePage(props: NotionPageProps) {
+  const { posts } = props;
 
-export default function HomePage({ projects }: HomePageProps) {
   return (
     <>
       <NextSeo title={`${profile.name} - Personal Website`} />
-      <Home projects={projects} />
+      <Home projects={posts} />
     </>
   );
 }
 
-export async function getServerSideProps() {
-  const fetchData = async () => {
-    const response = await getPages();
-    return response;
-  };
+export async function getStaticProps() {
+  const from = "index";
+  const props = await getGlobalData({ from });
 
-  const projects = await fetchCache("projects", fetchData, 60 * 60 * 24);
+  props.posts = props.allPages?.filter(
+    (page: PostProps) =>
+      page.status === BLOG.NOTION_PROPERTY_NAME.status_publish
+  );
 
   return {
-    props: {
-      projects,
-    },
+    props,
+    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND as string),
   };
 }

@@ -1,6 +1,6 @@
 import MemoryCache from "./memory_cache";
 import FileCache from "./local_file_cache";
-import MongoCache from "./mongo_db_cache";
+import RedisCache from "./redis_cache";
 import BLOG from "@/blog.config";
 
 export async function getDataFromCache(key, force) {
@@ -30,8 +30,8 @@ export async function delCacheData(key) {
 }
 
 function getApi() {
-  if (process.env.MONGO_DB_URL && process.env.MONGO_DB_NAME) {
-    return MongoCache;
+  if (process.env.REDIS_URL) {
+    return RedisCache;
   } else if (process.env.ENABLE_FILE_CACHE) {
     return FileCache;
   } else {

@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { mapImgUrl } from "@/common/libs/dev/notion/mapImage";
+import { mapImgUrl } from "@/common/libs/notion/mapImage";
 import { NotionRenderer } from "react-notion-x";
 import Title from "../elements/Title";
 import Link from "next/link";

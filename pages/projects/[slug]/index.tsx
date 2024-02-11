@@ -1,8 +1,8 @@
 import BLOG from "@/blog.config";
 import NotionPage from "@/common/components/notion/NotionPage";
-import { getPostBlocks } from "@/common/libs/dev/notion";
-import { getGlobalData } from "@/common/libs/dev/notion/getNotionData";
-import { getNotion } from "@/common/libs/dev/notion/getNotion";
+import { getPostBlocks } from "@/common/libs/notion";
+import { getGlobalData } from "@/common/libs/notion/getNotionData";
+import { getNotion } from "@/common/libs/notion/getNotion";
 import { idToUuid } from "notion-utils";
 import NotionPageDetailProps from "@/common/types/notion/notion-post-detail";
 import PostProps from "@/common/types/notion/post";

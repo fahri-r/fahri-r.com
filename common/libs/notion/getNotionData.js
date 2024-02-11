@@ -2,8 +2,8 @@ import BLOG from "@/blog.config";
 import {
   getDataFromCache,
   setDataToCache,
-} from "@/common/libs/dev/cache/cache_manager";
-import { getPostBlocks } from "@/common/libs/dev/notion";
+} from "@/common/libs/cache/cache_manager";
+import { getPostBlocks } from "@/common/libs/notion";
 import { idToUuid } from "notion-utils";
 import { deepClone } from "../utils";
 import { getAllCategories } from "./getAllCategories";
@@ -45,7 +45,7 @@ export async function getNotionPageData({ pageId, from }) {
   const cacheKey = "page_block_" + pageId;
   const data = await getDataFromCache(cacheKey);
   if (data && data.pageIds?.length > 0) {
-    console.log("[缓存]:", `from:${from}`, `root-page-id:${pageId}`);
+    console.log("[Cache]:", `from:${from}`, `root-page-id:${pageId}`);
     return data;
   }
   const db = await getDataBaseInfoByNotionAPI({ pageId, from });

@@ -1,4 +1,4 @@
-import { siteConfig } from "@/common/libs/dev/config";
+import { siteConfig } from "@/common/libs/config";
 import Head from "next/head";
 import React, { CSSProperties, useEffect, useRef, useState } from "react";
 
