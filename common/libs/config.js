@@ -1,15 +1,9 @@
 "use client";
 
 import BLOG from "@/blog.config";
-import { useGlobal } from "./global";
 import { deepClone } from "./utils";
 
 export const siteConfig = (key, defaultVal = null, extendConfig = null) => {
-  let global = null;
-  try {
-    global = useGlobal();
-  } catch (error) {}
-
   let val = null;
   let siteInfo = null;
 

@@ -1,6 +1,6 @@
 import { getGlobalData } from "@/common/libs/notion/getNotionData";
 import BLOG from "@/blog.config";
-import NotionPageProps from "@/common/types/notion/notion-posts";
+import NotionPageProps from "@/common/types/notion/notion-page";
 import PostProps from "@/common/types/notion/post";
 import { NextSeo } from "next-seo";
 import profile from "@/common/constant/profile";

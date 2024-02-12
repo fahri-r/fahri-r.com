@@ -1,4 +1,4 @@
-import ProfileProps from "@/common/types/profile";
+import ProfileProps from "@/common/types/common/profile";
 import { Github, Instagram, Linkedin, Mail } from "lucide-react";
 import html from "@/public/images/skills/html.svg";
 import css from "@/public/images/skills/css.svg";

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Eye, Github } from "lucide-react";
 import TweetEmbed from "react-tweet-embed";
 import Image from "next/image";
-import NotionPageDetailProps from "@/common/types/notion/notion-post-detail";
+import NotionPageDetailProps from "@/common/types/notion/notion-page-detail";
 import AnimateEnter from "../elements/AnimateEnter";
 
 const Code = dynamic(
@@ -41,7 +41,6 @@ const Tweet = ({ id }: { id: string }) => {
 
 const NotionPage = (props: NotionPageDetailProps) => {
   const { post } = props;
-  console.log("asu")
 
   return (
     <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">

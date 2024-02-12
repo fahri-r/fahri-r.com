@@ -5,7 +5,7 @@ import Title from "@/common/components/elements/Title";
 import Typography from "@/common/components/elements/Typography";
 import React from "react";
 import { ProjectItem } from "./ProjectItem";
-import NotionPageProps from "@/common/types/notion/notion-posts";
+import NotionPageProps from "@/common/types/notion/notion-page";
 
 function Projects(props: NotionPageProps) {
   const { posts } = props;

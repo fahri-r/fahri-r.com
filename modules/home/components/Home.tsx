@@ -3,7 +3,6 @@ import Divider from "@/common/components/elements/Divider";
 import Title from "@/common/components/elements/Title";
 import Typography from "@/common/components/elements/Typography";
 import profile from "@/common/constant/profile";
-import ProjectProps from "@/common/types/project";
 import { Globe } from "lucide-react";
 import Link from "next/link";
 import React from "react";

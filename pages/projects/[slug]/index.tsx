@@ -4,7 +4,7 @@ import { getPostBlocks } from "@/common/libs/notion";
 import { getGlobalData } from "@/common/libs/notion/getNotionData";
 import { getNotion } from "@/common/libs/notion/getNotion";
 import { idToUuid } from "notion-utils";
-import NotionPageDetailProps from "@/common/types/notion/notion-post-detail";
+import NotionPageDetailProps from "@/common/types/notion/notion-page-detail";
 import PostProps from "@/common/types/notion/post";
 import { NextSeo } from "next-seo";
 import profile from "@/common/constant/profile";

@@ -2,7 +2,7 @@
 
 import moment from "moment";
 import Typography from "../../../common/components/elements/Typography";
-import ExperienceProps from "@/common/types/experience";
+import ExperienceProps from "@/common/types/common/experience";
 export function CareerItem(props: ExperienceProps) {
   const { role, name, entry, resign } = props;
 
