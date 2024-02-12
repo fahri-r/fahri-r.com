@@ -31,11 +31,11 @@ export async function delCacheData(key: string) {
 }
 
 function getApi() {
-  // if (process.env.REDIS_URL as string) {
-  //   return RedisCache;
-  // } else if (process.env.ENABLE_FILE_CACHE as string) {
+  if (process.env.REDIS_URL as string) {
+    return RedisCache;
+  } else if (process.env.ENABLE_FILE_CACHE as string) {
     return FileCache;
-  // } else {
-  //   return MemoryCache;
-  // }
+  } else {
+    return MemoryCache;
+  }
 }
