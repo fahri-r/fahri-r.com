@@ -88,8 +88,20 @@ const profile: ProfileProps = {
       },
     },
     {
+      name: "PT. Bhairawa Tantra Nusantara",
+      role: "Website Developer",
+      entry: {
+        month: 8,
+        year: 2022,
+      },
+      resign: {
+        month: 6,
+        year: 2023,
+      },
+    },
+    {
       name: "HIPMI Kabupaten Bekasi (Freelance)",
-      role: "Frontend Web Developer",
+      role: "Frontend Developer",
       entry: {
         month: 3,
         year: 2023,
@@ -101,25 +113,13 @@ const profile: ProfileProps = {
     },
     {
       name: "Injabar UNPAD (Freelance)",
-      role: "Fullstack Web Developer",
+      role: "Fullstack Developer",
       entry: {
         month: 12,
         year: 2022,
       },
       resign: {
         month: 2,
-        year: 2023,
-      },
-    },
-    {
-      name: "PT. Bhairawa Tantra Nusantara",
-      role: "Website Developer",
-      entry: {
-        month: 8,
-        year: 2022,
-      },
-      resign: {
-        month: 6,
         year: 2023,
       },
     },
