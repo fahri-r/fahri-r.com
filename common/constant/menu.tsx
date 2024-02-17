@@ -1,4 +1,4 @@
-import { Braces, Home, Mail, User2 } from "lucide-react";
+import { Braces, Home, Mail, MessageCircle, User2 } from "lucide-react";
 import MenuProps from "@/common/types/menu";
 
 const menu: MenuProps[] = [
@@ -16,6 +16,11 @@ const menu: MenuProps[] = [
     path: "/projects",
     name: "Projects",
     icon: <Braces size={20} />,
+  },
+  {
+    path: "/chat",
+    name: "Chat",
+    icon: <MessageCircle size={20} />,
   },
   {
     path: "/contact",

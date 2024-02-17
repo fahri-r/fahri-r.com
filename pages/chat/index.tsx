@@ -1,10 +1,10 @@
 import profile from "@/common/constant/profile";
 import { NextSeo } from "next-seo";
-import Contact from "@/modules/contact";
+import Chat from "@/modules/chat";
 
-const PAGE_TITLE = "Contact";
+const PAGE_TITLE = "Chat";
 const PAGE_DESCRIPTION =
-  "Feel free to get in touch and let's have a discussion about how we can work together.";
+  "Leave whatever you like to say, suggestions, questions or anything!";
 
 export default function ContactPage() {
   return (
@@ -13,7 +13,7 @@ export default function ContactPage() {
         title={`${PAGE_TITLE} - ${profile.name}`}
         description={PAGE_DESCRIPTION}
       />
-      <Contact />
+      <Chat />
     </>
   );
 }
