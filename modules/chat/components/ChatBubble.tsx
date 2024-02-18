@@ -10,6 +10,11 @@ function ChatBubble({
   message: Message;
   isSender: boolean;
 }) {
+  const avatarImage =
+    process.env.RESEND_TO!! == message.user.email
+      ? "/images/avatar.jpg"
+      : message.user.image;
+
   return (
     <div
       className={`flex my-2 items-start p-4 ${
@@ -17,11 +22,11 @@ function ChatBubble({
       }`}
     >
       <Image
-        alt="message.user.name"
-        src={message.user.image}
-        width={40}
-        height={40}
-        className="rounded-full"
+        alt={message.user.name}
+        src={avatarImage}
+        width={100}
+        height={100}
+        className="rounded-full object-cover h-10 w-10"
       />
       <div
         className={

@@ -13,6 +13,7 @@ import {
 import Button from "@/common/components/elements/Button";
 import { addDoc, serverTimestamp } from "firebase/firestore";
 import { messagesRef } from "@/common/libs/firebase/converter/Message";
+import Image from "next/image";
 
 const formSchema = z.object({
   input: z.string().max(1000),
@@ -20,6 +21,10 @@ const formSchema = z.object({
 
 function ChatInput() {
   const { data: session } = useSession();
+  const avatarImage =
+    process.env.RESEND_TO!! == session?.user.email
+      ? "/images/avatar.jpg"
+      : session?.user.image;
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,9 +63,16 @@ function ChatInput() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex space-x-2 p-2 rounded-b-3xl max-w-4xl mx-auto bg-input w-full"
+        className="flex items-center space-x-2 p-2 rounded-b-3xl max-w-4xl mx-auto bg-input w-full"
         autoComplete="off"
       >
+        <Image
+          src={avatarImage ?? "/images/avatar-placeholder.png"}
+          alt={session?.user.name ?? "Avatar"}
+          width={100}
+          height={100}
+          className="rounded-full w-8 h-8 object-cover"
+        />
         <FormField
           control={form.control}
           name="input"

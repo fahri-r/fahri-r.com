@@ -6,7 +6,7 @@ import {
   Message,
   sortedMessagesRef,
 } from "@/common/libs/firebase/converter/Message";
-import React from "react";
+import React, { createRef, useEffect } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import ChatInput from "./ChatInput";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -19,6 +19,12 @@ function Chat() {
   const [messages, loading, error] = useCollectionData<Message>(
     sortedMessagesRef()
   );
+
+  const messagesEndRef = createRef<HTMLDivElement>();
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, messagesEndRef]);
 
   return (
     <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8 flex flex-col">
@@ -39,19 +45,26 @@ function Chat() {
               />
             ))}
           </div>
+          <div ref={messagesEndRef} />
         </div>
-        <ChatInput />
+        {session && <ChatInput />}
       </section>
       <section>
-        <Button
-          className="mt-6 w-full rounded-full"
-          onClick={() => signIn("google")}
-        >
-          Login
-        </Button>
-        <Button className="mt-6 w-full rounded-full" onClick={() => signOut()}>
-          Logout
-        </Button>
+        {session ? (
+          <Button
+            className="mt-6 w-full rounded-full"
+            onClick={() => signOut()}
+          >
+            Sign out
+          </Button>
+        ) : (
+          <Button
+            className="mt-6 w-full rounded-full"
+            onClick={() => signIn("google")}
+          >
+            Sign in with Google
+          </Button>
+        )}
       </section>
     </AnimateEnter>
   );
