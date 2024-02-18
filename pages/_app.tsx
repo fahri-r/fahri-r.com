@@ -10,6 +10,8 @@ import Sidebar from "@/common/components/sidebar/Sidebar";
 import AnimateEnter from "@/common/components/elements/AnimateEnter";
 import { Toast } from "@/common/components/elements/Toast";
 import Command from "@/common/components/command/Command";
+import FirebaseProvider from "@/common/context/FirebaseProvider";
+import { SessionProvider } from "next-auth/react";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -32,11 +34,15 @@ export default function App({ Component, pageProps }: AppProps) {
         kanit.variable
       )}
     >
-      <AnimateEnter className="mx-auto flex max-w-6xl flex-col px-8 py-5 lg:flex-row lg:gap-10 lg:py-24">
+      <AnimateEnter className="mx-auto flex max-w-6xl flex-col px-8 py-5 lg:flex-row lg:gap-10 lg:py-24 min-h-screen">
         <Provider>
-          <Command />
-          <Sidebar />
-          <Component {...pageProps} />
+          <SessionProvider session={pageProps.session}>
+            <FirebaseProvider>
+              <Command />
+              <Sidebar />
+              <Component {...pageProps} />
+            </FirebaseProvider>
+          </SessionProvider>
         </Provider>
       </AnimateEnter>
       <Toast />

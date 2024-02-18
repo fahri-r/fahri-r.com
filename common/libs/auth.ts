@@ -4,7 +4,7 @@ import Google from "next-auth/providers/google";
 import { adminAuth, adminDB } from "@/common/libs/firebase/firebaseAdmin";
 import { Adapter } from "next-auth/adapters";
 
-export const authOptions: NextAuthOptions = {
+const auth: NextAuthOptions = {
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -36,3 +36,5 @@ export const authOptions: NextAuthOptions = {
   },
   adapter: FirestoreAdapter(adminDB) as Adapter,
 };
+
+export default auth;

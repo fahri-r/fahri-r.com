@@ -10,9 +10,12 @@
   },
   "dependencies": {
     "@auth/firebase-adapter": "^1.4.0",
+    "@hookform/resolvers": "^3.3.4",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-form": "^0.0.3",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-slot": "^1.0.2",
     "@react-email/components": "0.0.12",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -30,7 +33,9 @@
     "notion-client": "^6.16.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-firebase-hooks": "^5.1.1",
     "react-github-calendar": "^4.0.8",
+    "react-hook-form": "^7.50.1",
     "react-hot-toast": "^2.4.1",
     "react-notion-x": "^6.16.0",
     "react-tweet-embed": "^2.0.0",
@@ -38,7 +43,8 @@
     "tailwind-merge": "^2.2.0",
     "tailwind-variants": "^0.1.18",
     "tailwindcss-animate": "^1.0.7",
-    "usehooks-ts": "^2.9.2"
+    "usehooks-ts": "^2.9.2",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/memory-cache": "^0.2.5",
