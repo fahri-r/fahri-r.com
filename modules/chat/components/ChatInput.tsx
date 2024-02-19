@@ -22,7 +22,7 @@ const formSchema = z.object({
 function ChatInput() {
   const { data: session } = useSession();
   const avatarImage =
-    process.env.RESEND_TO!! == session?.user.email
+    process.env.NEXT_PUBLIC_EMAIL!! == session?.user.email
       ? "/images/avatar.jpg"
       : session?.user.image;
 

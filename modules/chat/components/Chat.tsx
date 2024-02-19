@@ -37,7 +37,7 @@ function Chat() {
       <Divider />
       <section className="grow flex flex-col border border-neutral-700 rounded-3xl overflow-hidden h-96 justify-between">
         <div className="flex flex-col overflow-y-scroll">
-          <div className="p-5">
+          <div className="md:p-5">
             {messages?.map((message) => (
               <ChatBubble
                 message={message}

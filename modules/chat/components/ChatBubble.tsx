@@ -1,3 +1,4 @@
+import useIsMobile from "@/common/hooks/useIsMobile";
 import { Message } from "@/common/libs/firebase/converter/Message";
 import moment from "moment";
 import Image from "next/image";
@@ -10,8 +11,9 @@ function ChatBubble({
   message: Message;
   isSender: boolean;
 }) {
+  const isMobile = useIsMobile();
   const avatarImage =
-    process.env.RESEND_TO!! == message.user.email
+    process.env.NEXT_PUBLIC_EMAIL!! == message.user.email
       ? "/images/avatar.jpg"
       : message.user.image;
 
@@ -35,17 +37,24 @@ function ChatBubble({
       >
         <div className="flex text-xs gap-3">
           <p className={"line-clamp-1"}>{message.user.name}</p>
-          <p className="text-neutral-400">
-            {moment(message.timestamp).format("lll")}
-          </p>
+          {!isMobile && (
+            <p className="text-neutral-400">
+              {moment(message.timestamp).format("L LT")}
+            </p>
+          )}
         </div>
         <p
-          className={`px-2.5 bg-input rounded-xl py-1.5 ${
-            isSender ? "rounded-tr-none" : "rounded-tl-none"
+          className={`px-2.5 bg-input rounded-xl py-1.5 text-sm leading-relaxed w-fit ${
+            isSender ? "rounded-tr-none self-end" : "rounded-tl-none self-start"
           }`}
         >
           {message.input}
         </p>
+        {isMobile && (
+          <p className="text-neutral-400 text-xs">
+            {moment(message.timestamp).format("L LT")}
+          </p>
+        )}
       </div>
     </div>
   );
