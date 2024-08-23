@@ -131,6 +131,8 @@
 
 .notion-text {
   @apply font-poppins text-foreground;
+  line-height: 2rem;
+  letter-spacing: 0.025em;
 }
 
 .notion-full-page {
