@@ -12,11 +12,11 @@ const menu: MenuProps[] = [
     name: "About",
     icon: <User2 size={20} />,
   },
-  {
-    path: "/projects",
-    name: "Projects",
-    icon: <Braces size={20} />,
-  },
+  // {
+  //   path: "/projects",
+  //   name: "Projects",
+  //   icon: <Braces size={20} />,
+  // },
   {
     path: "/chat",
     name: "Chat",

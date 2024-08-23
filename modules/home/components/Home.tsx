@@ -25,7 +25,7 @@ function Home({ projects }: { projects: PostProps[] }) {
         </Typography>
       </section>
       <Divider />
-      <div className="flex items-center justify-between">
+      {/* <div className="flex items-center justify-between">
         <Title variant="title" size="xl">
           Latest Projects
         </Title>
@@ -43,7 +43,7 @@ function Home({ projects }: { projects: PostProps[] }) {
           </li>
         ))}
       </ul>
-      <Divider />
+      <Divider /> */}
       <section className="flex flex-col gap-4 rounded-lg border border-neutral-800 bg-neutral-900 bg-globe-pattern bg-right bg-no-repeat p-5 max-md:bg-none">
         <Title variant="title" size="xl">
           Let&apos;s work together!

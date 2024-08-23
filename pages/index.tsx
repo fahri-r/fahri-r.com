@@ -17,17 +17,17 @@ export default function HomePage(props: NotionPageProps) {
   );
 }
 
-export async function getStaticProps() {
-  const from = "index";
-  const props = await getGlobalData({ from });
+// export async function getStaticProps() {
+//   const from = "index";
+//   const props = await getGlobalData({ from });
 
-  props.posts = props.allPages?.filter(
-    (page: PostProps) =>
-      page.status === BLOG.NOTION_PROPERTY_NAME.status_publish
-  );
+//   props.posts = props.allPages?.filter(
+//     (page: PostProps) =>
+//       page.status === BLOG.NOTION_PROPERTY_NAME.status_publish
+//   );
 
-  return {
-    props,
-    revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND as string),
-  };
-}
+//   return {
+//     props,
+//     revalidate: parseInt(BLOG.NEXT_REVALIDATE_SECOND as string),
+//   };
+// }
