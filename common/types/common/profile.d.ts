@@ -10,7 +10,6 @@ type ProfileProps = {
   dob: string;
   location: string;
   socials: SocialProps[];
-  skills: SkillProps[];
   imgUrl: string;
   experiences: ExperienceProps[];
   education: EducationProps[];

@@ -6,9 +6,7 @@ import { Poppins, Kanit } from "next/font/google";
 import { cn } from "@/common/libs/utils";
 import Provider from "@/common/context/Provider";
 import Texture from "@/common/components/elements/Texture";
-import Sidebar from "@/common/components/sidebar/Sidebar";
 import AnimateEnter from "@/common/components/elements/AnimateEnter";
-import Command from "@/common/components/command/Command";
 import FirebaseProvider from "@/common/context/FirebaseProvider";
 import { SessionProvider } from "next-auth/react";
 
@@ -37,8 +35,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <Provider>
           <SessionProvider session={pageProps.session}>
             <FirebaseProvider>
-              <Command />
-              <Sidebar />
               <Component {...pageProps} />
             </FirebaseProvider>
           </SessionProvider>
