@@ -1,7 +1,7 @@
 type MenuProps = {
   path: string;
   name: string;
-  icon: JSX.Element;
+  icon: IconProps;
 };
 
 export default MenuProps;

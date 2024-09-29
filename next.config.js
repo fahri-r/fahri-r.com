@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["fahri-r.notion.site", "lh3.googleusercontent.com"],
+    domains: ["fahri-r.notion.site", "lh3.googleusercontent.com", "www.notion.so"],
   },
   transpilePackages: ['lucide-react']
 };

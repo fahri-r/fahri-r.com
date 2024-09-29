@@ -1,5 +1,4 @@
 import ProfileProps from "@/common/types/common/profile";
-import { Github, Instagram, Linkedin, Mail } from "lucide-react";
 
 const profile: ProfileProps = {
   name: "Fahri Ramadhan",
@@ -8,52 +7,52 @@ const profile: ProfileProps = {
   job: "Software Engineer",
   dob: "12/07/2000",
   location: "Indonesia",
+  imgUrl: "/avatar.png",
+  initials: "MFR",
   education: [
     {
+      logoUrl: "/school/ulbi.png",
       institution: "Universitas Logistik dan Bisnis Internasional",
+      initials: "UL",
       degree: "Bachelor's degree",
       major: "Informatics Engineering, (S.Tr.Kom)",
       entry: 2019,
       resign: 2023,
-      logo: "/images/education/ulbi.png",
       site: "https://www.ulbi.ac.id/",
     },
     {
+      logoUrl: "/school/sman1.png",
       institution: "SMA Negeri 1 Sumedang",
+      initials: "SN",
       degree: "Senior High School",
       major: "Science",
       entry: 2016,
       resign: 2019,
-      logo: "/images/education/sma1.png",
       site: "https://www.smansasumedang.sch.id/",
     },
   ],
   socials: [
     {
       href: "https://github.com/fahri-r",
-      name: "GitHub",
-      username: "fahri-r",
-      icon: <Github size={16} />,
+      icon: "github",
+      label: "GitHub"
     },
     {
       href: "https://www.linkedin.com/in/fahri-r",
-      name: "LinkedIn",
-      icon: <Linkedin size={16} />,
-    },
-    {
-      href: "https://www.instagram.com/fahriramadhannnn",
-      name: "Instagram",
-      icon: <Instagram size={16} />,
+      icon: "linkedin",
+      label: "LinkedIn"
     },
     {
       href: "mailto:00.fahri.r@gmail.com",
-      name: "Email",
-      icon: <Mail size={16} />,
+      icon: "mail",
+      label: "Email"
     },
   ],
-  experiences: [
+  works: [
     {
-      name: "CODE.ID",
+      logoUrl: "/company/code.png",
+      company: "CODE.ID",
+      initials: "C",
       role: "Fullstack Developer",
       entry: {
         month: 2,
@@ -61,7 +60,10 @@ const profile: ProfileProps = {
       },
     },
     {
-      name: "PT. Ever Green Hans",
+      logoUrl: "/company/evergreen.png",
+      company: "PT. Ever Green Hans",
+      initials: "EG",
+      description: "I am responsible for developing payroll desktop app for the client of PT. Ever Green Hans.",
       role: "Software Developer",
       entry: {
         month: 6,
@@ -73,7 +75,10 @@ const profile: ProfileProps = {
       },
     },
     {
-      name: "PT. Bhairawa Tantra Nusantara",
+      logoUrl: "/company/matakala.png",
+      company: "PT. Bhairawa Tantra Nusantara",
+      initials: "BTN",
+      description: "I am responsible for maintaining the website and sometimes developing DApps for PT. Bhairawa Tantra Nusantara.",
       role: "Website Developer",
       entry: {
         month: 8,
@@ -85,7 +90,10 @@ const profile: ProfileProps = {
       },
     },
     {
-      name: "HIPMI Kabupaten Bekasi (Freelance)",
+      logoUrl: "/company/hipmi.png",
+      company: "HIPMI Kabupaten Bekasi (Freelance)",
+      initials: "H",
+      description: "Develop a company profile for HIPMI using Next.js and Chakra UI.",
       role: "Frontend Developer",
       entry: {
         month: 3,
@@ -97,7 +105,10 @@ const profile: ProfileProps = {
       },
     },
     {
-      name: "Injabar UNPAD (Freelance)",
+      logoUrl: "/company/injabar.png",
+      company: "Injabar UNPAD (Freelance)",
+      initials: "IU",
+      description: "Develop a website to assess the performance of BUMD (Regional Owned Enterprises). Many aspects are considered in the performance appraisal, such as finance, operations, and administration.",
       role: "Fullstack Developer",
       entry: {
         month: 12,
@@ -109,7 +120,6 @@ const profile: ProfileProps = {
       },
     },
   ],
-  imgUrl: "/images/avatar.jpg",
 };
 
 export default profile;

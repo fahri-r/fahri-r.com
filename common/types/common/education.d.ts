@@ -4,7 +4,8 @@ type EducationProps = {
   major: string;
   entry: number;
   resign: number;
-  logo: string;
+  logoUrl: string;
+  initials: string;
   site: string;
 };
 

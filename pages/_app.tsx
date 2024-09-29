@@ -2,7 +2,7 @@ import "react-notion-x/src/styles.css";
 import "@/common/styles/globals.css";
 
 import type { AppProps } from "next/app";
-import { Inter } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/common/libs/utils";
 import Provider from "@/common/context/Provider";
 import FirebaseProvider from "@/common/context/FirebaseProvider";
@@ -11,11 +11,14 @@ import { TooltipProvider } from "@/common/components/elements/tooltip";
 import Navbar from "@/common/components/elements/navbar";
 import { ThemeProvider } from "@/common/context/theme-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <body className={cn(inter.className, "max-w-4xl mx-auto")}>
+    <body className={cn(fontSans.className, "min-h-screen bg-background font-sans antialiased max-w-2xl mx-auto py-12 sm:py-24 px-6")}>
       <Provider>
         <ThemeProvider
           attribute="class"

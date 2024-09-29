@@ -5,17 +5,17 @@ const menu: MenuProps[] = [
   {
     path: "/",
     name: "Home",
-    icon: <Home size={20} />,
+    icon: "house",
   },
   {
     path: "/projects",
     name: "Projects",
-    icon: <Braces size={20} />,
+    icon: "cpu",
   },
   {
     path: "/chat",
-    name: "Chat",
-    icon: <MessageCircle size={20} />,
+    name: "Guest Book",
+    icon: "book-text",
   },
 ];
 

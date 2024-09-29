@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { MoveLeft } from "lucide-react";
 import Typography from "@/common/components/elements/Typography";
-import Button from "@/common/components/elements/Button";
+import { Button } from "@/common/components/elements/button";
 import AnimateEnter from "@/common/components/elements/AnimateEnter";
 
 export default function InternalServerError() {

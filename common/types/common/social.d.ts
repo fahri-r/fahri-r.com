@@ -1,11 +1,7 @@
-import { LucideIcon } from "lucide-react";
-import { ReactElement } from "react";
-
 type SocialProps = {
   href: string;
-  name: string;
-  username?: string;
-  icon: ReactElement;
+  label: string;
+  icon: IconProps;
 };
 
 export default SocialProps;

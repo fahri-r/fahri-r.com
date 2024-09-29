@@ -3,6 +3,7 @@ import { ExtendedRecordMap } from "notion-types";
 
 type PostProps = {
   category: string;
+  description: string;
   date: {
     start_date: string;
   };

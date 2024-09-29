@@ -1,8 +1,11 @@
-type ExperienceProps = {
-  name: string;
+type WorkProps = {
+  company: string;
   role: string;
   entry: WorkDateProps;
   resign?: WorkDateProps;
+  description?: string;
+  logoUrl?: string;
+  initials: string;
 };
 
 type WorkDateProps = {
@@ -10,4 +13,4 @@ type WorkDateProps = {
   year: number;
 };
 
-export default ExperienceProps;
+export default WorkProps;

@@ -30,7 +30,7 @@ export default function Navbar() {
                     "size-12"
                   )}
                 >
-                  <LucideIcon name={"linkedin"} className="size-4" />
+                  <LucideIcon name={item.icon} className="size-4" />
                 </Link>
               </TooltipTrigger>
               <TooltipContent>
@@ -51,11 +51,11 @@ export default function Navbar() {
                     "size-12"
                   )}
                 >
-                  <LucideIcon name={"linkedin"} className="size-4" />
+                  <LucideIcon name={item.icon} className="size-4" />
                 </Link>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{item.name}</p>
+                <p>{item.label}</p>
               </TooltipContent>
             </Tooltip>
           </DockIcon>
