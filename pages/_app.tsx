@@ -8,7 +8,6 @@ import Provider from "@/common/context/Provider";
 import Texture from "@/common/components/elements/Texture";
 import Sidebar from "@/common/components/sidebar/Sidebar";
 import AnimateEnter from "@/common/components/elements/AnimateEnter";
-import { Toast } from "@/common/components/elements/Toast";
 import Command from "@/common/components/command/Command";
 import FirebaseProvider from "@/common/context/FirebaseProvider";
 import { SessionProvider } from "next-auth/react";
@@ -45,7 +44,6 @@ export default function App({ Component, pageProps }: AppProps) {
           </SessionProvider>
         </Provider>
       </AnimateEnter>
-      <Toast />
       <Texture />
     </body>
   );
