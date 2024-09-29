@@ -11,7 +11,7 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import ChatInput from "./ChatInput";
 import { signIn, signOut, useSession } from "next-auth/react";
 import ChatBubble from "./ChatBubble";
-import Button from "@/common/components/elements/Button";
+import { Button } from "@/common/components/elements/button";
 
 function Chat() {
   const { data: session } = useSession();

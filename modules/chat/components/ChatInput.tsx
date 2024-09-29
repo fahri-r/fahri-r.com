@@ -10,7 +10,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/common/components/elements/Form";
-import Button from "@/common/components/elements/Button";
+import { Button } from "@/common/components/elements/button";
 import { addDoc, serverTimestamp } from "firebase/firestore";
 import { messagesRef } from "@/common/libs/firebase/converter/Message";
 import Image from "next/image";
