@@ -7,11 +7,11 @@ const profile: ProfileProps = {
   job: "Software Engineer",
   dob: "12/07/2000",
   location: "Indonesia",
-  imgUrl: "/avatar.png",
+  imgUrl: "/images/avatar.png",
   initials: "MFR",
   education: [
     {
-      logoUrl: "/school/ulbi.png",
+      logoUrl: "/images/education/ulbi.png",
       institution: "Universitas Logistik dan Bisnis Internasional",
       initials: "UL",
       degree: "Bachelor's degree",
@@ -21,7 +21,7 @@ const profile: ProfileProps = {
       site: "https://www.ulbi.ac.id/",
     },
     {
-      logoUrl: "/school/sman1.png",
+      logoUrl: "/images/education/sma1.png",
       institution: "SMA Negeri 1 Sumedang",
       initials: "SN",
       degree: "Senior High School",
@@ -50,7 +50,7 @@ const profile: ProfileProps = {
   ],
   works: [
     {
-      logoUrl: "/company/code.png",
+      logoUrl: "/images/company/code.png",
       company: "CODE.ID",
       initials: "C",
       role: "Fullstack Developer",
@@ -60,7 +60,7 @@ const profile: ProfileProps = {
       },
     },
     {
-      logoUrl: "/company/evergreen.png",
+      logoUrl: "/images/company/evergreen.png",
       company: "PT. Ever Green Hans",
       initials: "EG",
       description: "I am responsible for developing payroll desktop app for the client of PT. Ever Green Hans.",
@@ -75,7 +75,7 @@ const profile: ProfileProps = {
       },
     },
     {
-      logoUrl: "/company/matakala.png",
+      logoUrl: "/images/company/matakala.png",
       company: "PT. Bhairawa Tantra Nusantara",
       initials: "BTN",
       description: "I am responsible for maintaining the website and sometimes developing DApps for PT. Bhairawa Tantra Nusantara.",
@@ -90,7 +90,7 @@ const profile: ProfileProps = {
       },
     },
     {
-      logoUrl: "/company/hipmi.png",
+      logoUrl: "/images/company/hipmi.png",
       company: "HIPMI Kabupaten Bekasi (Freelance)",
       initials: "H",
       description: "Develop a company profile for HIPMI using Next.js and Chakra UI.",
@@ -105,7 +105,7 @@ const profile: ProfileProps = {
       },
     },
     {
-      logoUrl: "/company/injabar.png",
+      logoUrl: "/images/company/injabar.png",
       company: "Injabar UNPAD (Freelance)",
       initials: "IU",
       description: "Develop a website to assess the performance of BUMD (Regional Owned Enterprises). Many aspects are considered in the performance appraisal, such as finance, operations, and administration.",

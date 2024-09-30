@@ -6,26 +6,47 @@ import Typography from "@/common/components/elements/Typography";
 import React from "react";
 import { ProjectItem } from "./ProjectItem";
 import NotionPageProps from "@/common/types/notion/notion-page";
+import BlurFade from "@/common/components/elements/blur-fade";
+import Link from "next/link";
+import { ProjectCard } from "@/common/components/elements/project-card";
+import moment from "moment";
+
+const BLUR_FADE_DELAY = 0.04;
 
 function Projects(props: NotionPageProps) {
   const { posts } = props;
 
   return (
-    <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
+    <>
       <section>
-        <Title variant="title">Projects</Title>
-        <Typography className="my-6 leading-relaxed">
-          Several projects that I have worked on, both private and open source.
-        </Typography>
+        <BlurFade delay={BLUR_FADE_DELAY}>
+          <Title variant="title" className="font-sans text-xl font-bold">Projects</Title>
+        </BlurFade>
+        <BlurFade delay={BLUR_FADE_DELAY * 2}>
+          <Typography className="leading-relaxed text-muted-foreground mb-4 text-sm">
+            Several projects that I have worked on, both private and open source.
+          </Typography>
+        </BlurFade>
       </section>
-      <ul className="grid place-items-center gap-4 md:grid-cols-2">
-        {posts.map((post) => (
-          <li key={post.id} className="w-full">
-            <ProjectItem {...post} />
-          </li>
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-[800px] mx-auto">
+        {posts.map((x, id) => (
+          <BlurFade
+            key={x.title}
+            delay={BLUR_FADE_DELAY * 3 + id * 0.05}
+          >
+            <ProjectCard
+              href={x.slug}
+              key={x.title}
+              title={x.title}
+              description={x.description}
+              dates={moment(x.date.start_date).format("LL")}
+              tags={x.tools}
+              image={x.pageCoverThumbnail}
+            />
+          </BlurFade>
         ))}
-      </ul>
-    </AnimateEnter>
+      </div>
+    </>
   );
 }
 

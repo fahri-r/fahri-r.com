@@ -113,7 +113,7 @@ export default function HomePage(props: NotionPageProps) {
           <div className="flex min-h-0 flex-col gap-y-4">
             <BlurFade delay={BLUR_FADE_DELAY * 7} className="flex justify-between items-center">
               <h2 className="text-xl font-bold">Latest Project</h2>
-              <Link href={"/projects"} className="hover:underline">View All</Link>
+              <Link href={"/projects"} className="hover:underline font-sans">View All</Link>
             </BlurFade>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-[800px] mx-auto">
               {posts.map((x, id) => (

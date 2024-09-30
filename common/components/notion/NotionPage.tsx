@@ -43,15 +43,15 @@ const NotionPage = (props: NotionPageDetailProps) => {
   const { post } = props;
 
   return (
-    <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
+    <AnimateEnter className="max-w-2xl lg:pt-8">
       <div id="notion-article" className={`mx-auto overflow-hidden`}>
         <div className="flex flex-col space-y-4">
-          <Title variant="title" className="space-y-2 font-normal">
+          <Title variant="title" className="space-y-2 font-sans font-bold">
             {post.title}
           </Title>
 
           {(post.site || post.repository) && (
-            <div className="flex text-base font-normal font-mono gap-2 items-center">
+            <div className="flex text-base font-sans gap-2 items-center">
               {post.repository && (
                 <Link href={post.repository} legacyBehavior>
                   <a
@@ -60,7 +60,7 @@ const NotionPage = (props: NotionPageDetailProps) => {
                     rel="noreferrer"
                   >
                     <Github size={18} />
-                    <span className="text-emerald-500 duration-300 hover:text-emerald-400">
+                    <span className="hover:underline text-sm">
                       Source code
                     </span>
                   </a>
@@ -79,7 +79,7 @@ const NotionPage = (props: NotionPageDetailProps) => {
                     rel="noreferrer"
                   >
                     <Eye size={18} />
-                    <span className="text-emerald-500 duration-300 hover:text-emerald-400">
+                    <span className="hover:underline text-sm">
                       Site
                     </span>
                   </a>
@@ -89,6 +89,7 @@ const NotionPage = (props: NotionPageDetailProps) => {
           )}
         </div>
         <NotionRenderer
+          className="px-0 text-muted-foreground text-sm text-pretty"
           recordMap={post.blockMap}
           mapPageUrl={mapPageUrl}
           mapImageUrl={mapImgUrl}

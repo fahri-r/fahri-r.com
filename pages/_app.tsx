@@ -18,7 +18,7 @@ const fontSans = FontSans({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <body className={cn(fontSans.className, "min-h-screen bg-background font-sans antialiased max-w-2xl mx-auto py-12 sm:py-24 px-6")}>
+    <body className={cn(fontSans.className, "min-h-screen bg-background antialiased max-w-2xl mx-auto py-12 sm:py-24 px-6")}>
       <Provider>
         <ThemeProvider
           attribute="class"

@@ -27,15 +27,15 @@ function Chat() {
   }, [messages, messagesEndRef]);
 
   return (
-    <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8 flex flex-col">
+    <AnimateEnter className="max-w-2xl flex flex-col">
       <section className="space-y-6">
-        <Title variant="title">Chat</Title>
-        <Typography className="leading-relaxed">
+        <Title variant="title" className="font-sans font-bold">Chat</Title>
+        <Typography className="leading-relaxed text-muted-foreground">
           Leave whatever you like to say, suggestions, questions or anything!
         </Typography>
       </section>
       <Divider />
-      <section className="grow flex flex-col border border-neutral-700 rounded-3xl overflow-hidden h-96 justify-between">
+      <section className="grow flex flex-col border border-neutral-700 rounded-3xl overflow-hidden justify-between min-h-screen">
         <div className="flex flex-col overflow-y-scroll">
           <div className="md:p-5">
             {messages?.map((message) => (
