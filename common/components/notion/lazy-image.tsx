@@ -102,7 +102,7 @@ export default function LazyImage({
   }
   return (
     <>
-      <img {...imgProps} placeholder="blur" />
+      <img {...imgProps} />
       {priority && (
         <Head>
           <link rel="preload" as="image" href={src} />

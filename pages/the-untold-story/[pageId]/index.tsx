@@ -2,7 +2,7 @@ import { NotionAPI } from "notion-client";
 import { ExtendedRecordMap } from "notion-types";
 import { NextSeo } from "next-seo";
 import profile from "@/common/constant/profile";
-import TheUntoldStoryDetail from "@/modules/the-untold-story/components/TheUntoldStoryDetail";
+import TheUntoldStoryDetail from "@/modules/the-untold-story/components/the-untold-story-detail";
 import { GetServerSidePropsContext } from "next";
 
 type TheUntoldStoryPageProps = {
