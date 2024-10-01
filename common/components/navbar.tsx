@@ -1,5 +1,5 @@
 import { Dock, DockIcon } from "@/common/components/elements/dock";
-import { ModeToggle } from "@/common/components/elements/mode-toggle";
+import { ModeToggle } from "@/common/components/mode-toggle";
 import { buttonVariants } from "@/common/components/elements/button";
 import { Separator } from "@/common/components/elements/separator";
 import {
@@ -11,7 +11,7 @@ import { cn } from "@/common/libs/utils";
 import Link from "next/link";
 import menu from "@/common/constant/menu";
 import profile from "@/common/constant/profile";
-import LucideIcon from "./lucide-icon";
+import LucideIcon from "./elements/lucide-icon";
 
 export default function Navbar() {
 

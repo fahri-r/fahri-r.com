@@ -1,4 +1,4 @@
-import { Skeleton } from "@/common/components/elements/Skeleton";
+import { Skeleton } from "@/common/components/elements/skeleton";
 import React from "react";
 
 function ProjectSkeleton() {

@@ -1,8 +1,8 @@
 import { getTextContent, getDateValue } from "notion-utils";
 import { NotionAPI } from "notion-client";
 import BLOG from "@/blog.config";
-import formatDate from "../formatDate";
-import { mapImgUrl } from "./mapImage";
+import formatDate from "../format-date";
+import { mapImgUrl } from "./map-image";
 
 export default async function getPageProperties(
   id,

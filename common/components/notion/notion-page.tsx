@@ -1,13 +1,13 @@
 import dynamic from "next/dynamic";
-import { mapImgUrl } from "@/common/libs/notion/mapImage";
+import { mapImgUrl } from "@/common/libs/notion/map-image";
 import { NotionRenderer } from "react-notion-x";
-import Title from "../elements/Title";
+import Title from "../elements/title";
 import Link from "next/link";
 import { Eye, Github } from "lucide-react";
 import TweetEmbed from "react-tweet-embed";
 import Image from "next/image";
 import NotionPageDetailProps from "@/common/types/notion/notion-page-detail";
-import AnimateEnter from "../elements/AnimateEnter";
+import BlurFade from "../elements/blur-fade";
 
 const Code = dynamic(
   () =>
@@ -43,10 +43,10 @@ const NotionPage = (props: NotionPageDetailProps) => {
   const { post } = props;
 
   return (
-    <AnimateEnter className="max-w-2xl lg:pt-8">
+    <BlurFade className="max-w-2xl lg:pt-8">
       <div id="notion-article" className={`mx-auto overflow-hidden`}>
         <div className="flex flex-col space-y-4">
-          <Title variant="title" className="space-y-2 font-sans font-bold">
+          <Title variant="title" className="text-xl space-y-2 font-sans font-bold">
             {post.title}
           </Title>
 
@@ -89,7 +89,7 @@ const NotionPage = (props: NotionPageDetailProps) => {
           )}
         </div>
         <NotionRenderer
-          className="px-0 text-muted-foreground text-sm text-pretty"
+          className="px-0 text-muted-foreground text-sm text-pretty text-base"
           recordMap={post.blockMap}
           mapPageUrl={mapPageUrl}
           mapImageUrl={mapImgUrl}
@@ -104,7 +104,7 @@ const NotionPage = (props: NotionPageDetailProps) => {
           }}
         />
       </div>
-    </AnimateEnter>
+    </BlurFade>
   );
 };
 

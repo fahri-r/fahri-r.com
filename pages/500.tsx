@@ -1,13 +1,13 @@
 import Link from "next/link";
 
 import { MoveLeft } from "lucide-react";
-import Typography from "@/common/components/elements/Typography";
+import Typography from "@/common/components/elements/typography";
 import { Button } from "@/common/components/elements/button";
-import AnimateEnter from "@/common/components/elements/AnimateEnter";
+import BlurFade from "@/common/components/elements/blur-fade";
 
 export default function InternalServerError() {
   return (
-    <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
+    <BlurFade className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
       <section className="flex flex-col items-center justify-center p-8">
         <div className="flex flex-col gap-4 text-center">
           <Typography>
@@ -26,6 +26,6 @@ export default function InternalServerError() {
           </div>
         </div>
       </section>
-    </AnimateEnter>
+    </BlurFade>
   );
 }

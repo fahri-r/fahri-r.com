@@ -1,4 +1,4 @@
-import { Message } from "@/common/libs/firebase/converter/Message";
+import { Message } from "@/common/libs/firebase/converter/message";
 import Image from "next/image";
 import React from "react";
 

@@ -3,7 +3,7 @@ import { NotionAPI } from "notion-client";
 import {
   getDataFromCache,
   setDataToCache,
-} from "@/common/libs/cache/cache_manager";
+} from "@/common/libs/cache/cache-manager";
 import { deepClone, delay } from "../utils";
 
 export async function getPostBlocks(id, from, slice) {

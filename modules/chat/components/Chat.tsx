@@ -1,17 +1,17 @@
-import AnimateEnter from "@/common/components/elements/AnimateEnter";
-import Divider from "@/common/components/elements/Divider";
-import Title from "@/common/components/elements/Title";
-import Typography from "@/common/components/elements/Typography";
+import Divider from "@/common/components/elements/divider";
+import Title from "@/common/components/elements/title";
+import Typography from "@/common/components/elements/typography";
 import {
   Message,
   sortedMessagesRef,
-} from "@/common/libs/firebase/converter/Message";
+} from "@/common/libs/firebase/converter/message";
 import React, { createRef, useEffect } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import ChatInput from "./ChatInput";
+import ChatInput from "../../../common/components/chat-input";
 import { signIn, signOut, useSession } from "next-auth/react";
-import ChatBubble from "./ChatBubble";
+import ChatBubble from "../../../common/components/chat-bubble";
 import { Button } from "@/common/components/elements/button";
+import BlurFade from "@/common/components/elements/blur-fade";
 
 function Chat() {
   const { data: session } = useSession();
@@ -27,7 +27,7 @@ function Chat() {
   }, [messages, messagesEndRef]);
 
   return (
-    <AnimateEnter className="max-w-2xl flex flex-col">
+    <BlurFade className="max-w-2xl flex flex-col">
       <section className="space-y-6">
         <Title variant="title" className="font-sans font-bold">Chat</Title>
         <Typography className="leading-relaxed text-muted-foreground">
@@ -66,7 +66,7 @@ function Chat() {
           </Button>
         )}
       </section>
-    </AnimateEnter>
+    </BlurFade>
   );
 }
 

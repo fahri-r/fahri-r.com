@@ -1,2 +1,2 @@
-export { getAllTools } from './notion/getAllTools'
-export { getPostBlocks } from './notion/getPostBlocks'
+export { getAllTools } from './notion/get-all-tools'
+export { getPostBlocks } from './notion/get-post-blocks'

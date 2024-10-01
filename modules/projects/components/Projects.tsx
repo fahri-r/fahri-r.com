@@ -1,14 +1,11 @@
 "use client";
 
-import AnimateEnter from "@/common/components/elements/AnimateEnter";
-import Title from "@/common/components/elements/Title";
-import Typography from "@/common/components/elements/Typography";
+import Title from "@/common/components/elements/title";
+import Typography from "@/common/components/elements/typography";
 import React from "react";
-import { ProjectItem } from "./ProjectItem";
 import NotionPageProps from "@/common/types/notion/notion-page";
 import BlurFade from "@/common/components/elements/blur-fade";
-import Link from "next/link";
-import { ProjectCard } from "@/common/components/elements/project-card";
+import { ProjectCard } from "@/common/components/project-card";
 import moment from "moment";
 
 const BLUR_FADE_DELAY = 0.04;

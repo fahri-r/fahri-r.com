@@ -4,11 +4,11 @@ import "@/common/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/common/libs/utils";
-import Provider from "@/common/context/Provider";
-import FirebaseProvider from "@/common/context/FirebaseProvider";
+import Provider from "@/common/context/provider";
+import FirebaseProvider from "@/common/context/firebase-provider";
 import { SessionProvider } from "next-auth/react";
 import { TooltipProvider } from "@/common/components/elements/tooltip";
-import Navbar from "@/common/components/elements/navbar";
+import Navbar from "@/common/components/navbar";
 import { ThemeProvider } from "@/common/context/theme-provider";
 
 const fontSans = FontSans({

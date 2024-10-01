@@ -2,15 +2,15 @@ import BLOG from "@/blog.config";
 import {
   getDataFromCache,
   setDataToCache,
-} from "@/common/libs/cache/cache_manager";
+} from "@/common/libs/cache/cache-manager";
 import { getPostBlocks } from "@/common/libs/notion";
 import { idToUuid } from "notion-utils";
 import { deepClone } from "../utils";
-import { getAllCategories } from "./getAllCategories";
-import getAllPageIds from "./getAllPageIds";
-import { getAllTools } from "./getAllTools";
-import getPageProperties from "./getPageProperties";
-import { mapImgUrl, compressImage } from "./mapImage";
+import { getAllCategories } from "./get-all-categories";
+import getAllPageIds from "./get-all-page-ids";
+import { getAllTools } from "./get-all-tools";
+import getPageProperties from "./get-page-properties";
+import { mapImgUrl, compressImage } from "./map-image";
 
 export async function getGlobalData({ pageId = BLOG.NOTION_PAGE_ID, from }) {
   const data = await getNotionPageData({ pageId, from });

@@ -2,7 +2,7 @@
 
 import { useState, useContext } from "react";
 
-import AppContext from "@/common/context/AppContext";
+import AppContext from "@/common/context/app-context";
 
 export default function Provider({ children }: { children: React.ReactNode }) {
   const [showMenu, setShowMenu] = useState(false);

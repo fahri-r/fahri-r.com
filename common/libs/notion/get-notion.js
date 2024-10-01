@@ -1,7 +1,7 @@
 import BLOG from "@/blog.config";
 import { idToUuid } from "notion-utils";
-import formatDate from "../formatDate";
-import { getPostBlocks } from "./getPostBlocks";
+import formatDate from "../format-date";
+import { getPostBlocks } from "./get-post-blocks";
 import { defaultMapImageUrl } from "react-notion-x";
 
 export async function getNotion(pageId) {

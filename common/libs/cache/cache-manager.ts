@@ -1,6 +1,6 @@
-import MemoryCache from "./memory_cache";
-import FileCache from "./local_file_cache";
-import RedisCache from "./redis_cache";
+import MemoryCache from "./memory-cache";
+import FileCache from "./local-file-cache";
+import RedisCache from "./redis-cache";
 import BLOG from "@/blog.config";
 import { CacheProps } from "@/common/types/notion/cache";
 

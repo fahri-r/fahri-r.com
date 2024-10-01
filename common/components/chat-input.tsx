@@ -9,10 +9,10 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/common/components/elements/Form";
+} from "@/common/components/elements/form";
 import { Button } from "@/common/components/elements/button";
 import { addDoc, serverTimestamp } from "firebase/firestore";
-import { messagesRef } from "@/common/libs/firebase/converter/Message";
+import { messagesRef } from "@/common/libs/firebase/converter/message";
 import Image from "next/image";
 
 const formSchema = z.object({

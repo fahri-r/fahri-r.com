@@ -1,4 +1,4 @@
-import { getGlobalData } from "@/common/libs/notion/getNotionData";
+import { getGlobalData } from "@/common/libs/notion/get-notion-data";
 import BLOG from "@/blog.config";
 import NotionPageProps from "@/common/types/notion/notion-page";
 import PostProps from "@/common/types/notion/post";

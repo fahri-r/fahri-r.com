@@ -6,9 +6,9 @@ import {
     CardTitle,
 } from "@/common/components/elements/card";
 import { cn } from "@/common/libs/utils";
-import Image from "next/image";
 import Link from "next/link";
 import Markdown from "react-markdown";
+import LazyImage from "@/common/components/notion/lazy-image";
 
 interface Props {
     title: string;
@@ -40,12 +40,11 @@ export function ProjectCard({
                 }
             >
                 {image && (
-                    <Image
+                    <LazyImage
                         src={image}
-                        alt={title}
-                        width={500}
-                        height={300}
                         className="h-40 w-full overflow-hidden object-cover object-top group-hover:brightness-50 transition-all duration-300 ease-out"
+                        alt={title}
+                        priority={true}
                     />
                 )}
                 <CardHeader className="px-2">

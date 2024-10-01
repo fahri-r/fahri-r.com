@@ -67,7 +67,7 @@ export const ResumeCard = ({
                                     )}
                                 />
                             </h3>
-                            <div className="text-xs sm:text-sm tabular-nums text-muted-foreground text-right">
+                            <div className="text-xs sm:text-sm tabular-nums text-muted-foreground text-right font-sans">
                                 {period}
                             </div>
                         </div>
@@ -78,7 +78,6 @@ export const ResumeCard = ({
                             initial={{ opacity: 0, height: 0 }}
                             animate={{
                                 opacity: isExpanded ? 1 : 0,
-
                                 height: isExpanded ? "auto" : 0,
                             }}
                             transition={{
