@@ -13,6 +13,8 @@ import ChatBubble from "../../../common/components/chat-bubble";
 import { Button } from "@/common/components/elements/button";
 import BlurFade from "@/common/components/elements/blur-fade";
 
+const BLUR_FADE_DELAY = 0.04;
+
 function Chat() {
   const { data: session } = useSession();
 
@@ -28,14 +30,15 @@ function Chat() {
 
   return (
     <BlurFade className="max-w-2xl flex flex-col">
-      <section className="space-y-6">
-        <Title variant="title" className="font-sans font-bold">Chat</Title>
-        <Typography className="leading-relaxed text-muted-foreground">
+      <BlurFade delay={BLUR_FADE_DELAY}>
+        <Title variant="title" className="font-sans text-xl font-bold">Guest Book</Title>
+      </BlurFade>
+      <BlurFade delay={BLUR_FADE_DELAY * 2}>
+        <Typography className="leading-relaxed text-muted-foreground mb-4 text-sm">
           Leave whatever you like to say, suggestions, questions or anything!
         </Typography>
-      </section>
-      <Divider />
-      <section className="grow flex flex-col border border-neutral-700 rounded-3xl overflow-hidden justify-between min-h-screen">
+      </BlurFade>
+      <section className="grow flex flex-col border border-neutral-700 rounded-3xl overflow-hidden justify-between min-h-96">
         <div className="flex flex-col overflow-y-scroll">
           <div className="md:p-5">
             {messages?.map((message) => (
