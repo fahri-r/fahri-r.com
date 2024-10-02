@@ -9,21 +9,22 @@ import PostProps from "@/common/types/notion/post";
 import { NextSeo } from "next-seo";
 import profile from "@/common/constant/profile";
 import { useRouter } from "next/router";
+import { Skeleton } from "@/common/components/elements/skeleton";
 
 export default function ProjectDetailPage(props: NotionPageDetailProps) {
   const router = useRouter();
   const { post } = props;
 
-  // if (router.isFallback) {
-  //   return (
-  //     <>
-  //       <NextSeo title={`${profile.name} - Personal Website`} />
-  //       <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
-  //         <ProjectSkeleton />
-  //       </AnimateEnter>
-  //     </>
-  //   );
-  // }
+  if (router.isFallback) {
+    return (
+      <>
+        <NextSeo title={`${profile.name} - Personal Website`} />
+        {/* <AnimateEnter className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8"> */}
+          <Skeleton />
+        {/* </AnimateEnter> */}
+      </>
+    );
+  }
 
   return (
     <>
