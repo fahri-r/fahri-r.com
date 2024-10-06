@@ -1,6 +1,3 @@
-import Divider from "@/common/components/elements/divider";
-import Title from "@/common/components/elements/title";
-import Typography from "@/common/components/elements/typography";
 import {
   Message,
   sortedMessagesRef,
@@ -31,12 +28,12 @@ function Chat() {
   return (
     <BlurFade className="max-w-2xl flex flex-col">
       <BlurFade delay={BLUR_FADE_DELAY}>
-        <Title variant="title" className="font-sans text-xl font-bold">Guest Book</Title>
+        <h1 className="font-sans text-xl font-bold">Guest Book</h1>
       </BlurFade>
       <BlurFade delay={BLUR_FADE_DELAY * 2}>
-        <Typography className="leading-relaxed text-muted-foreground mb-4 text-sm">
+        <p className="leading-relaxed text-muted-foreground mb-4 text-sm">
           Leave whatever you like to say, suggestions, questions or anything!
-        </Typography>
+        </p>
       </BlurFade>
       <section className="grow flex flex-col border border-neutral-700 rounded-3xl overflow-hidden justify-between min-h-96">
         <div className="flex flex-col overflow-y-scroll">

@@ -23,7 +23,7 @@ function ChatInput() {
   const { data: session } = useSession();
   const avatarImage =
     process.env.NEXT_PUBLIC_EMAIL!! == session?.user.email
-      ? "/images/avatar.jpg"
+      ? "/images/avatar.png"
       : session?.user.image;
 
   const form = useForm<z.infer<typeof formSchema>>({

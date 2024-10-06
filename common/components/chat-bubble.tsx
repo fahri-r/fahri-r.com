@@ -11,7 +11,7 @@ function ChatBubble({
 }) {
   const avatarImage =
     process.env.NEXT_PUBLIC_EMAIL!! == message.user.email
-      ? "/images/avatar.jpg"
+      ? "/images/avatar.png"
       : message.user.image;
 
   return (

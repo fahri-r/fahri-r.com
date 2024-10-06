@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import { mapImgUrl } from "@/common/libs/notion/map-image";
 import { NotionRenderer } from "react-notion-x";
-import Title from "../elements/title";
 import Link from "next/link";
 import { Eye, Github } from "lucide-react";
 import TweetEmbed from "react-tweet-embed";
@@ -46,9 +45,9 @@ const NotionPage = (props: NotionPageDetailProps) => {
     <BlurFade className="max-w-2xl lg:pt-8">
       <div id="notion-article" className={`mx-auto overflow-hidden`}>
         <div className="flex flex-col space-y-4">
-          <Title variant="title" className="text-xl space-y-2 font-sans font-bold">
+          <h1 className="text-xl space-y-2 font-sans font-bold">
             {post.title}
-          </Title>
+          </h1>
 
           {(post.site || post.repository) && (
             <div className="flex text-base font-sans gap-2 items-center">
