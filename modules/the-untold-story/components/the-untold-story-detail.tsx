@@ -10,9 +10,10 @@ function TheUntoldStoryDetail({ recordMap }: { recordMap: ExtendedRecordMap }) {
   const title = getPageTitle(recordMap);
 
   return (
-    <BlurFade className="max-w-[854px] max-lg:py-8 lg:w-4/5 lg:pt-8">
+    <BlurFade className="max-lg:py-8 lg:pt-8">
       <NotionRenderer
-        pageTitle={<h1>{title} - The Untold Story</h1>}
+        className="text-black dark:text-white text-pretty text-base bg-background"
+        pageTitle={<h1>{title}</h1>}
         components={{ nextImage: Image, nextLink: Link }}
         recordMap={recordMap}
         fullPage={true}
