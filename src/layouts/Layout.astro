@@ -1,5 +1,7 @@
 ---
+import { ModeWatcher } from 'mode-watcher';
 import '../styles/app.css';
+import Navbar from '~/components/navbar.svelte';
 ---
 
 <!doctype html>
@@ -14,6 +16,8 @@ import '../styles/app.css';
 	<body
 		class="bg-background mx-auto flex min-h-[100dvh] min-h-screen max-w-2xl flex-col space-y-10 px-6 py-12 antialiased sm:py-24"
 	>
+		<ModeWatcher client:load />
+		<Navbar client:load />
 		<slot />
 	</body>
 </html>
