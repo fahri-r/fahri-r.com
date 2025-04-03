@@ -1,11 +1,20 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import About from '~/components/home/about.svelte';
+import Hero from '~/components/home/hero.svelte';
+import ModeToggle from '~/components/mode-toggle.svelte';
+import { ModeWatcher } from 'mode-watcher';
+import Work from '~/components/home/work.svelte';
+import Education from '~/components/home/education.svelte';
 ---
 
 <Layout>
-	<Welcome />
+	<div>
+		<ModeWatcher client:load />
+		<ModeToggle client:load />
+	</div>
+	<Hero client:load />
+	<About />
+	<Work client:load />
+	<Education client:load />
 </Layout>

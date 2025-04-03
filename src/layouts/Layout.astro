@@ -11,16 +11,9 @@ import '../styles/app.css';
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>
 	</head>
-	<body>
+	<body
+		class="bg-background mx-auto flex min-h-[100dvh] min-h-screen max-w-2xl flex-col space-y-10 px-6 py-12 antialiased sm:py-24"
+	>
 		<slot />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
