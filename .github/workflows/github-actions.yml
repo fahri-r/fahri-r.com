@@ -1,0 +1,37 @@
+name: Sync Posts Everyday
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Create .env file
+        run: |
+          cat <<EOF > .env
+          DATABASE_ID=${{ secrets.DATABASE_ID }}
+          NOTION_KEY=${{ secrets.NOTION_KEY }}
+          EOF
+        shell: bash
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Run generate script
+        run: bun generate
+
+      - name: Vercel Preview Deploy
+        run: |
+          bunx vercel@latest --token ${{ secrets.VERCEL_TOKEN }}
