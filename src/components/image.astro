@@ -1,30 +1,13 @@
 ---
 import { Image as AstroImage } from 'astro:assets';
-import { postImageImport } from '~/libs/images.js';
 
-const {
-	src,
-	MAX_WIDTH = 1400, // 2x max width of blog section width (2x for retina devices). Max width on Medium is 680px, so target that as max width for articles.
-	imageClass = 'w-full bg-gray-100',
-	alt = 'Blog Image'
-} = Astro.props;
+const { src, alt = 'Blog Image' } = Astro.props;
 
-const relativeSrc = `../${src}`;
-const imgType = relativeSrc.split('.').pop();
-const { default: imgData } = await postImageImport(src);
-const { width, height } = imgData;
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/*.{jpeg,jpg,png,gif}');
+if (!images[src])
+	throw new Error(`"${src}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif}"`);
+
+const imgType = src.split('.').pop();
 ---
 
-{
-	imgType === 'bmp' ? (
-		<img src={src} alt={alt} class={imageClass} />
-	) : (
-		<AstroImage
-			src={src}
-			{alt}
-			class={imageClass}
-			width={width < MAX_WIDTH ? width : MAX_WIDTH}
-			height={height}
-		/>
-	)
-}
+{imgType === 'bmp' ? <img src={src} alt={alt} /> : <AstroImage src={images[src]()} alt={alt} />}

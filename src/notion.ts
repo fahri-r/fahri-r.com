@@ -9,14 +9,13 @@ import * as path from 'path';
 import { sanitizeUrl } from './libs/sanitize';
 
 class FileSystemExporter implements NotionExporter {
-	// You can define custom configurations for your plugin, allowing users to tailor it to their needs.
 	constructor(private outputDir: string) {}
 
 	async export(data: ChainData): Promise<void> {
 		// Create output directory if it doesn't exist
 		await fs.mkdir(this.outputDir, { recursive: true });
 
-		// Generate filename from page properties or ID
+		// Generate filename from slug or title
 		const title = data.blockTree.properties.content.title?.[0]?.plain_text;
 		const slug = data.blockTree.properties.slug?.rich_text[0]?.plain_text || sanitizeUrl(title);
 		const filename = `${slug}.mdx`;
@@ -53,7 +52,7 @@ const NOTION_KEY = process.env.NOTION_KEY;
 const DATABASE_ID = process.env.DATABASE_ID; // TODO: Import from ENV
 
 const POSTS_PATH = `src/pages/posts`;
-const IMAGES_PATH = 'public/images/posts';
+const ASSETS_PATH = 'src/assets';
 
 const notion = new Client({
 	auth: NOTION_KEY
@@ -65,7 +64,7 @@ const queryParams: any = {
 };
 
 if (isPublished) {
-	queryParams.filter = {
+	queryParams['filter'] = {
 		and: [
 			{
 				property: 'status',
@@ -86,7 +85,7 @@ const pageIds = results.map((page) => page.id);
 const n2m = new NotionConverter(notion)
 	.withExporter(new FileSystemExporter(POSTS_PATH))
 	.downloadMediaTo({
-		outputDir: IMAGES_PATH,
+		outputDir: ASSETS_PATH,
 		transformPath: (localPath) => path.basename(localPath)
 	})
 	.withRenderer(
@@ -94,14 +93,14 @@ const n2m = new NotionConverter(notion)
 			.createBlockTransformers({
 				image: {
 					transform: async ({ block }) => {
-						return `<Image src="/images/posts/${block.image.file.url}" />`;
+						return `<Image src="/${ASSETS_PATH}/${block.image.file.url}" />`;
 					}
 				},
 				video: {
 					transform: async ({ block }) => {
 						const { file, external } = block.video;
 
-						let url = file?.url ? `/images/posts/${file.url}` : external?.url;
+						let url = file?.url ? `/${ASSETS_PATH}/${file.url}` : external?.url;
 						if (url?.includes('youtube.com')) {
 							if (url.includes('/watch')) {
 								// Youtube URLs with the /watch format don't work, need to be replaced with /embed

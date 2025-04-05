@@ -10,7 +10,7 @@
 		"format": "prettier --write .",
 		"sync": "rimraf src/pages/posts/_ && bunx tsx src/notion.ts",
 		"sync:published": "rimraf src/pages/posts/_ && bunx tsx src/notion.ts --published",
-		"generate": "rimraf dist/*_ && ([ -d 'dist' ] || mkdir dist) && ([ -d 'dist/images' ] || mkdir dist/images) && ([ -d 'src/pages/posts' ] || mkdir src/pages/posts) && ([ -d 'public/images/posts' ] || mkdir public/images/posts) && rimraf src/pages/posts/_ && bunx tsx src/notion.ts --published && astro build"
+		"generate": "rimraf dist/*_ && ([ -d 'dist' ] || mkdir dist) && ([ -d 'dist/images' ] || mkdir dist/images) && ([ -d 'src/pages/posts' ] || mkdir src/pages/posts) && ([ -d 'src/assets' ] || mkdir src/assets) && rimraf src/pages/posts/_ && bunx tsx src/notion.ts --published && astro build"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^4.2.3",
