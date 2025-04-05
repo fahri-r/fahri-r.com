@@ -7,10 +7,12 @@ import vercelStatic from '@astrojs/vercel/static';
 
 import sitemap from '@astrojs/sitemap';
 
+import mdx from '@astrojs/mdx';
+
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://www.fahri-r.com',
-	integrations: [svelte(), sitemap()],
+	integrations: [svelte(), sitemap(), mdx()],
 	vite: {
 		plugins: [tailwindcss()]
 	},
