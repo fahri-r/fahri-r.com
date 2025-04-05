@@ -34,4 +34,4 @@ jobs:
 
       - name: Vercel Preview Deploy
         run: |
-          bunx vercel@latest --token ${{ secrets.VERCEL_TOKEN }}
+          bunx vercel@latest --yes --token ${{ secrets.VERCEL_TOKEN }}
