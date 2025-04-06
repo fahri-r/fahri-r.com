@@ -114,6 +114,38 @@ const n2m = new NotionConverter(notion)
 				}
 			})
 			.addImports("import Image from '~/components/image.astro';")
+			.addVariable('frontmatter', async (name, context) => {
+				const {
+					repository, 
+					site, 
+					tools, 
+					slug, 
+					description, 
+					status, 
+					date, 
+					category, 
+					content
+				} = context.pageProperties;
+				
+				const title = content.title[0].plain_text;
+				const cover = context.blockTree.find(x => x.type == 'image')?.image?.file.url;
+
+				return `---
+layout: ~/layouts/PostLayout.astro
+id: ${context.pageId}
+repository: ${repository?.url}
+site: ${site?.url}
+category: ${category?.select?.name}
+slug: ${slug?.rich_text[0]?.plain_text || sanitizeUrl(title)}
+cover: /${ASSETS_PATH}/${cover}
+tools: ${JSON.stringify(tools.multi_select)}
+status: ${status?.select?.name}
+description: ${description?.rich_text[0]?.plain_text ?? null}
+title: ${title}
+date: ${date?.date?.start}
+---
+`;
+			})
 	);
 
 for (let pageId of pageIds) {
