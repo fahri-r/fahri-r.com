@@ -1,0 +1,53 @@
+---
+import { Eye, Github } from '@lucide/svelte';
+import { Card, CardContent, CardHeader } from '~/components/shared/card';
+import { Badge } from '~/components/shared/badge';
+import { cn } from '~/utils';
+
+const { tools = [], site = null, repository = null, class: className } = Astro.props;
+---
+
+<Card class={cn('border p-2.5', className)}>
+	<CardHeader class="font-bold"> Project Details </CardHeader>
+	<CardContent class="flex flex-col gap-2 p-0 pt-4">
+		{
+			repository && (
+				<a
+					href={repository}
+					class="text-primary flex items-center gap-2"
+					target="_blank"
+					rel="noreferrer"
+				>
+					<Github size={18} />
+					<span class="text-sm hover:underline">Source code</span>
+				</a>
+			)
+		}
+
+		{
+			site && (
+				<a
+					href={site}
+					class="text-primary flex items-center gap-2"
+					target="_blank"
+					rel="noreferrer"
+				>
+					<Eye size={18} />
+					<span class="text-sm hover:underline">Site</span>
+				</a>
+			)
+		}
+
+		{
+			tools.length && (
+				<div class="mt-1.5 flex flex-wrap gap-1">
+					{tools.map((x: any) => (
+						<Badge class="px-1 py-0 text-[10px]" variant="secondary">
+							{x.name}
+						</Badge>
+					))}
+				</div>
+			)
+		}
+	</CardContent>
+</Card>

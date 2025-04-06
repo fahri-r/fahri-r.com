@@ -2,6 +2,9 @@
 import { ModeWatcher } from 'mode-watcher';
 import '../styles/app.css';
 import Navbar from '~/components/navbar.svelte';
+import { cn } from '~/utils';
+
+const { class: className } = Astro.props;
 ---
 
 <!doctype html>
@@ -14,7 +17,10 @@ import Navbar from '~/components/navbar.svelte';
 		<title>Astro Basics</title>
 	</head>
 	<body
-		class="bg-background mx-auto flex min-h-[100dvh] min-h-screen max-w-2xl flex-col space-y-10 px-6 py-12 antialiased sm:py-24"
+		class={cn(
+			'bg-background mx-auto flex min-h-[100dvh] min-h-screen max-w-2xl flex-col space-y-10 px-6 py-12 antialiased sm:py-24',
+			className
+		)}
 	>
 		<ModeWatcher client:load />
 		<Navbar client:load />

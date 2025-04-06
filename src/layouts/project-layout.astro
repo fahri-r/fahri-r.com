@@ -1,0 +1,32 @@
+---
+import { cn } from '~/utils';
+import Layout from './layout.astro';
+import Sidebar from '~/components/projects/sidebar.astro';
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={frontmatter.title} class="lg:max-w-4xl">
+	<main>
+		<div class="mx-auto flex justify-center gap-12 px-4">
+			<article class={cn('space-y-8 z-40 w-full rounded-sm')}>
+				<header class="mb-4 lg:mb-6">
+					<div class="mb-4 text-2xl leading-tight font-extrabold text-gray-900 dark:text-white">
+						{frontmatter.title}
+					</div>
+				</header>
+
+				<slot />
+			</article>
+
+			<aside class="hidden xl:block xl:w-[350px]">
+				<Sidebar
+					tools={frontmatter.tools}
+					site={frontmatter.site}
+					repository={frontmatter.repository}
+					class="sticky top-10"
+				/>
+			</aside>
+		</div>
+	</main>
+</Layout>

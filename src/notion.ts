@@ -51,7 +51,7 @@ if (!process.env.NOTION_KEY || !process.env.DATABASE_ID)
 const NOTION_KEY = process.env.NOTION_KEY;
 const DATABASE_ID = process.env.DATABASE_ID; // TODO: Import from ENV
 
-const POSTS_PATH = `src/pages/posts`;
+const POSTS_PATH = `src/pages/projects`;
 const ASSETS_PATH = 'src/assets';
 
 const notion = new Client({
@@ -115,23 +115,14 @@ const n2m = new NotionConverter(notion)
 			})
 			.addImports("import Image from '~/components/image.astro';")
 			.addVariable('frontmatter', async (name, context) => {
-				const {
-					repository, 
-					site, 
-					tools, 
-					slug, 
-					description, 
-					status, 
-					date, 
-					category, 
-					content
-				} = context.pageProperties;
-				
+				const { repository, site, tools, slug, description, status, date, category, content } =
+					context.pageProperties;
+
 				const title = content.title[0].plain_text;
-				const cover = context.blockTree.find(x => x.type == 'image')?.image?.file.url;
+				const cover = context.blockTree.find((x) => x.type == 'image')?.image?.file.url;
 
 				return `---
-layout: ~/layouts/PostLayout.astro
+layout: ~/layouts/project-layout.astro
 id: ${context.pageId}
 repository: ${repository?.url}
 site: ${site?.url}
