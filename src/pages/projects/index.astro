@@ -1,11 +1,9 @@
 ---
-import { Badge } from '~/components/shared/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '~/components/shared/card';
 import Layout from '~/layouts/layout.astro';
-import Image from '~/components/image.astro';
+import ProjectCard from '~/components/projects/project-card.astro';
 
 const PROJECTS_PATH = 'projects';
-const posts = await Astro.glob('./*.mdx');
+const projects = await Astro.glob('./*.mdx');
 ---
 
 <Layout title="Blog">
@@ -17,53 +15,22 @@ const posts = await Astro.glob('./*.mdx');
 
 		<div class="mx-auto grid max-w-[800px] grid-cols-1 gap-3 sm:grid-cols-2">
 			{
-				posts
-					.sort((postA, postB) => {
-						const aDate = new Date(postA.frontmatter.date);
-						const bDate = new Date(postB.frontmatter.date);
+				projects
+					.sort((projectA, projectB) => {
+						const aDate = new Date(projectA.frontmatter.date);
+						const bDate = new Date(projectB.frontmatter.date);
 						return bDate.getTime() - aDate.getTime();
 					})
-					.map(async (post) => {
-						const { cover, title, date, slug, tools, description } = post?.frontmatter;
+					.map(async (project) => {
+						const { cover, title, date, slug, tools, description } = project?.frontmatter;
+						const href = `/${PROJECTS_PATH}/${slug}`;
 						const dateStr = new Date(date).toLocaleString('en-US', {
 							month: 'short',
 							day: 'numeric',
 							year: 'numeric'
 						});
 
-						return (
-							<a href={`/${PROJECTS_PATH}/${slug}`} class={'h-full'}>
-								<Card class="group hover:bg-accent flex h-full flex-col overflow-hidden border pb-2 transition-all duration-300 ease-out hover:scale-[102%] hover:shadow-lg">
-									{cover && (
-										<Image
-											src={cover}
-											alt={`${title} Cover`}
-											class="h-40 w-full overflow-hidden object-cover object-top transition-all duration-300 ease-out group-hover:brightness-50"
-										/>
-									)}
-									<CardHeader class="px-2">
-										<div class="space-y-1">
-											<CardTitle class="mt-1 text-base">{title}</CardTitle>
-											<time class="font-sans text-xs">{dateStr}</time>
-											<p class="prose text-muted-foreground dark:prose-invert line-clamp-3 max-w-full font-sans text-xs text-pretty">
-												{description}
-											</p>
-										</div>
-									</CardHeader>
-									<CardContent class="mt-auto flex flex-col p-0 px-2">
-										{tools && tools.length > 0 && (
-											<div class="mt-2 flex flex-wrap gap-1">
-												{tools?.map((tool: any) => (
-													<Badge class="px-1 py-0 text-[10px]" variant="secondary">
-														{tool.name}
-													</Badge>
-												))}
-											</div>
-										)}
-									</CardContent>
-								</Card>
-							</a>
-						);
+						return <ProjectCard {href} {cover} {title} {tools} {description} date={dateStr} />;
 					})
 			}
 		</div>

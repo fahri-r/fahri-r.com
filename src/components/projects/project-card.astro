@@ -1,0 +1,47 @@
+---
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/shared/card';
+import { Badge } from '~/components/shared/badge';
+import Image from '~/components/image.astro';
+
+const { cover, title, date, href, tools, description } = Astro.props;
+---
+
+<a {href} class={'h-full'}>
+	<Card
+		class="group hover:bg-accent flex h-full flex-col overflow-hidden border pb-2 transition-all duration-300 ease-out hover:scale-[102%] hover:shadow-lg"
+	>
+		{
+			cover && (
+				<Image
+					src={cover}
+					alt={`${title} Cover`}
+					class="h-40 w-full overflow-hidden object-cover object-top transition-all duration-300 ease-out group-hover:brightness-50"
+				/>
+			)
+		}
+		<CardHeader class="px-2">
+			<div class="space-y-1">
+				<CardTitle class="mt-1 text-base">{title}</CardTitle>
+				<time class="font-sans text-xs">{date}</time>
+				<p
+					class="prose text-muted-foreground dark:prose-invert line-clamp-3 max-w-full font-sans text-xs text-pretty"
+				>
+					{description}
+				</p>
+			</div>
+		</CardHeader>
+		<CardContent class="mt-auto flex flex-col p-0 px-2">
+			{
+				tools && tools.length > 0 && (
+					<div class="mt-2 flex flex-wrap gap-1">
+						{tools?.map((tool: any) => (
+							<Badge class="px-1 py-0 text-[10px]" variant="secondary">
+								{tool.name}
+							</Badge>
+						))}
+					</div>
+				)
+			}
+		</CardContent>
+	</Card>
+</a>
