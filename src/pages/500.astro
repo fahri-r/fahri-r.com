@@ -1,0 +1,20 @@
+---
+import { MoveLeft } from '@lucide/svelte';
+import { Button } from '~/components/shared/button';
+import Layout from '~/layouts/layout.astro';
+---
+
+<Layout class="justify-center">
+	<div class="flex flex-col space-y-4 text-center">
+		<p>Whoops, something went wrong!</p>
+		<div class="flex items-center justify-center gap-4">
+			<Button variant="ghost" class="group" href="/">
+				<MoveLeft
+					class="transition-transform duration-300 group-hover:-translate-x-0.5"
+					size={20}
+				/>
+				Home
+			</Button>
+		</div>
+	</div>
+</Layout>
