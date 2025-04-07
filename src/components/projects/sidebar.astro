@@ -42,7 +42,7 @@ const { tools = [], site = null, repository = null, class: className } = Astro.p
 			tools.length && (
 				<div class="mt-1.5 flex flex-wrap gap-1">
 					{tools.map((x: any) => (
-						<Badge class="px-1 py-0 text-[10px]" variant="secondary">
+						<Badge class="px-1 py-0 text-sm" variant="secondary">
 							{x.name}
 						</Badge>
 					))}

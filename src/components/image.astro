@@ -1,7 +1,7 @@
 ---
 import { Image as AstroImage } from 'astro:assets';
 
-const { src, alt = 'Blog Image' } = Astro.props;
+const { src, alt = 'Blog Image', class: className } = Astro.props;
 
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/*.{jpeg,jpg,png,gif}');
 if (!images[src])
@@ -10,4 +10,10 @@ if (!images[src])
 const imgType = src.split('.').pop();
 ---
 
-{imgType === 'bmp' ? <img src={src} alt={alt} /> : <AstroImage src={images[src]()} alt={alt} />}
+{
+	imgType === 'bmp' ? (
+		<img {src} {alt} class={className} />
+	) : (
+		<AstroImage src={images[src]()} {alt} class={className} />
+	)
+}
