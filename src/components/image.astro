@@ -3,9 +3,11 @@ import { Image as AstroImage } from 'astro:assets';
 
 const { src, alt = 'Blog Image', class: className } = Astro.props;
 
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/*.{jpeg,jpg,png,gif}');
+const images = import.meta.glob<{ default: ImageMetadata }>(
+	'/src/assets/projects/*.{jpeg,jpg,png,gif}'
+);
 if (!images[src])
-	throw new Error(`"${src}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif}"`);
+	throw new Error(`"${src}" does not exist in glob: "src/assets/projects/*.{jpeg,jpg,png,gif}"`);
 
 const imgType = src.split('.').pop();
 ---

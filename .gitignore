@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # vscode setting folder
 .vscode/
+.vercel/
+src/pages/projects/*.mdx
+src/assets/projects/

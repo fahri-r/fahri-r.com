@@ -11,14 +11,16 @@ This repository is currently undergoing a major migration from **Next.js** to **
 
 ## Key Features
 
-✅ **Automated Notion Sync**:  
-   - GitHub Actions cron job regularly pulls content from Notion  
-   - Generates static pages for maximum performance  
+✅ **Automated Notion Sync**:
 
-✅ **Modern Tech Stack**:  
-   - Astro.js for the base framework  
-   - Svelte for interactive components  
-   - MDX for rich content authoring  
+- GitHub Actions cron job regularly pulls content from Notion
+- Generates static pages for maximum performance
+
+✅ **Modern Tech Stack**:
+
+- Astro.js for the base framework
+- Svelte for interactive components
+- MDX for rich content authoring
 
 ## Current Status: Work in Progress �
 

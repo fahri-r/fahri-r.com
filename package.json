@@ -8,9 +8,7 @@
 		"preview": "astro preview",
 		"astro": "astro",
 		"format": "prettier --write .",
-		"sync": "rimraf src/pages/projects/_ && bunx tsx src/notion.ts",
-		"sync:published": "rimraf src/pages/projects/_ && bunx tsx src/notion.ts --published",
-		"generate": "rimraf dist/*_ && ([ -d 'dist' ] || mkdir dist) && ([ -d 'dist/images' ] || mkdir dist/images) && ([ -d 'src/pages/projects' ] || mkdir src/pages/projects) && ([ -d 'src/assets' ] || mkdir src/assets) && rimraf src/pages/projects/_ && bunx tsx src/notion.ts --published && astro build"
+		"generate": "rimraf dist/*_ && ([ -d 'dist' ] || mkdir dist) && ([ -d 'dist/images' ] || mkdir dist/images) && ([ -d 'src/pages/projects' ] || mkdir src/pages/projects) && ([ -d 'src/assets/projects' ] || mkdir src/assets/projects) && rimraf src/pages/projects/_ && bunx tsx src/libs/notion/client.ts && astro build"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^4.2.3",
@@ -20,13 +18,13 @@
 		"@lucide/svelte": "^0.483.0",
 		"@notionhq/client": "^2.3.0",
 		"@tailwindcss/vite": "^4.0.15",
-		"@types/node": "^22.14.0",
 		"astro": "^5.5.4",
+		"async-retry": "^1.3.3",
+		"axios": "^1.8.4",
 		"clsx": "^2.1.1",
 		"dotenv": "^16.4.7",
 		"mode-watcher": "^0.5.1",
 		"moment": "^2.30.1",
-		"notion-to-md": "^4.0.0-alpha.4",
 		"svelte": "^5.25.2",
 		"tailwind-merge": "^3.0.2",
 		"tailwind-variants": "^1.0.0",
@@ -39,6 +37,8 @@
 		"prettier": "^3.5.3",
 		"prettier-plugin-astro": "^0.14.1",
 		"prettier-plugin-svelte": "^3.3.3",
-		"prettier-plugin-tailwindcss": "^0.6.11"
+		"prettier-plugin-tailwindcss": "^0.6.11",
+		"@types/async-retry": "^1.4.9",
+		"@types/node": "^22.14.0"
 	}
 }
