@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import { pipeline } from 'node:stream/promises';
 import axios from 'axios';
 import retry from 'async-retry';
-import { config } from 'dotenv';
 import type * as responses from '~/interfaces/notion/responses.interface';
 import type * as requestParams from '~/interfaces/notion/request-params.interface';
 import type {
@@ -43,92 +42,18 @@ import type {
 	Reference
 } from '~/interfaces/notion/block.interface';
 import { Client, APIResponseError } from '@notionhq/client';
+import { NOTION_KEY } from '~/constants/global';
 import type { DatabaseColumn } from '~/interfaces/notion/database-column.interface';
 
-config();
-const NOTION_KEY = process.env.NOTION_KEY || '';
-const DATABASE_ID = process.env.DATABASE_ID || '';
 const NUMBER_OF_RETRY = 2;
-
-if (!NOTION_KEY || !DATABASE_ID) throw new Error('Missing Notion .env data');
 
 const client = new Client({
 	auth: NOTION_KEY
 });
 
-var posts = await getAllPosts();
-for (let post of posts) {
-	let metadata = '---\n';
-	let header = '';
-	var body = '';
-	var blocks = await getAllBlocksByBlockId(post.pageId);
-
-	metadata += 'layout: "~/layouts/project-layout.astro"\n';
-	// Loop through each property and add "key: value\n"
-	for (const [key, value] of Object.entries(post)) {
-		if (key == 'cover') continue;
-
-		if (!value) {
-			metadata += `${key}: null\n`;
-			continue;
-		}
-
-		var stringValue = value instanceof Object ? JSON.stringify(value) : `"${value}"`;
-		metadata += `${key}: ${stringValue}\n`;
-	}
-
-	blocks.map((block: Block) => {
-		switch (block.type) {
-			case 'paragraph':
-				body += block.paragraph?.richTexts.map((richText) => richText.plainText).join('');
-				body += '\n';
-
-				break;
-			case 'image':
-				if (block.image?.file?.url) {
-					var url = block.image.file.url;
-					const fileExtension = getFileExtension(url);
-					downloadFile(url, block.id, fileExtension);
-
-					var component = "import Image from '~/components/image.astro'";
-					if (!header.includes(component)) {
-						header += "import Image from '~/components/image.astro';\n";
-					}
-
-					body += `<Image src="/src/assets/projects/${block.id}${fileExtension}" />\n`;
-
-					if (!metadata.includes('cover')) {
-						metadata += `cover: "/src/assets/projects/${block.id}${fileExtension}"\n`;
-					}
-				}
-
-				break;
-			case 'video':
-				if (block.video?.file?.url) {
-					var url = block.video.file.url;
-					const fileExtension = getFileExtension(url);
-					downloadFile(url, block.id, fileExtension);
-					body += `<iframe width="100%" height="480" src="/src/assets/projects/${block.id}${fileExtension}" title="Preview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen />\n`;
-				}
-
-				break;
-
-			default:
-				break;
-		}
-	});
-
-	metadata += '---\n';
-	header += '\n';
-	body += '\n';
-
-	var data = metadata + header + body;
-	fs.writeFileSync(`src/pages/projects/${post.slug}.mdx`, data);
-}
-
-export async function getAllPosts(): Promise<any[]> {
+export async function getAllPosts(databaseId: string, database: DatabaseColumn[]): Promise<any[]> {
 	const params: requestParams.QueryDatabase = {
-		database_id: DATABASE_ID,
+		database_id: databaseId,
 		page_size: 100
 	};
 
@@ -163,7 +88,7 @@ export async function getAllPosts(): Promise<any[]> {
 		params['start_cursor'] = res.next_cursor as string;
 	}
 
-	var post = results.map((pageObject) => _buildPost(pageObject)).filter((post) => post);
+	var post = results.map((pageObject) => _buildPost(pageObject, database)).filter((post) => post);
 
 	return post;
 }
@@ -270,12 +195,17 @@ export async function getBlock(blockId: string): Promise<Block> {
 	return _buildBlock(res);
 }
 
-function getFileExtension(url: string): string | null {
+export function getFileExtension(url: string): string | null {
 	const match = url.match(/\.([a-zA-Z0-9]+)(?:[?#]|$)/);
 	return match ? `.${match[1]}` : null;
 }
 
-async function downloadFile(url: string, filename: string, fileExtension: string | null) {
+export async function downloadFile(
+	outputDir: string,
+	url: string,
+	filename: string,
+	fileExtension: string | null
+) {
 	try {
 		const response = await axios({
 			method: 'GET',
@@ -283,7 +213,7 @@ async function downloadFile(url: string, filename: string, fileExtension: string
 			responseType: 'stream'
 		});
 
-		const writer = fs.createWriteStream(`src/assets/projects/${filename}${fileExtension}`);
+		const writer = fs.createWriteStream(`src/assets/${outputDir}/${filename}${fileExtension}`);
 		await pipeline(response.data, writer);
 	} catch (error) {
 		console.error('Download failed:', error);
@@ -690,7 +620,7 @@ async function _getSyncedBlockChildren(block: Block): Promise<Block[]> {
 	return children;
 }
 
-function _buildPost(pageObject: responses.PageObject): any | null {
+function _buildPost(pageObject: responses.PageObject, database: DatabaseColumn[]): any | null {
 	const prop = pageObject.properties;
 
 	let icon: FileObject | Emoji | null = null;
@@ -716,56 +646,13 @@ function _buildPost(pageObject: responses.PageObject): any | null {
 		};
 	}
 
-	const projectDatabase: DatabaseColumn[] = [
-		{
-			type: 'title',
-			columnName: 'content',
-			isRequired: true
-		},
-		{
-			type: 'rich_text',
-			columnName: 'slug',
-			isRequired: true
-		},
-		{
-			type: 'date',
-			columnName: 'date',
-			isRequired: true
-		},
-		{
-			type: 'url',
-			columnName: 'repository',
-			isRequired: false
-		},
-		{
-			type: 'url',
-			columnName: 'site',
-			isRequired: false
-		},
-		{
-			type: 'multi_select',
-			columnName: 'tools',
-			isRequired: false
-		},
-		{
-			type: 'select',
-			columnName: 'category',
-			isRequired: false
-		},
-		{
-			type: 'rich_text',
-			columnName: 'description',
-			isRequired: false
-		}
-	];
-
 	var result: any = {
 		pageId: pageObject.id,
 		icon,
 		cover
 	};
 
-	for (let col of projectDatabase) {
+	for (let col of database) {
 		const { type, columnName, isRequired } = col;
 		switch (type) {
 			case 'number':
