@@ -3,8 +3,8 @@ import { pipeline } from 'node:stream/promises';
 import axios from 'axios';
 import retry from 'async-retry';
 import { config } from 'dotenv';
-import type * as responses from './responses';
-import type * as requestParams from './request-params';
+import type * as responses from '~/interfaces/notion/responses.interface';
+import type * as requestParams from '~/interfaces/notion/request-params.interface';
 import type {
 	Block,
 	Paragraph,
@@ -41,9 +41,9 @@ import type {
 	LinkToPage,
 	Mention,
 	Reference
-} from './interfaces';
+} from '~/interfaces/notion/block.interface';
 import { Client, APIResponseError } from '@notionhq/client';
-import type { DatabaseColumn } from './database-column';
+import type { DatabaseColumn } from '~/interfaces/notion/database-column.interface';
 
 config();
 const NOTION_KEY = process.env.NOTION_KEY || '';

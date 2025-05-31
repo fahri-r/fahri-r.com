@@ -1,6 +1,6 @@
-import type { WorkProps } from './work';
+import type { Work } from './work.interface';
 
-type EducationProps = {
+interface Education {
 	institution: string;
 	degree: string;
 	major: string;
@@ -9,25 +9,23 @@ type EducationProps = {
 	logoUrl: string;
 	initials: string;
 	site: string;
-};
+}
 
-type SocialProps = {
+interface Social {
 	href: string;
 	label: string;
-	icon: IconProps;
-};
+	icon: string;
+}
 
-type ProfileProps = {
+export default interface Profile {
 	name: string;
 	initials: string;
 	description: string;
 	job: string;
 	dob: string;
 	location: string;
-	socials: SocialProps[];
+	socials: Social[];
 	imgUrl: string;
-	works: WorkProps[];
-	education: EducationProps[];
-};
-
-export default ProfileProps;
+	works: Work[];
+	education: Education[];
+}

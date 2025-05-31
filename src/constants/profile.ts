@@ -1,6 +1,6 @@
-import type ProfileProps from '~/types/profile';
+import type Profile from '~/interfaces/profile.interface';
 
-const profile: ProfileProps = {
+const profile: Profile = {
 	name: 'Fahri Ramadhan',
 	description:
 		'Organized and self-motivated software engineer graduate with 1 years combined freelance and professional experience. Fluent in SQL, Javascript, and PHP programming languages. Possess practical working knowledge of relational databases using PostgreSQL and SQL Server. Constantly updating personal and professional technical skills with complementary collegiate courses and online bootcamps. Reliable and responsible team player.',

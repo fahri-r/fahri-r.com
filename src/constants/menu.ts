@@ -1,6 +1,6 @@
-import type MenuProps from '~/types/menu';
+import type Menu from '~/interfaces/menu.interface';
 
-const menu: MenuProps[] = [
+const menu: Menu[] = [
 	{
 		path: '/',
 		name: 'Home',
