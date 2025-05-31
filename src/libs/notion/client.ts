@@ -6,7 +6,6 @@ import { config } from 'dotenv';
 import type * as responses from './responses';
 import type * as requestParams from './request-params';
 import type {
-	Post,
 	Block,
 	Paragraph,
 	Heading1,
@@ -44,6 +43,7 @@ import type {
 	Reference
 } from './interfaces';
 import { Client, APIResponseError } from '@notionhq/client';
+import type { DatabaseColumn } from './database-column';
 
 config();
 const NOTION_KEY = process.env.NOTION_KEY || '';
@@ -126,7 +126,7 @@ for (let post of posts) {
 	fs.writeFileSync(`src/pages/projects/${post.slug}.mdx`, data);
 }
 
-export async function getAllPosts(): Promise<Post[]> {
+export async function getAllPosts(): Promise<any[]> {
 	const params: requestParams.QueryDatabase = {
 		database_id: DATABASE_ID,
 		page_size: 100
@@ -163,51 +163,46 @@ export async function getAllPosts(): Promise<Post[]> {
 		params['start_cursor'] = res.next_cursor as string;
 	}
 
-	var post = results
-		.filter((pageObject) => _validPageObject(pageObject))
-		.map((pageObject) => _buildPost(pageObject));
+	var post = results.map((pageObject) => _buildPost(pageObject)).filter((post) => post);
+
 	return post;
 }
 
 export async function getAllBlocksByBlockId(blockId: string): Promise<Block[]> {
 	let results: responses.BlockObject[] = [];
 
-	if (fs.existsSync(`tmp/${blockId}.json`)) {
-		results = JSON.parse(fs.readFileSync(`tmp/${blockId}.json`, 'utf-8'));
-	} else {
-		const params: requestParams.RetrieveBlockChildren = {
-			block_id: blockId
-		};
+	const params: requestParams.RetrieveBlockChildren = {
+		block_id: blockId
+	};
 
-		while (true) {
-			const res = await retry(
-				async (bail) => {
-					try {
-						return (await client.blocks.children.list(
-							params as any // eslint-disable-line @typescript-eslint/no-explicit-any
-						)) as responses.RetrieveBlockChildrenResponse;
-					} catch (error: unknown) {
-						if (error instanceof APIResponseError) {
-							if (error.status && error.status >= 400 && error.status < 500) {
-								bail(error);
-							}
+	while (true) {
+		const res = await retry(
+			async (bail) => {
+				try {
+					return (await client.blocks.children.list(
+						params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+					)) as responses.RetrieveBlockChildrenResponse;
+				} catch (error: unknown) {
+					if (error instanceof APIResponseError) {
+						if (error.status && error.status >= 400 && error.status < 500) {
+							bail(error);
 						}
-						throw error;
 					}
-				},
-				{
-					retries: NUMBER_OF_RETRY
+					throw error;
 				}
-			);
-
-			results = results.concat(res.results);
-
-			if (!res.has_more) {
-				break;
+			},
+			{
+				retries: NUMBER_OF_RETRY
 			}
+		);
 
-			params['start_cursor'] = res.next_cursor as string;
+		results = results.concat(res.results);
+
+		if (!res.has_more) {
+			break;
 		}
+
+		params['start_cursor'] = res.next_cursor as string;
 	}
 
 	const allBlocks = results.map((blockObject) => _buildBlock(blockObject));
@@ -290,7 +285,6 @@ async function downloadFile(url: string, filename: string, fileExtension: string
 
 		const writer = fs.createWriteStream(`src/assets/projects/${filename}${fileExtension}`);
 		await pipeline(response.data, writer);
-		console.log('Download completed!');
 	} catch (error) {
 		console.error('Download failed:', error);
 	}
@@ -571,42 +565,38 @@ function _buildBlock(blockObject: responses.BlockObject): Block {
 async function _getTableRows(blockId: string): Promise<TableRow[]> {
 	let results: responses.BlockObject[] = [];
 
-	if (fs.existsSync(`tmp/${blockId}.json`)) {
-		results = JSON.parse(fs.readFileSync(`tmp/${blockId}.json`, 'utf-8'));
-	} else {
-		const params: requestParams.RetrieveBlockChildren = {
-			block_id: blockId
-		};
+	const params: requestParams.RetrieveBlockChildren = {
+		block_id: blockId
+	};
 
-		while (true) {
-			const res = await retry(
-				async (bail) => {
-					try {
-						return (await client.blocks.children.list(
-							params as any // eslint-disable-line @typescript-eslint/no-explicit-any
-						)) as responses.RetrieveBlockChildrenResponse;
-					} catch (error: unknown) {
-						if (error instanceof APIResponseError) {
-							if (error.status && error.status >= 400 && error.status < 500) {
-								bail(error);
-							}
+	while (true) {
+		const res = await retry(
+			async (bail) => {
+				try {
+					return (await client.blocks.children.list(
+						params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+					)) as responses.RetrieveBlockChildrenResponse;
+				} catch (error: unknown) {
+					if (error instanceof APIResponseError) {
+						if (error.status && error.status >= 400 && error.status < 500) {
+							bail(error);
 						}
-						throw error;
 					}
-				},
-				{
-					retries: NUMBER_OF_RETRY
+					throw error;
 				}
-			);
-
-			results = results.concat(res.results);
-
-			if (!res.has_more) {
-				break;
+			},
+			{
+				retries: NUMBER_OF_RETRY
 			}
+		);
 
-			params['start_cursor'] = res.next_cursor as string;
+		results = results.concat(res.results);
+
+		if (!res.has_more) {
+			break;
 		}
+
+		params['start_cursor'] = res.next_cursor as string;
 	}
 
 	return results.map((blockObject) => {
@@ -635,42 +625,38 @@ async function _getTableRows(blockId: string): Promise<TableRow[]> {
 async function _getColumns(blockId: string): Promise<Column[]> {
 	let results: responses.BlockObject[] = [];
 
-	if (fs.existsSync(`tmp/${blockId}.json`)) {
-		results = JSON.parse(fs.readFileSync(`tmp/${blockId}.json`, 'utf-8'));
-	} else {
-		const params: requestParams.RetrieveBlockChildren = {
-			block_id: blockId
-		};
+	const params: requestParams.RetrieveBlockChildren = {
+		block_id: blockId
+	};
 
-		while (true) {
-			const res = await retry(
-				async (bail) => {
-					try {
-						return (await client.blocks.children.list(
-							params as any // eslint-disable-line @typescript-eslint/no-explicit-any
-						)) as responses.RetrieveBlockChildrenResponse;
-					} catch (error: unknown) {
-						if (error instanceof APIResponseError) {
-							if (error.status && error.status >= 400 && error.status < 500) {
-								bail(error);
-							}
+	while (true) {
+		const res = await retry(
+			async (bail) => {
+				try {
+					return (await client.blocks.children.list(
+						params as any // eslint-disable-line @typescript-eslint/no-explicit-any
+					)) as responses.RetrieveBlockChildrenResponse;
+				} catch (error: unknown) {
+					if (error instanceof APIResponseError) {
+						if (error.status && error.status >= 400 && error.status < 500) {
+							bail(error);
 						}
-						throw error;
 					}
-				},
-				{
-					retries: NUMBER_OF_RETRY
+					throw error;
 				}
-			);
-
-			results = results.concat(res.results);
-
-			if (!res.has_more) {
-				break;
+			},
+			{
+				retries: NUMBER_OF_RETRY
 			}
+		);
 
-			params['start_cursor'] = res.next_cursor as string;
+		results = results.concat(res.results);
+
+		if (!res.has_more) {
+			break;
 		}
+
+		params['start_cursor'] = res.next_cursor as string;
 	}
 
 	return await Promise.all(
@@ -704,19 +690,7 @@ async function _getSyncedBlockChildren(block: Block): Promise<Block[]> {
 	return children;
 }
 
-function _validPageObject(pageObject: responses.PageObject): boolean {
-	const prop = pageObject.properties;
-
-	return (
-		!!prop.Content.title &&
-		prop.Content.title.length > 0 &&
-		!!prop.Slug.rich_text &&
-		prop.Slug.rich_text.length > 0 &&
-		!!prop.Date.date
-	);
-}
-
-function _buildPost(pageObject: responses.PageObject): Post {
+function _buildPost(pageObject: responses.PageObject): any | null {
 	const prop = pageObject.properties;
 
 	let icon: FileObject | Emoji | null = null;
@@ -742,27 +716,99 @@ function _buildPost(pageObject: responses.PageObject): Post {
 		};
 	}
 
-	const post: Post = {
+	const projectDatabase: DatabaseColumn[] = [
+		{
+			type: 'title',
+			columnName: 'content',
+			isRequired: true
+		},
+		{
+			type: 'rich_text',
+			columnName: 'slug',
+			isRequired: true
+		},
+		{
+			type: 'date',
+			columnName: 'date',
+			isRequired: true
+		},
+		{
+			type: 'url',
+			columnName: 'repository',
+			isRequired: false
+		},
+		{
+			type: 'url',
+			columnName: 'site',
+			isRequired: false
+		},
+		{
+			type: 'multi_select',
+			columnName: 'tools',
+			isRequired: false
+		},
+		{
+			type: 'select',
+			columnName: 'category',
+			isRequired: false
+		},
+		{
+			type: 'rich_text',
+			columnName: 'description',
+			isRequired: false
+		}
+	];
+
+	var result: any = {
 		pageId: pageObject.id,
-		title: prop.Content.title
-			? prop.Content.title.map((richText) => richText.plain_text).join('')
-			: '',
-		icon: icon,
-		cover: cover,
-		slug: prop.Slug.rich_text
-			? prop.Slug.rich_text.map((richText) => richText.plain_text).join('')
-			: '',
-		date: prop.Date.date ? prop.Date.date.start : '',
-		repository: prop.Repository.url ? prop.Repository.url : '',
-		site: prop.Site.url ? prop.Site.url : '',
-		tools: prop.Tools.multi_select ? prop.Tools.multi_select : [],
-		category: prop.Category.select ? prop.Category.select.name : '',
-		description: prop.Description.rich_text
-			? prop.Description.rich_text.map((richText) => richText.plain_text).join('')
-			: ''
+		icon,
+		cover
 	};
 
-	return post;
+	for (let col of projectDatabase) {
+		const { type, columnName, isRequired } = col;
+		switch (type) {
+			case 'number':
+				if (isRequired && !prop[columnName].number) return null;
+				result[columnName] = prop[columnName].number ?? 0;
+
+				break;
+			case 'select':
+				if (isRequired && !prop[columnName].select?.name) return null;
+				result[columnName] = prop[columnName].select?.name ?? '';
+
+				break;
+			case 'multi_select':
+				if (isRequired && !prop[columnName].multi_select) return null;
+				result[columnName] = prop[columnName].multi_select ?? [];
+
+				break;
+			case 'date':
+				if (isRequired && !prop[columnName].date?.start) return null;
+				result[columnName] = prop[columnName].date?.start ?? '';
+
+				break;
+			case 'url':
+				if (isRequired && !prop[columnName].url) return null;
+				result[columnName] = prop[columnName].url ?? '';
+
+				break;
+			case 'title':
+				if (isRequired && !prop[columnName].title) return null;
+				result[columnName] =
+					prop[columnName].title.map((richText) => richText.plain_text).join('') ?? '';
+
+				break;
+			case 'rich_text':
+				if (isRequired && !prop[columnName].rich_text) return null;
+				result[columnName] =
+					prop[columnName].rich_text?.map((richText) => richText.plain_text).join('') ?? '';
+
+				break;
+		}
+	}
+
+	return result;
 }
 
 function _buildRichText(richTextObject: responses.RichTextObject): RichText {

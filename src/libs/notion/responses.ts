@@ -273,7 +273,7 @@ interface PageProperty {
 	title: RichTextObject[];
 }
 
-export interface SelectProperty {
+interface SelectProperty {
 	id: string;
 	name: string;
 	color: string;

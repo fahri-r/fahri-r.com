@@ -1,19 +1,3 @@
-import type { SelectProperty } from './responses';
-
-export interface Post {
-	pageId: string;
-	title: string;
-	icon: FileObject | Emoji | null;
-	cover: FileObject | null;
-	slug: string;
-	date: string;
-	repository: string | null;
-	site: string | null;
-	tools: SelectProperty[];
-	category: string;
-	description: string;
-}
-
 export interface Block {
 	id: string;
 	type: string;
