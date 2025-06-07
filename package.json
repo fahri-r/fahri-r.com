@@ -8,7 +8,8 @@
 		"preview": "astro preview",
 		"astro": "astro",
 		"format": "prettier --write .",
-		"generate": "rimraf dist/*_ && ([ -d 'dist' ] || mkdir dist) && ([ -d 'dist/images' ] || mkdir dist/images) && ([ -d 'src/pages/projects' ] || mkdir src/pages/projects) && ([ -d 'src/assets/projects' ] || mkdir src/assets/projects) && rimraf src/pages/projects/_ && bunx tsx src/libs/notion/converter.ts -d src/libs/notion/databases/project.database.ts -o projects && astro build"
+		"generate-project": "rimraf dist/*_ && ([ -d 'dist' ] || mkdir dist) && ([ -d 'dist/images' ] || mkdir dist/images) && ([ -d 'src/pages/projects' ] || mkdir src/pages/projects) && ([ -d 'src/assets/projects' ] || mkdir src/assets/projects) && rimraf src/pages/projects/_ && bunx tsx src/libs/notion/converter.ts -d src/libs/notion/databases/project.database.ts -o projects",
+		"generate-blog": "rimraf dist/*_ && ([ -d 'dist' ] || mkdir dist) && ([ -d 'dist/images' ] || mkdir dist/images) && ([ -d 'src/pages/blog' ] || mkdir src/pages/blog) && ([ -d 'src/assets/blog' ] || mkdir src/assets/blog) && rimraf src/pages/blog/_ && bunx tsx src/libs/notion/converter.ts -d src/libs/notion/databases/blog.database.ts -o blog"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "4.3.0",
