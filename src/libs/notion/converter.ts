@@ -5,6 +5,7 @@ import type { Block } from '~/interfaces/notion/block.interface';
 import args from 'args';
 import path from 'path';
 import type { DatabaseColumn } from '~/interfaces/notion/database-column.interface';
+import { Heading1, Heading2, Heading3 } from '~/constants/notion-block';
 
 if (!NOTION_KEY) throw new Error('Missing Notion .env data');
 
@@ -46,10 +47,24 @@ try {
 
 if (!databaseId || !database.length) throw new Error('Missing database or database id');
 
+const importComponent = (componentName: string, isAnnotation = false) => {
+	const notionComponentPath = '~/components/shared/notion-blocks';
+	const sanitizedTitle = componentName
+		.replace(/_/g, '') // Replace all underscores with spaces
+		.replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
+
+	componentName = isAnnotation ? `annotations/${componentName}` : componentName;
+	var component = `import ${sanitizedTitle} from '${notionComponentPath}/${componentName}.svelte'`;
+
+	if (!header.includes(component)) {
+		header.push(component);
+	}
+};
+
 var posts = await getAllPosts(databaseId, database);
+let header: string[] = [];
 for (let post of posts) {
 	let metadata = '---\n';
-	let header = '';
 	var body = '';
 	var blocks = await getAllBlocksByBlockId(post.pageId);
 
@@ -69,6 +84,22 @@ for (let post of posts) {
 
 	blocks.map((block: Block) => {
 		switch (block.type) {
+			case Heading1:
+				importComponent(Heading1);
+				body += `<Heading1 block={${JSON.stringify(block)}} headings={[]}/>\n`;
+
+				break;
+			case Heading2:
+				importComponent(Heading2);
+				body += `<Heading2 block={${JSON.stringify(block)}} headings={[]}/>\n`;
+
+				break;
+			case Heading3:
+				importComponent(Heading3);
+				body += `<Heading3 block={${JSON.stringify(block)}} headings={[]}/>\n`;
+
+				break;
+
 			case 'paragraph':
 				body += block.paragraph?.richTexts.map((richText) => richText.plainText).join('');
 				body += '\n';
@@ -76,14 +107,14 @@ for (let post of posts) {
 				break;
 			case 'image':
 				if (block.image?.file?.url) {
+					var component = "import Image from '~/components/image.astro'";
+					if (!header.includes(component)) {
+						header.push(component);
+					}
+
 					var url = block.image.file.url;
 					const fileExtension = getFileExtension(url);
 					downloadFile(outputDir, url, block.id, fileExtension);
-
-					var component = "import Image from '~/components/image.astro'";
-					if (!header.includes(component)) {
-						header += "import Image from '~/components/image.astro';\n";
-					}
 
 					body += `<Image src="/src/assets/${outputDir}/${block.id}${fileExtension}" />\n`;
 
@@ -104,14 +135,14 @@ for (let post of posts) {
 				break;
 
 			default:
+				console.log(block.type);
 				break;
 		}
 	});
 
 	metadata += '---\n';
-	header += '\n';
 	body += '\n';
 
-	var data = metadata + header + body;
+	var data = metadata + header.join('\n') + '\n' + body;
 	fs.writeFileSync(`src/pages/${outputDir}/${post.slug}.mdx`, data);
 }
