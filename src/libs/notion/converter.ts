@@ -5,7 +5,7 @@ import type { Block } from '~/interfaces/notion/block.interface';
 import args from 'args';
 import path from 'path';
 import type { DatabaseColumn } from '~/interfaces/notion/database-column.interface';
-import { Heading1, Heading2, Heading3 } from '~/constants/notion-block';
+import { Heading1, Heading2, Heading3, Paragraph } from '~/constants/notion-block';
 
 if (!NOTION_KEY) throw new Error('Missing Notion .env data');
 
@@ -49,11 +49,10 @@ if (!databaseId || !database.length) throw new Error('Missing database or databa
 
 const importComponent = (componentName: string, isAnnotation = false) => {
 	const notionComponentPath = '~/components/shared/notion-blocks';
-	const sanitizedTitle = componentName
-		.replace(/_/g, '') // Replace all underscores with spaces
-		.replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
+	const sanitizedComponentName = componentName.replace(/_/g, '') // Replace all underscores with empty string
+	const sanitizedTitle = sanitizedComponentName.replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
 
-	componentName = isAnnotation ? `annotations/${componentName}` : componentName;
+	componentName = isAnnotation ? `annotations/${sanitizedComponentName}` : sanitizedComponentName;
 	var component = `import ${sanitizedTitle} from '${notionComponentPath}/${componentName}.svelte'`;
 
 	if (!header.includes(component)) {
@@ -84,27 +83,27 @@ for (let post of posts) {
 
 	blocks.map((block: Block) => {
 		switch (block.type) {
+			case Paragraph:
+				importComponent(Paragraph);
+				body += `<Paragraph block={${JSON.stringify(block)}} />\n`;
+
+				break;
 			case Heading1:
 				importComponent(Heading1);
-				body += `<Heading1 block={${JSON.stringify(block)}} headings={[]}/>\n`;
+				body += `<Heading1 block={${JSON.stringify(block)}} />\n`;
 
 				break;
 			case Heading2:
 				importComponent(Heading2);
-				body += `<Heading2 block={${JSON.stringify(block)}} headings={[]}/>\n`;
+				body += `<Heading2 block={${JSON.stringify(block)}} />\n`;
 
 				break;
 			case Heading3:
 				importComponent(Heading3);
-				body += `<Heading3 block={${JSON.stringify(block)}} headings={[]}/>\n`;
+				body += `<Heading3 block={${JSON.stringify(block)}} />\n`;
 
 				break;
 
-			case 'paragraph':
-				body += block.paragraph?.richTexts.map((richText) => richText.plainText).join('');
-				body += '\n';
-
-				break;
 			case 'image':
 				if (block.image?.file?.url) {
 					var component = "import Image from '~/components/image.astro'";
@@ -143,6 +142,6 @@ for (let post of posts) {
 	metadata += '---\n';
 	body += '\n';
 
-	var data = metadata + header.join('\n') + '\n' + body;
+	var data = metadata + header.join('\n') + '\n\n' + body;
 	fs.writeFileSync(`src/pages/${outputDir}/${post.slug}.mdx`, data);
 }
