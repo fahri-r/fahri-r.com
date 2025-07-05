@@ -2,7 +2,7 @@
 	import { ChevronRightIcon } from '@lucide/svelte';
 	import { Card, CardHeader } from '~/components/shared/card';
 	import { Avatar } from '~/components/shared/avatar';
-	import { cn } from '~/utils';
+	import { cn } from '~/libs/utils';
 
 	let { logoUrl, altText, title, subtitle, period, description, initials } = $props();
 

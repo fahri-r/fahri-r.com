@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-	import { cn } from '~/utils';
+	import { cn } from '~/libs/utils';
 
 	let { class: className, src, fallback, ...props } = $props();
 
