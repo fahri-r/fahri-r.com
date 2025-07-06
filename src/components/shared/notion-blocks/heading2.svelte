@@ -6,9 +6,10 @@
 
 	interface Props {
 		block: Block;
+		headings: Block[];
 	}
 
-	const { block }: Props = $props();
+	const { block, headings }: Props = $props();
 
 	const id = buildHeadingId(block.heading2!);
 	const richTexts = block.heading2?.richTexts ?? [];
@@ -27,7 +28,7 @@
 		</summary>
 		<div>
 			{#if block.heading2?.children}
-				<NotionBlocks blocks={block.heading2.children} />
+				<NotionBlocks blocks={block.heading2.children} {headings} />
 			{/if}
 		</div>
 	</details>

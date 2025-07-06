@@ -5,7 +5,15 @@ import type { Block } from '~/interfaces/notion/block.interface';
 import args from 'args';
 import path from 'path';
 import type { DatabaseColumn } from '~/interfaces/notion/database-column.interface';
-import { Heading1, Heading2, Heading3, Paragraph } from '~/constants/notion-block';
+import {
+	Divider,
+	Embed,
+	Heading1,
+	Heading2,
+	Heading3,
+	Paragraph,
+	Quote
+} from '~/constants/notion-block';
 
 if (!NOTION_KEY) throw new Error('Missing Notion .env data');
 
@@ -49,7 +57,7 @@ if (!databaseId || !database.length) throw new Error('Missing database or databa
 
 const importComponent = (componentName: string, isAnnotation = false) => {
 	const notionComponentPath = '~/components/shared/notion-blocks';
-	const sanitizedComponentName = componentName.replace(/_/g, '') // Replace all underscores with empty string
+	const sanitizedComponentName = componentName.replace(/_/g, ''); // Replace all underscores with empty string
 	const sanitizedTitle = sanitizedComponentName.replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
 
 	componentName = isAnnotation ? `annotations/${sanitizedComponentName}` : sanitizedComponentName;
@@ -101,6 +109,21 @@ for (let post of posts) {
 			case Heading3:
 				importComponent(Heading3);
 				body += `<Heading3 block={${JSON.stringify(block)}} />\n`;
+
+				break;
+			case Divider:
+				importComponent(Divider);
+				body += `<Divider block={${JSON.stringify(block)}} />\n`;
+
+				break;
+			case Quote:
+				importComponent(Quote);
+				body += `<Quote block={${JSON.stringify(block)}} />\n`;
+
+				break;
+			case Embed:
+				importComponent(Embed);
+				body += `<Embed client:load block={${JSON.stringify(block)}} />\n`;
 
 				break;
 

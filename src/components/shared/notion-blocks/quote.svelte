@@ -12,20 +12,22 @@
 	const { block, headings }: Props = $props();
 </script>
 
-<p class={block.paragraph!.color.replaceAll('_', '-')}>
-	{#each block.paragraph!.richTexts as richText}
+<blockquote class={block.quote!.color.replaceAll('_', '-')}>
+	{#each block.quote!.richTexts as richText}
 		<RichText {richText} />
 	{/each}
 
-	{#if block.hasChildren}
-		<NotionBlocks blocks={block.paragraph!.children!} {headings} />
+	{#if block.quote!.children}
+		<NotionBlocks blocks={block.quote!.children} {headings} />
 	{/if}
-</p>
+</blockquote>
 
 <style>
-	p {
-		margin: 0.3rem 0;
+	blockquote {
+		margin: 0.6rem 0;
+		padding: 0 0.9rem;
+		border-left: 3px solid var(--fg);
 		font-size: 1rem;
-		min-height: 1.8rem;
+		line-height: 1.8rem;
 	}
 </style>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import type { RichText } from '~/interfaces/notion/block.interface';
+	import '~/styles/notion-color.css';
 
 	interface Props {
 		richText: RichText;
