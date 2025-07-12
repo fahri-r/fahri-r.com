@@ -14,3 +14,5 @@ export const File = 'file';
 export const Toggle = 'toggle';
 export const Table = 'table';
 export const TableOfContents = 'table_of_contents';
+export const SyncedBlock = 'synced_block';
+export const LinkToPage = 'link_to_page';

@@ -10,7 +10,7 @@
 	let { richText, children }: Props = $props();
 </script>
 
-{#if richText.href}
+{#if richText.href && !richText.mention}
 	<a href={richText.href} class="link">
 		{@render children()}
 	</a>

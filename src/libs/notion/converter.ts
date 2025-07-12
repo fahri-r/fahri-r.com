@@ -14,8 +14,10 @@ import {
 	Heading2,
 	Heading3,
 	Image,
+	LinkToPage,
 	Paragraph,
 	Quote,
+	SyncedBlock,
 	Table,
 	TableOfContents,
 	Toggle,
@@ -164,15 +166,20 @@ for (let post of posts) {
 
 				break;
 			case TableOfContents:
-
-				var headings = blocks.filter((b: Block) =>
-					[Heading1, Heading2, Heading3].includes(
-						b.type
-					)
-				);
+				var headings = blocks.filter((b: Block) => [Heading1, Heading2, Heading3].includes(b.type));
 
 				importComponent(TableOfContents);
 				body += `<TableOfContents block={${JSON.stringify(block)}} headings={${JSON.stringify(headings)}}/>\n`;
+
+				break;
+			case SyncedBlock:
+				importComponent(SyncedBlock);
+				body += `<SyncedBlock block={${JSON.stringify(block)}} />\n`;
+
+				break;
+			case LinkToPage:
+				importComponent(LinkToPage);
+				body += `<LinkToPage block={${JSON.stringify(block)}} />\n`;
 
 				break;
 			default:

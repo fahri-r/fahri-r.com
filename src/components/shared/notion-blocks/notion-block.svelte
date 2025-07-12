@@ -15,6 +15,11 @@
 	import Video from '~/components/shared/notion-blocks/video.svelte';
 	import Image from '~/components/shared/notion-blocks/image.svelte';
 	import File from '~/components/shared/notion-blocks/file.svelte';
+	import Toggle from '~/components/shared/notion-blocks/toggle.svelte';
+	import Table from '~/components/shared/notion-blocks/table.svelte';
+	import TableOfContents from '~/components/shared/notion-blocks/table-of-contents.svelte';
+	import SyncedBlock from '~/components/shared/notion-blocks/synced-block.svelte';
+	import LinkToPage from '~/components/shared/notion-blocks/link-to-page.svelte';
 
 	interface Props {
 		blocks: interfaces.Block[];
@@ -86,5 +91,15 @@
 		<Image {block} />
 	{:else if block.type === notionBlokConst.File}
 		<File {block} />
+	{:else if block.type === notionBlokConst.Toggle}
+		<Toggle {block} {headings} />
+	{:else if block.type === notionBlokConst.Table}
+		<Table {block} />
+	{:else if block.type === notionBlokConst.TableOfContents}
+		<TableOfContents {block} {headings} />
+	{:else if block.type === notionBlokConst.SyncedBlock}
+		<SyncedBlock {block} {headings} />
+	{:else if block.type === notionBlokConst.LinkToPage}
+		<LinkToPage {block} />
 	{/if}
 {/each}
