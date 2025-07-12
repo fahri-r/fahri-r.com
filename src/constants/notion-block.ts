@@ -11,3 +11,6 @@ export const Callout = 'callout';
 export const Video = 'video';
 export const Image = 'image';
 export const File = 'file';
+export const Toggle = 'toggle';
+export const Table = 'table';
+export const TableOfContents = 'table_of_contents';

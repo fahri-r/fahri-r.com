@@ -16,6 +16,9 @@ import {
 	Image,
 	Paragraph,
 	Quote,
+	Table,
+	TableOfContents,
+	Toggle,
 	Video
 } from '~/constants/notion-block';
 
@@ -148,6 +151,28 @@ for (let post of posts) {
 			case File:
 				importComponent(File);
 				body += `<File client:load block={${JSON.stringify(block)}} />\n`;
+
+				break;
+			case Toggle:
+				importComponent(Toggle);
+				body += `<Toggle client:load block={${JSON.stringify(block)}} />\n`;
+
+				break;
+			case Table:
+				importComponent(Table);
+				body += `<Table block={${JSON.stringify(block)}} />\n`;
+
+				break;
+			case TableOfContents:
+
+				var headings = blocks.filter((b: Block) =>
+					[Heading1, Heading2, Heading3].includes(
+						b.type
+					)
+				);
+
+				importComponent(TableOfContents);
+				body += `<TableOfContents block={${JSON.stringify(block)}} headings={${JSON.stringify(headings)}}/>\n`;
 
 				break;
 			default:
