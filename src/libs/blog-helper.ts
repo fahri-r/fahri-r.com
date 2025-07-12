@@ -1,6 +1,20 @@
-import type { Heading1, Heading2, Heading3, RichText } from '~/interfaces/notion/block.interface';
+import type {
+	Block,
+	Heading1,
+	Heading2,
+	Heading3,
+	RichText,
+	Column
+} from '~/interfaces/notion/block.interface';
+import { pathJoin } from './utils';
 
 const REQUEST_TIMEOUT_MS = 10000;
+const BASE_PATH = '';
+
+export const filePath = (url: URL): string => {
+	const [dir, filename] = url.pathname.split('/').slice(-2);
+	return pathJoin(BASE_PATH, `/notion/${dir}/${filename}`);
+};
 
 export const buildURLToHTMLMap = async (urls: URL[]): Promise<{ [key: string]: string }> => {
 	const htmls: string[] = await Promise.all(
@@ -110,4 +124,40 @@ export const isFullAmazonURL = (url: URL): boolean => {
 
 export const isAmazonURL = (url: URL): boolean => {
 	return isShortAmazonURL(url) || isFullAmazonURL(url);
+};
+
+export const isYouTubeURL = (url: URL): boolean => {
+	if (['www.youtube.com', 'youtube.com', 'youtu.be'].includes(url.hostname)) {
+		return true;
+	}
+	return false;
+};
+
+// Supported URL
+//
+// - https://youtu.be/0zM3nApSvMg
+// - https://www.youtube.com/watch?v=0zM3nApSvMg&feature=feedrec_grec_index
+// - https://www.youtube.com/watch?v=0zM3nApSvMg#t=0m10s
+// - https://www.youtube.com/watch?v=0zM3nApSvMg
+// - https://www.youtube.com/v/0zM3nApSvMg?fs=1&amp;hl=en_US&amp;rel=0
+// - https://www.youtube.com/embed/0zM3nApSvMg?rel=0
+// - https://youtube.com/live/uOLwqWlpKbA
+export const parseYouTubeVideoId = (url: URL): string => {
+	if (!isYouTubeURL(url)) return '';
+
+	if (url.hostname === 'youtu.be') {
+		return url.pathname.split('/')[1];
+	} else if (url.pathname === '/watch') {
+		return url.searchParams.get('v') || '';
+	} else {
+		const elements = url.pathname.split('/');
+
+		if (elements.length < 2) return '';
+
+		if (elements[1] === 'v' || elements[1] === 'embed' || elements[1] === 'live') {
+			return elements[2];
+		}
+	}
+
+	return '';
 };

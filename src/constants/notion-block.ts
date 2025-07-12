@@ -7,3 +7,7 @@ export const Quote = 'quote';
 export const Embed = 'embed';
 export const Bookmark = 'bookmark';
 export const LinkPreview = 'link_preview';
+export const Callout = 'callout';
+export const Video = 'video';
+export const Image = 'image';
+export const File = 'file';

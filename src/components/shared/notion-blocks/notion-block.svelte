@@ -11,6 +11,10 @@
 	import Embed from '~/components/shared/notion-blocks/embed.svelte';
 	import Quote from '~/components/shared/notion-blocks/quote.svelte';
 	import Bookmark from '~/components/shared/notion-blocks/bookmark.svelte';
+	import Callout from '~/components/shared/notion-blocks/callout.svelte';
+	import Video from '~/components/shared/notion-blocks/video.svelte';
+	import Image from '~/components/shared/notion-blocks/image.svelte';
+	import File from '~/components/shared/notion-blocks/file.svelte';
 
 	interface Props {
 		blocks: interfaces.Block[];
@@ -74,5 +78,13 @@
 		<Embed {block} urlMap={bookmarkURLMap!} />
 	{:else if [notionBlokConst.Bookmark, notionBlokConst.LinkPreview].includes(block.type)}
 		<Bookmark {block} urlMap={bookmarkURLMap!} />
+	{:else if block.type === notionBlokConst.Callout}
+		<Callout {block} {headings} />
+	{:else if block.type === notionBlokConst.Video}
+		<Video {block} />
+	{:else if block.type === notionBlokConst.Image}
+		<Image {block} />
+	{:else if block.type === notionBlokConst.File}
+		<File {block} />
 	{/if}
 {/each}

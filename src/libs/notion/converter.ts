@@ -6,13 +6,17 @@ import args from 'args';
 import path from 'path';
 import type { DatabaseColumn } from '~/interfaces/notion/database-column.interface';
 import {
+	Callout,
 	Divider,
 	Embed,
+	File,
 	Heading1,
 	Heading2,
 	Heading3,
+	Image,
 	Paragraph,
-	Quote
+	Quote,
+	Video
 } from '~/constants/notion-block';
 
 if (!NOTION_KEY) throw new Error('Missing Notion .env data');
@@ -126,36 +130,26 @@ for (let post of posts) {
 				body += `<Embed client:load block={${JSON.stringify(block)}} />\n`;
 
 				break;
-
-			case 'image':
-				if (block.image?.file?.url) {
-					var component = "import Image from '~/components/image.astro'";
-					if (!header.includes(component)) {
-						header.push(component);
-					}
-
-					var url = block.image.file.url;
-					const fileExtension = getFileExtension(url);
-					downloadFile(outputDir, url, block.id, fileExtension);
-
-					body += `<Image src="/src/assets/${outputDir}/${block.id}${fileExtension}" />\n`;
-
-					if (!metadata.includes('cover')) {
-						metadata += `cover: "/src/assets/${outputDir}/${block.id}${fileExtension}"\n`;
-					}
-				}
+			case Callout:
+				importComponent(Callout);
+				body += `<Callout client:load block={${JSON.stringify(block)}} />\n`;
 
 				break;
-			case 'video':
-				if (block.video?.file?.url) {
-					var url = block.video.file.url;
-					const fileExtension = getFileExtension(url);
-					downloadFile(outputDir, url, block.id, fileExtension);
-					body += `<iframe width="100%" height="480" src="/src/assets/${outputDir}/${block.id}${fileExtension}" title="Preview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen />\n`;
-				}
+			case Video:
+				importComponent(Video);
+				body += `<Video client:load block={${JSON.stringify(block)}} />\n`;
 
 				break;
+			case Image:
+				importComponent(Image);
+				body += `<Image client:load block={${JSON.stringify(block)}} />\n`;
 
+				break;
+			case File:
+				importComponent(File);
+				body += `<File client:load block={${JSON.stringify(block)}} />\n`;
+
+				break;
 			default:
 				console.log(block.type);
 				break;
