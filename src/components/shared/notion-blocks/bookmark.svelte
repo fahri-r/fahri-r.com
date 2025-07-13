@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { isAmazonURL } from '~/libs/blog-helper.ts';
-	import type { Block } from '~/interfaces/notion/block.interface';
+	import type { Bookmark, Embed, LinkPreview } from '~/interfaces/notion/block.interface';
 	import { onMount } from 'svelte';
 
 	interface Props {
-		block: Block;
+		block: Bookmark | LinkPreview | Embed;
 		urlMap: { [key: string]: string };
 	}
 
 	const { block, urlMap }: Props = $props();
 
-	const urlString = (block.bookmark || block.linkPreview || block.embed)?.url;
+	const urlString = block.url;
 
 	let url = new URL(urlString!);
 	let metadata: any = $state();

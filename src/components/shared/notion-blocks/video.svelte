@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { Block } from '~/interfaces/notion/block.interface';
+	import type { Video } from '~/interfaces/notion/block.interface';
 	import { isYouTubeURL, parseYouTubeVideoId } from '~/libs/blog-helper.ts';
 	import Caption from '~/components/shared/notion-blocks/caption.svelte';
 	import { onMount } from 'svelte';
 
 	interface Props {
-		block: Block;
+		block: Video;
 	}
 
 	const { block }: Props = $props();
@@ -13,7 +13,10 @@
 	let url: URL | undefined = $state();
 	onMount(() => {
 		try {
-			url = new URL(block.video!.external?.url!);
+			if (block.mediaType === 'external') {
+				url = new URL(block.external.url);
+			} else if (block.mediaType === 'file') {
+			}
 		} catch (err) {
 			console.log(err);
 		}
@@ -33,7 +36,7 @@
 			</iframe>
 		{/if}
 	</div>
-	<Caption richTexts={block.video!.caption} />
+	<Caption richTexts={block.caption} />
 </div>
 
 <style>

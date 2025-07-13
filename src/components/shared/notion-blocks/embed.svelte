@@ -1,5 +1,4 @@
 <script lang="ts">
-	import * as interfaces from '~/interfaces/notion/block.interface';
 	import {
 		isTweetURL,
 		isTikTokURL,
@@ -14,9 +13,10 @@
 	import PinterestEmbed from '~/components/shared/notion-blocks/pinterest-embed.svelte';
 	import CodePenEmbed from '~/components/shared/notion-blocks/codepen-embed.svelte';
 	import { onMount } from 'svelte';
+	import type { Embed } from '~/interfaces/notion/block.interface';
 
 	interface Props {
-		block: interfaces.Block;
+		block: Embed;
 		urlMap: { [key: string]: string };
 	}
 
@@ -25,7 +25,7 @@
 	let url: URL | undefined = $state();
 	onMount(() => {
 		try {
-			url = new URL(block.embed?.url!);
+			url = new URL(block.url!);
 		} catch (err) {
 			console.log(err);
 		}

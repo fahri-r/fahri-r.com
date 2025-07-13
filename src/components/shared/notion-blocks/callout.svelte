@@ -1,23 +1,30 @@
 <script lang="ts">
-	import type { Block, Emoji, FileObject } from '~/interfaces/notion/block.interface';
+	import type {
+		Callout,
+		Emoji,
+		FileObject,
+		Heading1,
+		Heading2,
+		Heading3
+	} from '~/interfaces/notion/block.interface';
 	import RichText from '~/components/shared/notion-blocks/rich-text.svelte';
 	import NotionBlocks from '~/components/shared/notion-blocks/notion-block.svelte';
 
 	interface Props {
-		block: Block;
-		headings: Block[];
+		block: Callout;
+		headings: (Heading1 | Heading2 | Heading3)[];
 	}
 
 	const { block, headings }: Props = $props();
 </script>
 
-<div class={`callout ${block.callout!.color.replaceAll('_', '-')}`}>
-	{#if block.callout!.icon}
+<div class={`callout ${block.color.replaceAll('_', '-')}`}>
+	{#if block.icon}
 		<div class="icon">
-			{#if block.callout!.icon.type === 'emoji'}
-				{(block.callout!.icon as Emoji).emoji}
-			{:else if block.callout?.icon.type === 'external'}
-				<img src={(block.callout.icon as FileObject).url} alt="Icon in a callout block" />
+			{#if block.icon.type === 'emoji'}
+				{(block.icon as Emoji).emoji}
+			{:else if block.icon.type === 'external'}
+				<img src={(block.icon as FileObject).url} alt="Icon in a callout block" />
 			{:else}
 				{null}
 			{/if}
@@ -25,12 +32,12 @@
 	{/if}
 
 	<div>
-		{#each block.callout!.richTexts as richText}
+		{#each block.richTexts as richText}
 			<RichText {richText} />
 		{/each}
 
-		{#if block.callout!.children}
-			<NotionBlocks blocks={block.callout!.children} {headings} />
+		{#if block.hasChildren && block.children}
+			<NotionBlocks blocks={block.children} {headings} />
 		{/if}
 	</div>
 </div>

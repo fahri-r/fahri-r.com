@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { Block } from '~/interfaces/notion/block.interface';
+	import type { File } from '~/interfaces/notion/block.interface';
 	import { filePath } from '~/libs/blog-helper.ts';
 	import Caption from '~/components/shared/notion-blocks/caption.svelte';
 	import { onMount } from 'svelte';
 
 	interface Props {
-		block: Block;
+		block: File;
 	}
 
 	const { block }: Props = $props();
@@ -15,7 +15,7 @@
 
 	onMount(() => {
 		try {
-			url = new URL(block.file?.external?.url || block.file?.file?.url!);
+			url = new URL(block.mediaType === 'external' ? block.external.url : block.file.url);
 			filename = decodeURIComponent(url.pathname.split('/').slice(-1)[0]);
 		} catch (err) {
 			console.log(err);
@@ -27,7 +27,7 @@
 	<div>
 		{#if url}
 			<a
-				href={block.file?.external ? url.toString() : filePath(url)}
+				href={block.mediaType === 'external' ? url.toString() : filePath(url)}
 				target="_blank"
 				rel="noopener noreferrer"
 			>
@@ -39,7 +39,7 @@
 			</a>
 		{/if}
 	</div>
-	<Caption richTexts={block.file?.caption!} />
+	<Caption richTexts={block.caption} />
 </div>
 
 <style>

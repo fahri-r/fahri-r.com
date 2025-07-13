@@ -1,26 +1,26 @@
 <script lang="ts">
-	import type { Block } from '~/interfaces/notion/block.interface';
+	import type { Heading1, Heading2, Heading3, Toggle } from '~/interfaces/notion/block.interface';
 	import RichText from '~/components/shared/notion-blocks/rich-text.svelte';
 	import NotionBlocks from '~/components/shared/notion-blocks/notion-block.svelte';
 	import '~/styles/notion-color.css';
 
 	interface Props {
-		block: Block;
-		headings: Block[];
+		block: Toggle;
+		headings: (Heading1 | Heading2 | Heading3)[];
 	}
 
 	const { block, headings }: Props = $props();
 </script>
 
-<details class={`toggle ${block.toggle!.color.replaceAll('_', '-')}`}>
+<details class={`toggle ${block.color.replaceAll('_', '-')}`}>
 	<summary>
-		{#each block.toggle!.richTexts as richText}
+		{#each block.richTexts as richText}
 			<RichText {richText} />
 		{/each}
 	</summary>
 	<div>
-		{#if block.toggle!.children}
-			<NotionBlocks blocks={block.toggle!.children} {headings} />
+		{#if block.hasChildren && block.children}
+			<NotionBlocks blocks={block.children} {headings} />
 		{/if}
 	</div>
 </details>

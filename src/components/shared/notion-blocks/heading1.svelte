@@ -1,21 +1,21 @@
 <script lang="ts">
-	import type { Block } from '~/interfaces/notion/block.interface';
+	import type { Heading1, Heading2, Heading3 } from '~/interfaces/notion/block.interface';
 	import { buildHeadingId } from '~/libs/blog-helper';
 	import RichText from './rich-text.svelte';
 	import NotionBlocks from './notion-block.svelte';
 
 	interface Props {
-		block: Block;
-		headings: Block[];
+		block: Heading1;
+		headings: (Heading1 | Heading2 | Heading3)[];
 	}
 
 	const { block, headings }: Props = $props();
 
-	const id = buildHeadingId(block.heading1!);
-	const richTexts = block.heading1?.richTexts ?? [];
+	const id = buildHeadingId(block);
+	const richTexts = block.richTexts ?? [];
 </script>
 
-{#if block.heading1?.isToggleable}
+{#if block.isToggleable}
 	<details class="toggle">
 		<summary>
 			<a href={`#${id}`} {id}>
@@ -27,8 +27,8 @@
 			>
 		</summary>
 		<div>
-			{#if block.heading1?.children}
-				<NotionBlocks blocks={block.heading1.children} {headings} />
+			{#if block.hasChildren && block.children}
+				<NotionBlocks blocks={block.children} {headings} />
 			{/if}
 		</div>
 	</details>

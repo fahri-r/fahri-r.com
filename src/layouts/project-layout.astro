@@ -4,9 +4,16 @@ import Layout from './layout.astro';
 import Sidebar from '~/components/projects/sidebar.astro';
 import { Eye, Github } from '@lucide/svelte';
 import { Badge } from '~/components/shared/badge';
+import NotionBlock from '~/components/shared/notion-blocks/notion-block.svelte';
+import type { Block } from '~/interfaces/notion/block.interface';
 
 const { frontmatter } = Astro.props;
-const { title, tools, site, repository } = frontmatter;
+const { title, tools, site, repository, ...rawBlocks } = frontmatter;
+
+var blocks = Object.values<Block>(rawBlocks).filter((b) => b);
+var headings = blocks.filter(
+	(b) => b.type === 'heading_1' || b.type === 'heading_2' || b.type === 'heading_3'
+);
 ---
 
 <Layout title={frontmatter.title} class="lg:max-w-4xl">
@@ -59,7 +66,7 @@ const { title, tools, site, repository } = frontmatter;
 					}
 				</div>
 
-				<slot />
+				<NotionBlock client:load {blocks} {headings} />
 			</article>
 
 			<aside class="hidden xl:block xl:w-[350px]">

@@ -1,21 +1,21 @@
 <script lang="ts">
-	import type { Block } from '~/interfaces/notion/block.interface';
+	import type { Image } from '~/interfaces/notion/block.interface';
 	import { filePath } from '~/libs/blog-helper.ts';
 	import Caption from '~/components/shared/notion-blocks/caption.svelte';
 	import { onMount } from 'svelte';
 
 	interface Props {
-		block: Block;
+		block: Image;
 	}
 
 	const { block }: Props = $props();
 
 	let image = $state('');
 	onMount(() => {
-		if (block.image?.external) {
-			image = block.image.external.url;
-		} else if (block.image?.file) {
-			image = filePath(new URL(block.image.file.url));
+		if (block.mediaType === 'external') {
+			image = block.external.url;
+		} else if (block.mediaType === 'file') {
+			image = filePath(new URL(block.file.url));
 		}
 	});
 </script>
@@ -26,7 +26,7 @@
 			<div>
 				<img src={image} alt="Image in a image block" loading="lazy" />
 			</div>
-			<Caption richTexts={block.image?.caption!} />
+			<Caption richTexts={block.caption} />
 		</div>
 	{/if}
 </figure>

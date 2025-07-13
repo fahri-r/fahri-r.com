@@ -6,40 +6,19 @@ import type * as responses from '~/interfaces/notion/responses.interface';
 import type * as requestParams from '~/interfaces/notion/request-params.interface';
 import type {
 	Block,
-	Paragraph,
-	Heading1,
-	Heading2,
-	Heading3,
-	BulletedListItem,
-	NumberedListItem,
-	ToDo,
-	Image,
-	Code,
-	Quote,
 	Equation,
-	Callout,
-	Embed,
-	Video,
-	File,
-	Bookmark,
-	LinkPreview,
-	SyncedBlock,
 	SyncedFrom,
-	Table,
 	TableRow,
 	TableCell,
-	Toggle,
-	ColumnList,
 	Column,
-	TableOfContents,
 	RichText,
 	Text,
 	Annotation,
 	Emoji,
-	FileObject,
-	LinkToPage,
 	Mention,
-	Reference
+	Reference,
+	FileObject,
+	SyncedBlock
 } from '~/interfaces/notion/block.interface';
 import { Client, APIResponseError } from '@notionhq/client';
 import { NOTION_KEY } from '~/constants/global';
@@ -135,32 +114,32 @@ export async function getAllBlocksByBlockId(blockId: string): Promise<Block[]> {
 	for (let i = 0; i < allBlocks.length; i++) {
 		const block = allBlocks[i];
 
-		if (block.type === 'table' && block.table) {
-			block.table.rows = await _getTableRows(block.id);
-		} else if (block.type === 'column_list' && block.columnList) {
-			block.columnList.columns = await _getColumns(block.id);
-		} else if (block.type === 'bulleted_list_item' && block.bulletedListItem && block.hasChildren) {
-			block.bulletedListItem.children = await getAllBlocksByBlockId(block.id);
-		} else if (block.type === 'numbered_list_item' && block.numberedListItem && block.hasChildren) {
-			block.numberedListItem.children = await getAllBlocksByBlockId(block.id);
-		} else if (block.type === 'to_do' && block.toDo && block.hasChildren) {
-			block.toDo.children = await getAllBlocksByBlockId(block.id);
-		} else if (block.type === 'synced_block' && block.syncedBlock) {
-			block.syncedBlock.children = await _getSyncedBlockChildren(block);
-		} else if (block.type === 'toggle' && block.toggle) {
-			block.toggle.children = await getAllBlocksByBlockId(block.id);
-		} else if (block.type === 'paragraph' && block.paragraph && block.hasChildren) {
-			block.paragraph.children = await getAllBlocksByBlockId(block.id);
-		} else if (block.type === 'heading_1' && block.heading1 && block.hasChildren) {
-			block.heading1.children = await getAllBlocksByBlockId(block.id);
-		} else if (block.type === 'heading_2' && block.heading2 && block.hasChildren) {
-			block.heading2.children = await getAllBlocksByBlockId(block.id);
-		} else if (block.type === 'heading_3' && block.heading3 && block.hasChildren) {
-			block.heading3.children = await getAllBlocksByBlockId(block.id);
-		} else if (block.type === 'quote' && block.quote && block.hasChildren) {
-			block.quote.children = await getAllBlocksByBlockId(block.id);
-		} else if (block.type === 'callout' && block.callout && block.hasChildren) {
-			block.callout.children = await getAllBlocksByBlockId(block.id);
+		if (block.type === 'table') {
+			block.rows = await _getTableRows(block.id);
+		} else if (block.type === 'column_list') {
+			block.columns = await _getColumns(block.id);
+		} else if (block.type === 'bulleted_list_item' && block.hasChildren) {
+			block.children = await getAllBlocksByBlockId(block.id);
+		} else if (block.type === 'numbered_list_item' && block.hasChildren) {
+			block.children = await getAllBlocksByBlockId(block.id);
+		} else if (block.type === 'to_do' && block.hasChildren) {
+			block.children = await getAllBlocksByBlockId(block.id);
+		} else if (block.type === 'synced_block') {
+			block.children = await _getSyncedBlockChildren(block);
+		} else if (block.type === 'toggle') {
+			block.children = await getAllBlocksByBlockId(block.id);
+		} else if (block.type === 'paragraph' && block.hasChildren) {
+			block.children = await getAllBlocksByBlockId(block.id);
+		} else if (block.type === 'heading_1' && block.hasChildren) {
+			block.children = await getAllBlocksByBlockId(block.id);
+		} else if (block.type === 'heading_2' && block.hasChildren) {
+			block.children = await getAllBlocksByBlockId(block.id);
+		} else if (block.type === 'heading_3' && block.hasChildren) {
+			block.children = await getAllBlocksByBlockId(block.id);
+		} else if (block.type === 'quote' && block.hasChildren) {
+			block.children = await getAllBlocksByBlockId(block.id);
+		} else if (block.type === 'callout' && block.hasChildren) {
+			block.children = await getAllBlocksByBlockId(block.id);
 		}
 	}
 
@@ -221,275 +200,364 @@ export async function downloadFile(
 }
 
 function _buildBlock(blockObject: responses.BlockObject): Block {
-	const block: Block = {
+	const baseBlock = {
 		id: blockObject.id,
-		type: blockObject.type,
 		hasChildren: blockObject.has_children
 	};
+	let block: Block;
 
 	switch (blockObject.type) {
 		case 'paragraph':
 			if (blockObject.paragraph) {
-				const paragraph: Paragraph = {
+				block = {
+					...baseBlock,
+					type: 'paragraph',
 					richTexts: blockObject.paragraph.rich_text.map(_buildRichText),
 					color: blockObject.paragraph.color
 				};
-				block.paragraph = paragraph;
 			}
+
 			break;
 		case 'heading_1':
 			if (blockObject.heading_1) {
-				const heading1: Heading1 = {
+				block = {
+					...baseBlock,
+					type: 'heading_1',
 					richTexts: blockObject.heading_1.rich_text.map(_buildRichText),
 					color: blockObject.heading_1.color,
 					isToggleable: blockObject.heading_1.is_toggleable
 				};
-				block.heading1 = heading1;
 			}
+
 			break;
 		case 'heading_2':
 			if (blockObject.heading_2) {
-				const heading2: Heading2 = {
+				block = {
+					...baseBlock,
+					type: 'heading_2',
 					richTexts: blockObject.heading_2.rich_text.map(_buildRichText),
 					color: blockObject.heading_2.color,
 					isToggleable: blockObject.heading_2.is_toggleable
 				};
-				block.heading2 = heading2;
 			}
+
 			break;
 		case 'heading_3':
 			if (blockObject.heading_3) {
-				const heading3: Heading3 = {
+				block = {
+					...baseBlock,
+					type: 'heading_3',
 					richTexts: blockObject.heading_3.rich_text.map(_buildRichText),
 					color: blockObject.heading_3.color,
 					isToggleable: blockObject.heading_3.is_toggleable
 				};
-				block.heading3 = heading3;
 			}
+
 			break;
 		case 'bulleted_list_item':
 			if (blockObject.bulleted_list_item) {
-				const bulletedListItem: BulletedListItem = {
+				block = {
+					...baseBlock,
+					type: 'bulleted_list_item',
 					richTexts: blockObject.bulleted_list_item.rich_text.map(_buildRichText),
 					color: blockObject.bulleted_list_item.color
 				};
-				block.bulletedListItem = bulletedListItem;
 			}
+
 			break;
 		case 'numbered_list_item':
 			if (blockObject.numbered_list_item) {
-				const numberedListItem: NumberedListItem = {
+				block = {
+					...baseBlock,
+					type: 'numbered_list_item',
 					richTexts: blockObject.numbered_list_item.rich_text.map(_buildRichText),
 					color: blockObject.numbered_list_item.color
 				};
-				block.numberedListItem = numberedListItem;
 			}
+
 			break;
 		case 'to_do':
 			if (blockObject.to_do) {
-				const toDo: ToDo = {
+				block = {
+					...baseBlock,
+					type: 'to_do',
 					richTexts: blockObject.to_do.rich_text.map(_buildRichText),
 					checked: blockObject.to_do.checked,
 					color: blockObject.to_do.color
 				};
-				block.toDo = toDo;
 			}
+
 			break;
 		case 'video':
 			if (blockObject.video) {
-				const video: Video = {
-					caption: blockObject.video.caption?.map(_buildRichText) || [],
-					type: blockObject.video.type
+				const baseVideo = {
+					...baseBlock,
+					type: 'video' as const,
+					caption: blockObject.video.caption?.map(_buildRichText) || []
 				};
+
 				if (blockObject.video.type === 'external' && blockObject.video.external) {
-					video.external = { url: blockObject.video.external.url };
+					block = {
+						...baseVideo,
+						mediaType: 'external',
+						external: { url: blockObject.video.external.url }
+					};
 				} else if (blockObject.video.type === 'file' && blockObject.video.file) {
-					video.file = {
-						type: blockObject.video.type,
-						url: blockObject.video.file.url,
-						expiryTime: blockObject.video.file.expiry_time
+					block = {
+						...baseVideo,
+						mediaType: 'file',
+						file: {
+							type: blockObject.video.type,
+							url: blockObject.video.file.url,
+							expiryTime: blockObject.video.file.expiry_time
+						}
 					};
 				}
-				block.video = video;
 			}
+
 			break;
 		case 'image':
 			if (blockObject.image) {
-				const image: Image = {
-					caption: blockObject.image.caption?.map(_buildRichText) || [],
-					type: blockObject.image.type
+				const baseImage = {
+					...baseBlock,
+					type: 'image' as const,
+					caption: blockObject.image.caption?.map(_buildRichText) || []
 				};
 				if (blockObject.image.type === 'external' && blockObject.image.external) {
-					image.external = { url: blockObject.image.external.url };
+					block = {
+						...baseImage,
+						mediaType: 'external',
+						external: { url: blockObject.image.external.url }
+					};
 				} else if (blockObject.image.type === 'file' && blockObject.image.file) {
-					image.file = {
-						type: blockObject.image.type,
-						url: blockObject.image.file.url,
-						expiryTime: blockObject.image.file.expiry_time
+					block = {
+						...baseImage,
+						mediaType: 'file',
+						file: {
+							type: blockObject.image.type,
+							url: blockObject.image.file.url,
+							expiryTime: blockObject.image.file.expiry_time
+						}
 					};
 				}
-				block.image = image;
 			}
+
 			break;
 		case 'file':
 			if (blockObject.file) {
-				const file: File = {
-					caption: blockObject.file.caption?.map(_buildRichText) || [],
-					type: blockObject.file.type
+				const baseFile = {
+					...baseBlock,
+					type: 'file' as const,
+					caption: blockObject.file.caption?.map(_buildRichText) || []
 				};
+
 				if (blockObject.file.type === 'external' && blockObject.file.external) {
-					file.external = { url: blockObject.file.external.url };
+					block = {
+						...baseFile,
+						mediaType: 'external',
+						external: { url: blockObject.file.external.url }
+					};
 				} else if (blockObject.file.type === 'file' && blockObject.file.file) {
-					file.file = {
-						type: blockObject.file.type,
-						url: blockObject.file.file.url,
-						expiryTime: blockObject.file.file.expiry_time
+					block = {
+						...baseFile,
+						mediaType: 'file',
+						file: {
+							type: blockObject.file.type,
+							url: blockObject.file.file.url,
+							expiryTime: blockObject.file.file.expiry_time
+						}
 					};
 				}
-				block.file = file;
 			}
+
 			break;
 		case 'code':
 			if (blockObject.code) {
-				const code: Code = {
+				block = {
+					...baseBlock,
+					type: 'code',
 					caption: blockObject.code.caption?.map(_buildRichText) || [],
 					richTexts: blockObject.code.rich_text.map(_buildRichText),
 					language: blockObject.code.language
 				};
-				block.code = code;
 			}
+
 			break;
 		case 'quote':
 			if (blockObject.quote) {
-				const quote: Quote = {
+				block = {
+					...baseBlock,
+					type: 'quote',
 					richTexts: blockObject.quote.rich_text.map(_buildRichText),
 					color: blockObject.quote.color
 				};
-				block.quote = quote;
 			}
+
 			break;
 		case 'equation':
 			if (blockObject.equation) {
-				const equation: Equation = {
+				block = {
+					...baseBlock,
+					type: 'equation',
 					expression: blockObject.equation.expression
 				};
-				block.equation = equation;
 			}
+
 			break;
 		case 'callout':
 			if (blockObject.callout) {
-				let icon: FileObject | Emoji | null = null;
+				const baseCallout = {
+					...baseBlock,
+					type: 'callout' as const,
+					richTexts: blockObject.callout.rich_text.map(_buildRichText),
+					color: blockObject.callout.color,
+					icon: null
+				};
+
 				if (blockObject.callout.icon) {
 					if (blockObject.callout.icon.type === 'emoji' && 'emoji' in blockObject.callout.icon) {
-						icon = {
+						const icon: Emoji = {
 							type: blockObject.callout.icon.type,
 							emoji: blockObject.callout.icon.emoji
+						};
+
+						block = {
+							...baseCallout,
+							icon: icon
 						};
 					} else if (
 						blockObject.callout.icon.type === 'external' &&
 						'external' in blockObject.callout.icon
 					) {
-						icon = {
+						const icon: FileObject = {
 							type: blockObject.callout.icon.type,
 							url: blockObject.callout.icon.external?.url || ''
 						};
+
+						block = {
+							...baseCallout,
+							icon: icon
+						};
 					}
 				}
-
-				const callout: Callout = {
-					richTexts: blockObject.callout.rich_text.map(_buildRichText),
-					icon: icon,
-					color: blockObject.callout.color
-				};
-				block.callout = callout;
 			}
+
 			break;
 		case 'synced_block':
 			if (blockObject.synced_block) {
-				let syncedFrom: SyncedFrom | null = null;
+				block = {
+					...baseBlock,
+					type: 'synced_block',
+					syncedFrom: null
+				};
+
 				if (blockObject.synced_block.synced_from && blockObject.synced_block.synced_from.block_id) {
-					syncedFrom = {
+					const syncedFrom: SyncedFrom = {
 						blockId: blockObject.synced_block.synced_from.block_id
 					};
-				}
 
-				const syncedBlock: SyncedBlock = {
-					syncedFrom: syncedFrom
-				};
-				block.syncedBlock = syncedBlock;
+					block = {
+						...block,
+						syncedFrom
+					};
+				}
 			}
+
 			break;
 		case 'toggle':
 			if (blockObject.toggle) {
-				const toggle: Toggle = {
+				block = {
+					...baseBlock,
+					type: 'toggle',
 					richTexts: blockObject.toggle.rich_text.map(_buildRichText),
 					color: blockObject.toggle.color,
 					children: []
 				};
-				block.toggle = toggle;
 			}
+
 			break;
 		case 'embed':
 			if (blockObject.embed) {
-				const embed: Embed = {
+				block = {
+					...baseBlock,
+					type: 'embed',
 					url: blockObject.embed.url
 				};
-				block.embed = embed;
 			}
+
 			break;
 		case 'bookmark':
 			if (blockObject.bookmark) {
-				const bookmark: Bookmark = {
+				block = {
+					...baseBlock,
+					type: 'bookmark',
 					url: blockObject.bookmark.url
 				};
-				block.bookmark = bookmark;
 			}
+
 			break;
 		case 'link_preview':
 			if (blockObject.link_preview) {
-				const linkPreview: LinkPreview = {
+				block = {
+					...baseBlock,
+					type: 'link_preview',
 					url: blockObject.link_preview.url
 				};
-				block.linkPreview = linkPreview;
 			}
+
 			break;
 		case 'table':
 			if (blockObject.table) {
-				const table: Table = {
+				block = {
+					...baseBlock,
+					type: 'table',
 					tableWidth: blockObject.table.table_width,
 					hasColumnHeader: blockObject.table.has_column_header,
 					hasRowHeader: blockObject.table.has_row_header,
 					rows: []
 				};
-				block.table = table;
 			}
+
 			break;
 		case 'column_list':
-			const columnList: ColumnList = {
+			block = {
+				...baseBlock,
+				type: 'column_list',
 				columns: []
 			};
-			block.columnList = columnList;
+
 			break;
 		case 'table_of_contents':
 			if (blockObject.table_of_contents) {
-				const tableOfContents: TableOfContents = {
+				block = {
+					...baseBlock,
+					type: 'table_of_contents',
 					color: blockObject.table_of_contents.color
 				};
-				block.tableOfContents = tableOfContents;
 			}
+
 			break;
 		case 'link_to_page':
 			if (blockObject.link_to_page && blockObject.link_to_page.page_id) {
-				const linkToPage: LinkToPage = {
-					type: blockObject.link_to_page.type,
+				block = {
+					...baseBlock,
+					type: 'link_to_page',
+					linkType: blockObject.link_to_page.type,
 					pageId: blockObject.link_to_page.page_id
 				};
-				block.linkToPage = linkToPage;
 			}
+
+			break;
+		case 'divider':
+			block = {
+				...baseBlock,
+				type: 'divider'
+			};
+
 			break;
 	}
 
-	return block;
+	return block!;
 }
 
 async function _getTableRows(blockId: string): Promise<TableRow[]> {
@@ -605,11 +673,11 @@ async function _getColumns(blockId: string): Promise<Column[]> {
 	);
 }
 
-async function _getSyncedBlockChildren(block: Block): Promise<Block[]> {
+async function _getSyncedBlockChildren(block: SyncedBlock): Promise<Block[]> {
 	let originalBlock: Block = block;
-	if (block.syncedBlock && block.syncedBlock.syncedFrom && block.syncedBlock.syncedFrom.blockId) {
+	if (block.syncedFrom && block.syncedFrom.blockId) {
 		try {
-			originalBlock = await getBlock(block.syncedBlock.syncedFrom.blockId);
+			originalBlock = await getBlock(block.syncedFrom.blockId);
 		} catch (err) {
 			console.log(`Could not retrieve the original synced_block. error: ${err}`);
 			return [];
@@ -728,6 +796,9 @@ function _buildRichText(richTextObject: responses.RichTextObject): RichText {
 		richText.text = text;
 	} else if (richTextObject.type === 'equation' && richTextObject.equation) {
 		const equation: Equation = {
+			id: '',
+			hasChildren: false,
+			type: 'equation',
 			expression: richTextObject.equation.expression
 		};
 		richText.equation = equation;

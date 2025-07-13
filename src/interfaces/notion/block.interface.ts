@@ -1,100 +1,124 @@
-export interface Block {
+export type BlockType =
+	| 'paragraph'
+	| 'heading_1'
+	| 'heading_2'
+	| 'heading_3'
+	| 'divider'
+	| 'quote'
+	| 'embed'
+	| 'bookmark'
+	| 'link_preview'
+	| 'callout'
+	| 'video'
+	| 'image'
+	| 'file'
+	| 'toggle'
+	| 'table'
+	| 'table_of_contents'
+	| 'synced_block'
+	| 'link_to_page'
+	| 'code'
+	| 'equation'
+	| 'bulleted_list_item'
+	| 'numbered_list_item'
+	| 'to_do'
+	| 'column_list'
+	| 'divider';
+
+export type Block =
+	| Paragraph
+	| Heading1
+	| Heading2
+	| Heading3
+	| Image
+	| Video
+	| File
+	| Code
+	| Quote
+	| Equation
+	| Toggle
+	| Embed
+	| Bookmark
+	| LinkPreview
+	| BulletedListItem
+	| NumberedListItem
+	| ToDo
+	| Table
+	| ColumnList
+	| TableOfContents
+	| LinkToPage
+	| Callout
+	| SyncedBlock
+ 	| Divider;
+
+interface BaseBlock {
 	id: string;
-	type: string;
+	type: BlockType;
 	hasChildren: boolean;
-
-	paragraph?: Paragraph;
-	heading1?: Heading1;
-	heading2?: Heading2;
-	heading3?: Heading3;
-	bulletedListItem?: BulletedListItem;
-	numberedListItem?: NumberedListItem;
-	toDo?: ToDo;
-	image?: Image;
-	file?: File;
-	code?: Code;
-	quote?: Quote;
-	equation?: Equation;
-	callout?: Callout;
-	syncedBlock?: SyncedBlock;
-	toggle?: Toggle;
-	embed?: Embed;
-	video?: Video;
-	bookmark?: Bookmark;
-	linkPreview?: LinkPreview;
-	table?: Table;
-	columnList?: ColumnList;
-	tableOfContents?: TableOfContents;
-	linkToPage?: LinkToPage;
 }
 
-export interface Paragraph {
+export interface Divider extends BaseBlock {
+	type: 'divider';
+}
+
+export interface Paragraph extends BaseBlock {
+	type: 'paragraph';
 	richTexts: RichText[];
 	color: string;
 	children?: Block[];
 }
 
-export interface Heading1 {
+export interface Heading1 extends BaseBlock {
+	type: 'heading_1';
 	richTexts: RichText[];
 	color: string;
 	isToggleable: boolean;
 	children?: Block[];
 }
 
-export interface Heading2 {
+export interface Heading2 extends BaseBlock {
+	type: 'heading_2';
 	richTexts: RichText[];
 	color: string;
 	isToggleable: boolean;
 	children?: Block[];
 }
 
-export interface Heading3 {
+export interface Heading3 extends BaseBlock {
+	type: 'heading_3';
 	richTexts: RichText[];
 	color: string;
 	isToggleable: boolean;
 	children?: Block[];
 }
 
-export interface BulletedListItem {
+export interface BulletedListItem extends BaseBlock {
+	type: 'bulleted_list_item';
 	richTexts: RichText[];
 	color: string;
 	children?: Block[];
 }
 
-export interface NumberedListItem {
+export interface NumberedListItem extends BaseBlock {
+	type: 'numbered_list_item';
 	richTexts: RichText[];
 	color: string;
 	children?: Block[];
 }
 
-export interface ToDo {
+export interface ToDo extends BaseBlock {
+	type: 'to_do';
 	richTexts: RichText[];
 	checked: boolean;
 	color: string;
 	children?: Block[];
 }
 
-export interface Image {
-	caption: RichText[];
-	type: string;
-	file?: FileObject;
-	external?: External;
-	width?: number;
-	height?: number;
-}
+type MediaType = 'external' | 'file';
 
-export interface Video {
+interface MediaBlock extends BaseBlock {
 	caption: RichText[];
-	type: string;
-	file?: FileObject;
-	external?: External;
-}
-
-export interface File {
-	caption: RichText[];
-	type: string;
-	file?: FileObject;
-	external?: External;
+	mediaType: MediaType;
 }
 
 export interface FileObject {
@@ -103,34 +127,63 @@ export interface FileObject {
 	expiryTime?: string;
 }
 
-export interface External {
+interface External {
 	url: string;
 }
 
-export interface Code {
+interface FileMedia extends MediaBlock {
+	mediaType: 'file';
+	file: FileObject;
+}
+
+interface ExternalMedia extends MediaBlock {
+	mediaType: 'external';
+	external: External;
+}
+
+export type Image = (FileMedia | ExternalMedia) & {
+	type: 'image';
+	width?: number;
+	height?: number;
+};
+
+export type Video = (FileMedia | ExternalMedia) & {
+	type: 'video';
+};
+
+export type File = (FileMedia | ExternalMedia) & {
+	type: 'file';
+};
+
+export interface Code extends BaseBlock {
+	type: 'code';
 	caption: RichText[];
 	richTexts: RichText[];
 	language: string;
 }
 
-export interface Quote {
+export interface Quote extends BaseBlock {
+	type: 'quote';
 	richTexts: RichText[];
 	color: string;
 	children?: Block[];
 }
 
-export interface Equation {
+export interface Equation extends BaseBlock {
+	type: 'equation';
 	expression: string;
 }
 
-export interface Callout {
+export interface Callout extends BaseBlock {
+	type: 'callout';
 	richTexts: RichText[];
 	icon: FileObject | Emoji | null;
 	color: string;
 	children?: Block[];
 }
 
-export interface SyncedBlock {
+export interface SyncedBlock extends BaseBlock {
+	type: 'synced_block';
 	syncedFrom: SyncedFrom | null;
 	children?: Block[];
 }
@@ -139,25 +192,30 @@ export interface SyncedFrom {
 	blockId: string;
 }
 
-export interface Toggle {
+export interface Toggle extends BaseBlock {
+	type: 'toggle';
 	richTexts: RichText[];
 	color: string;
 	children: Block[];
 }
 
-export interface Embed {
+export interface Embed extends BaseBlock {
+	type: 'embed';
 	url: string;
 }
 
-export interface Bookmark {
+export interface Bookmark extends BaseBlock {
+	type: 'bookmark';
 	url: string;
 }
 
-export interface LinkPreview {
+export interface LinkPreview extends BaseBlock {
+	type: 'link_preview';
 	url: string;
 }
 
-export interface Table {
+export interface Table extends BaseBlock {
+	type: 'table';
 	tableWidth: number;
 	hasColumnHeader: boolean;
 	hasRowHeader: boolean;
@@ -175,7 +233,8 @@ export interface TableCell {
 	richTexts: RichText[];
 }
 
-export interface ColumnList {
+export interface ColumnList extends BaseBlock {
+	type: 'column_list';
 	columns: Column[];
 }
 
@@ -191,7 +250,8 @@ export interface List {
 	listItems: Block[];
 }
 
-export interface TableOfContents {
+export interface TableOfContents extends BaseBlock {
+	type: 'table_of_contents';
 	color: string;
 }
 
@@ -227,8 +287,9 @@ export interface Link {
 	url: string;
 }
 
-export interface LinkToPage {
-	type: string;
+export interface LinkToPage extends BaseBlock {
+	type: 'link_to_page';
+	linkType: string;
 	pageId: string;
 }
 

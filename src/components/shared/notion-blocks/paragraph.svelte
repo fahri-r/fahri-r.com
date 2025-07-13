@@ -1,24 +1,24 @@
 <script lang="ts">
-	import type { Block } from '~/interfaces/notion/block.interface';
+	import type { Heading1, Heading2, Heading3, Paragraph } from '~/interfaces/notion/block.interface';
 	import RichText from '~/components/shared/notion-blocks/rich-text.svelte';
 	import NotionBlocks from '~/components/shared/notion-blocks/notion-block.svelte';
 	import '~/styles/notion-color.css';
 
 	interface Props {
-		block: Block;
-		headings: Block[];
+		block: Paragraph;
+		headings: (Heading1 | Heading2 | Heading3)[];
 	}
 
 	const { block, headings }: Props = $props();
 </script>
 
-<p class={block.paragraph!.color.replaceAll('_', '-')}>
-	{#each block.paragraph!.richTexts as richText}
+<p class={block.color.replaceAll('_', '-')}>
+	{#each block.richTexts as richText}
 		<RichText {richText} />
 	{/each}
 
-	{#if block.hasChildren}
-		<NotionBlocks blocks={block.paragraph!.children!} {headings} />
+	{#if block.hasChildren && block.children}
+		<NotionBlocks blocks={block.children} {headings} />
 	{/if}
 </p>
 

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { Block } from '~/interfaces/notion/block.interface';
+	import type { Table } from '~/interfaces/notion/block.interface';
 	import RichText from '~/components/shared/notion-blocks/rich-text.svelte';
 
 	export interface Props {
-		block: Block;
+		block: Table;
 	}
 
 	const { block }: Props = $props();
@@ -12,10 +12,10 @@
 <div class="table">
 	<table>
 		<tbody>
-			{#each block.table?.rows! as tableRow, j}
+			{#each block.rows as tableRow, j}
 				<tr>
 					{#each tableRow.cells as cell, i}
-						{#if (block.table?.hasRowHeader && i === 0) || (block.table?.hasColumnHeader && j === 0)}
+						{#if (block.hasRowHeader && i === 0) || (block.hasColumnHeader && j === 0)}
 							<th>
 								{#each cell.richTexts as richText}
 									<RichText {richText} />

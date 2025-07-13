@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { buildURLToHTMLMap, isAmazonURL, isTweetURL } from '~/libs/blog-helper';
-	import * as notionBlokConst from '~/constants/notion-block';
 	import * as interfaces from '~/interfaces/notion/block.interface';
 	import Paragraph from '~/components/shared/notion-blocks/paragraph.svelte';
 	import Heading1 from '~/components/shared/notion-blocks/heading1.svelte';
@@ -25,34 +24,22 @@
 
 	interface Props {
 		blocks: interfaces.Block[];
-		isRoot?: boolean;
-		headings: interfaces.Block[];
+		headings: (interfaces.Heading1 | interfaces.Heading2 | interfaces.Heading3)[];
 	}
 
 	const {
 		blocks: rawBlocks,
-		isRoot = false,
-		headings: rawHeadings = []
+		headings = []
 	}: Props = $props();
-
-	let headings: interfaces.Block[] = $state(rawHeadings);
+	
 	let blocks: interfaces.Block[] = $state(rawBlocks);
 	let bookmarkURLMap: { [key: string]: string } | undefined = $state();
 
 	onMount(async () => {
-
-		if (isRoot) {
-			headings = blocks.filter((b: interfaces.Block) =>
-				[notionBlokConst.Heading1, notionBlokConst.Heading2, notionBlokConst.Heading3].includes(
-					b.type
-				)
-			);
-		}
-
 		const bookmarkURLs = blocks
-			.filter((b: interfaces.Block) => [notionBlokConst.Bookmark, notionBlokConst.LinkPreview, notionBlokConst.Embed].includes(b.type))
-			.map((b: interfaces.Block) => {
-				const urlString = (b.bookmark || b.linkPreview || b.embed)!.url;
+			.filter((b: interfaces.Block) => b.type === 'bookmark' || b.type === 'link_preview' || b.type === 'embed')
+			.map((b: interfaces.Bookmark | interfaces.LinkPreview | interfaces.Embed) => {
+				const urlString = b.url;
 
 				let url: URL = new URL('');
 				try {
@@ -69,43 +56,43 @@
 </script>
 
 {#each blocks as block}
-	{#if block.type === notionBlokConst.Paragraph}
+	{#if block.type === 'paragraph'}
 		<Paragraph {block} {headings} />
-	{:else if block.type === notionBlokConst.Heading1}
+	{:else if block.type === 'heading_1'}
 		<Heading1 {block} {headings} />
-	{:else if block.type === notionBlokConst.Heading2}
+	{:else if block.type === 'heading_2'}
 		<Heading2 {block} {headings} />
-	{:else if block.type === notionBlokConst.Heading3}
+	{:else if block.type === 'heading_3'}
 		<Heading3 {block} {headings} />
-	{:else if block.type === notionBlokConst.Divider}
+	{:else if block.type === 'divider'}
 		<Divider />
-	{:else if block.type === notionBlokConst.Quote}
+	{:else if block.type === 'quote'}
 		<Quote {block} {headings} />
-	{:else if block.type === notionBlokConst.Embed}
+	{:else if block.type === 'embed'}
 		<Embed {block} urlMap={bookmarkURLMap!} />
-	{:else if [notionBlokConst.Bookmark, notionBlokConst.LinkPreview].includes(block.type)}
+	{:else if block.type === 'bookmark' || block.type === 'link_preview'}
 		<Bookmark {block} urlMap={bookmarkURLMap!} />
-	{:else if block.type === notionBlokConst.Callout}
+	{:else if block.type === 'callout'}
 		<Callout {block} {headings} />
-	{:else if block.type === notionBlokConst.Video}
+	{:else if block.type === 'video'}
 		<Video {block} />
-	{:else if block.type === notionBlokConst.Image}
+	{:else if block.type === 'image'}
 		<Image {block} />
-	{:else if block.type === notionBlokConst.File}
+	{:else if block.type === 'file'}
 		<File {block} />
-	{:else if block.type === notionBlokConst.Toggle}
+	{:else if block.type === 'toggle'}
 		<Toggle {block} {headings} />
-	{:else if block.type === notionBlokConst.Table}
+	{:else if block.type === 'table'}
 		<Table {block} />
-	{:else if block.type === notionBlokConst.TableOfContents}
+	{:else if block.type === 'table_of_contents'}
 		<TableOfContents {block} {headings} />
-	{:else if block.type === notionBlokConst.SyncedBlock}
+	{:else if block.type === 'synced_block'}
 		<SyncedBlock {block} {headings} />
-	{:else if block.type === notionBlokConst.LinkToPage}
+	{:else if block.type === 'link_to_page'}
 		<LinkToPage {block} />
-	{:else if block.type === notionBlokConst.Code}
+	{:else if block.type === 'code'}
 		<Code {block} />
-	{:else if block.type === notionBlokConst.Equation}
+	{:else if block.type === 'equation'}
 		<Equation {block} />
 	{/if}
 {/each}

@@ -1,12 +1,16 @@
 <script lang="ts">
-	import { Heading2, Heading3 } from '~/constants/notion-block';
-	import type { Block } from '~/interfaces/notion/block.interface';
+	import type {
+		TableOfContents,
+		Heading1,
+		Heading2,
+		Heading3
+	} from '~/interfaces/notion/block.interface';
 	import { buildHeadingId } from '~/libs/blog-helper.ts';
 	import '~/styles/notion-color.css';
 
 	interface Props {
-		block: Block;
-		headings: Block[];
+		block: TableOfContents;
+		headings: (Heading1 | Heading2 | Heading3)[];
 	}
 
 	const { block, headings }: Props = $props();
@@ -14,19 +18,18 @@
 
 <div class="table-of-contents">
 	{#each headings as headingBlock}
-		{@const heading = headingBlock.heading1 || headingBlock.heading2 || headingBlock.heading3}
 		{@const indentClass =
-			headingBlock.type === Heading2
+			headingBlock.type === 'heading_2'
 				? 'indent-1'
-				: headingBlock.type === Heading3
+				: headingBlock.type === 'heading_3'
 					? 'indent-2'
 					: ''}
 
 		<a
-			href={`#${buildHeadingId(heading!)}`}
-			class={`table-of-contents-item ${(block.tableOfContents?.color || 'default').replaceAll('_', '-')} ${indentClass}`}
+			href={`#${buildHeadingId(headingBlock)}`}
+			class={`table-of-contents-item ${(block.color || 'default').replaceAll('_', '-')} ${indentClass}`}
 		>
-			{heading?.richTexts.map((richText) => richText.plainText).join('')}
+			{headingBlock.richTexts.map((richText) => richText.plainText).join('')}
 		</a>
 	{/each}
 </div>

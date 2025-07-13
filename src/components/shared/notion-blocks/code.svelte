@@ -14,17 +14,17 @@
 	import 'prismjs/components/prism-typescript';
 	import 'prismjs/components/prism-yaml';
 	import mermaid from 'mermaid';
-	import type { Block, RichText } from '~/interfaces/notion/block.interface';
+	import type { Code, RichText } from '~/interfaces/notion/block.interface';
 	import Caption from '~/components/shared/notion-blocks/caption.svelte';
 
 	interface Props {
-		block: Block;
+		block: Code;
 	}
 
 	const { block }: Props = $props();
 
-	const code = block.code?.richTexts!.map((richText: RichText) => richText.text?.content).join('');
-	const language = block.code?.language.toLowerCase();
+	const code = block.richTexts!.map((richText: RichText) => richText.text?.content).join('');
+	const language = block.language.toLowerCase();
 	const grammar = Prism.languages[language!] || Prism.languages.javascript;
 	const highlightedCode =
 		language === 'mermaid' ? code : Prism.highlight(code!, grammar, language!);
@@ -70,7 +70,7 @@
 			<pre><code>{@html highlightedCode}</code></pre>
 		{/if}
 	</div>
-	<Caption richTexts={block.code?.caption!} />
+	<Caption richTexts={block.caption!} />
 </div>
 
 <style>

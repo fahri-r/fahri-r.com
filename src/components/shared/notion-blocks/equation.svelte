@@ -1,10 +1,10 @@
 <script lang="ts">
 	import katex from 'katex';
 	import { onMount } from 'svelte';
-	import type { Block } from '~/interfaces/notion/block.interface';
+	import type { Equation } from '~/interfaces/notion/block.interface';
 
 	interface Props {
-		block: Block;
+		block: Equation;
 	}
 
 	const { block }: Props = $props();
@@ -12,7 +12,7 @@
 	let html = $state('');
 
 	onMount(() => {
-		html = katex.renderToString(block.equation?.expression!, {
+		html = katex.renderToString(block.expression!, {
 			throwOnError: false
 		});
 	});
