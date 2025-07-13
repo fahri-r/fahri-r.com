@@ -246,8 +246,23 @@ export interface Column {
 }
 
 export interface List {
-	type: string;
+	type: 'bulleted_list' | 'numbered_list' | 'to_do_list';
 	listItems: Block[];
+}
+
+export interface BulletedList extends List{
+	type: 'bulleted_list';
+	listItems: BulletedListItem[];
+}
+
+export interface NumberedList extends List{
+	type: 'numbered_list';
+	listItems: NumberedListItem[];
+}
+
+export interface ToDoList extends List{
+	type: 'to_do_list';
+	listItems: ToDo[];
 }
 
 export interface TableOfContents extends BaseBlock {

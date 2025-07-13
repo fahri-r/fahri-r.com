@@ -21,38 +21,88 @@
 	import LinkToPage from '~/components/shared/notion-blocks/link-to-page.svelte';
 	import Code from '~/components/shared/notion-blocks/code.svelte';
 	import Equation from '~/components/shared/notion-blocks/equation.svelte';
+	import BulletedListItems from '~/components/shared/notion-blocks/bulleted-list.svelte';
+	import NumberedListItems from '~/components/shared/notion-blocks/numbered-list.svelte';
+	import ToDoListItems from '~/components/shared/notion-blocks/to-do-list.svelte';
 
 	interface Props {
 		blocks: interfaces.Block[];
 		headings: (interfaces.Heading1 | interfaces.Heading2 | interfaces.Heading3)[];
+		level?: number;
 	}
 
-	const {
-		blocks: rawBlocks,
-		headings = []
-	}: Props = $props();
-	
-	let blocks: interfaces.Block[] = $state(rawBlocks);
+	const { blocks: rawBlocks, headings = [], level = 1 }: Props = $props();
+
+	let blocks: interfaces.Block[] = $state([]);
+	let listGroups: interfaces.List[] = $state([]);
 	let bookmarkURLMap: { [key: string]: string } | undefined = $state();
 
 	onMount(async () => {
-		const bookmarkURLs = blocks
-			.filter((b: interfaces.Block) => b.type === 'bookmark' || b.type === 'link_preview' || b.type === 'embed')
-			.map((b: interfaces.Bookmark | interfaces.LinkPreview | interfaces.Embed) => {
-				const urlString = b.url;
+		let prevBlock: interfaces.Block | undefined;
+		let currentListGroup: interfaces.Block[] = []; // Track consecutive list items of same type
+		let bookmarkURLs: URL[] = [];
 
-				let url: URL = new URL('');
-				try {
-					url = new URL(urlString);
-				} catch (err) {
-					console.log(err);
+		for (const block of rawBlocks) {
+			const isListBlock =
+				block.type === 'bulleted_list_item' ||
+				block.type === 'numbered_list_item' ||
+				block.type === 'to_do';
+
+			// Handle list items grouping
+			if (isListBlock) {
+				// Start new group if:
+				// 1. First block
+				// 2. Not same type as previous
+				// 3. Previous block wasn't a list item
+				if (!prevBlock || prevBlock.type !== block.type || !currentListGroup.length) {
+					currentListGroup.push(block);
+					blocks.push(block); // Only add first item of each group
+				} else {
+					currentListGroup.push(block);
 				}
-				return url;
-			})
-			.filter((url: URL) => url && !isTweetURL(url) && !isAmazonURL(url));
+			}
+			// Handle non-list blocks
+			else {
+				// Push any pending list group
+				if (currentListGroup.length > 0) {
+					listGroups.push({
+						type: getListType(prevBlock!.type),
+						listItems: [...currentListGroup]
+					});
+					currentListGroup = [];
+				}
+				blocks.push(block);
+			}
 
-		bookmarkURLMap = await buildURLToHTMLMap(bookmarkURLs);
+			// Handle bookmark URLs
+			if (block.type === 'bookmark' || block.type === 'link_preview' || block.type === 'embed') {
+				try {
+					const url = new URL(block.url);
+					if (!isTweetURL(url) && !isAmazonURL(url)) {
+						bookmarkURLs.push(url);
+					}
+				} catch (err) {
+					console.error('Invalid URL:', block.url, err);
+				}
+			}
+
+			// Build URL map
+			bookmarkURLMap = await buildURLToHTMLMap(bookmarkURLs);
+			prevBlock = block;
+		}
 	});
+
+	// Helper function to determine list type
+	function getListType(itemType: string): 'bulleted_list' | 'numbered_list' | 'to_do_list' {
+		switch (itemType) {
+			case 'bulleted_list_item':
+				return 'bulleted_list';
+			case 'numbered_list_item':
+				return 'numbered_list';
+			default:
+				return 'to_do_list';
+		}
+	}
 </script>
 
 {#each blocks as block}
@@ -94,5 +144,21 @@
 		<Code {block} />
 	{:else if block.type === 'equation'}
 		<Equation {block} />
+	{:else if block.type === 'bulleted_list_item'}
+		{@const bulletedList = listGroups.find(
+			(x) => x.type == 'bulleted_list' && x.listItems.some((item) => item.id === block.id)
+		)! as interfaces.BulletedList}
+		<BulletedListItems list={bulletedList} {headings} />
+	{:else if block.type === 'numbered_list_item'}
+		{@const numberedList = listGroups.find(
+			(x) => x.type == 'numbered_list' && x.listItems.some((item) => item.id === block.id)
+		)! as interfaces.NumberedList}
+		{console.log(numberedList)}
+		<NumberedListItems list={numberedList} {level} {headings} />
+	{:else if block.type === 'to_do'}
+		{@const toDoList = listGroups.find(
+			(x) => x.type == 'to_do_list' && x.listItems.some((item) => item.id === block.id)
+		)! as interfaces.ToDoList}
+		<ToDoListItems list={toDoList} {headings} />
 	{/if}
 {/each}
