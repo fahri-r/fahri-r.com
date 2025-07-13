@@ -20,6 +20,8 @@
 	import TableOfContents from '~/components/shared/notion-blocks/table-of-contents.svelte';
 	import SyncedBlock from '~/components/shared/notion-blocks/synced-block.svelte';
 	import LinkToPage from '~/components/shared/notion-blocks/link-to-page.svelte';
+	import Code from '~/components/shared/notion-blocks/code.svelte';
+	import Equation from '~/components/shared/notion-blocks/equation.svelte';
 
 	interface Props {
 		blocks: interfaces.Block[];
@@ -101,5 +103,9 @@
 		<SyncedBlock {block} {headings} />
 	{:else if block.type === notionBlokConst.LinkToPage}
 		<LinkToPage {block} />
+	{:else if block.type === notionBlokConst.Code}
+		<Code {block} />
+	{:else if block.type === notionBlokConst.Equation}
+		<Equation {block} />
 	{/if}
 {/each}

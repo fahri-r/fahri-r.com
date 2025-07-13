@@ -7,8 +7,10 @@ import path from 'path';
 import type { DatabaseColumn } from '~/interfaces/notion/database-column.interface';
 import {
 	Callout,
+	Code,
 	Divider,
 	Embed,
+	Equation,
 	File,
 	Heading1,
 	Heading2,
@@ -180,6 +182,16 @@ for (let post of posts) {
 			case LinkToPage:
 				importComponent(LinkToPage);
 				body += `<LinkToPage block={${JSON.stringify(block)}} />\n`;
+
+				break;
+			case Code:
+				importComponent(Code);
+				body += `<Code client:load block={${JSON.stringify(block)}} />\n`;
+
+				break;
+			case Equation:
+				importComponent(Equation);
+				body += `<Equation block={${JSON.stringify(block)}} />\n`;
 
 				break;
 			default:
