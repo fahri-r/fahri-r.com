@@ -1,0 +1,30 @@
+---
+import type { Heading1, Heading2, Heading3, Paragraph } from '~/interfaces/notion/block.interface';
+import RichText from './rich-text.astro';
+import NotionBlocks from './notion-block.astro';
+import '~/styles/notion-color.css';
+
+interface Props {
+	block: Paragraph;
+	headings: (Heading1 | Heading2 | Heading3)[];
+}
+
+const { block, headings }: Props = Astro.props;
+---
+
+<p class={block.color.replaceAll('_', '-')}>
+	{block.richTexts.map((richText) => <RichText richText={richText} />)}
+	{
+		block.hasChildren && block.children && (
+			<NotionBlocks blocks={block.children} headings={headings} />
+		)
+	}
+</p>
+
+<style>
+	p {
+		margin: 0.3rem 0;
+		font-size: 1rem;
+		min-height: 1.8rem;
+	}
+</style>

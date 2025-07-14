@@ -1,0 +1,44 @@
+---
+import type { Heading1, Heading2, Heading3, Toggle } from '~/interfaces/notion/block.interface';
+import RichText from './rich-text.astro';
+import NotionBlocks from './notion-block.astro';
+import '~/styles/notion-color.css';
+
+interface Props {
+	block: Toggle;
+	headings: (Heading1 | Heading2 | Heading3)[];
+}
+
+const { block, headings }: Props = Astro.props;
+---
+
+<details class={`toggle ${block.color.replaceAll('_', '-')}`}>
+	<summary>
+		{
+			block.richTexts.map((richText) => {
+				<RichText {richText} />;
+			})
+		}
+	</summary>
+	<div>
+		{block.hasChildren && block.children && <NotionBlocks blocks={block.children} {headings} />}
+	</div>
+</details>
+
+<style>
+	.toggle {
+		padding: 0.4rem;
+	}
+
+	.toggle > summary {
+		cursor: pointer;
+	}
+
+	.toggle > summary > a {
+		display: inline;
+	}
+
+	.toggle > div {
+		margin-left: 1em;
+	}
+</style>

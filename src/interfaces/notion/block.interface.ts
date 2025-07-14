@@ -49,7 +49,7 @@ export type Block =
 	| LinkToPage
 	| Callout
 	| SyncedBlock
- 	| Divider;
+	| Divider;
 
 interface BaseBlock {
 	id: string;
@@ -250,17 +250,17 @@ export interface List {
 	listItems: Block[];
 }
 
-export interface BulletedList extends List{
+export interface BulletedList extends List {
 	type: 'bulleted_list';
 	listItems: BulletedListItem[];
 }
 
-export interface NumberedList extends List{
+export interface NumberedList extends List {
 	type: 'numbered_list';
 	listItems: NumberedListItem[];
 }
 
-export interface ToDoList extends List{
+export interface ToDoList extends List {
 	type: 'to_do_list';
 	listItems: ToDo[];
 }

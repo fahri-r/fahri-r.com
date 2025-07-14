@@ -1,0 +1,39 @@
+---
+import type {
+	BulletedList,
+	Heading1,
+	Heading2,
+	Heading3
+} from '~/interfaces/notion/block.interface';
+import RichText from './rich-text.astro';
+import NotionBlocks from './notion-block.astro';
+import '~/styles/notion-color.css';
+
+interface Props {
+	list: BulletedList;
+	headings: (Heading1 | Heading2 | Heading3)[];
+}
+
+const { list, headings }: Props = Astro.props;
+const { listItems: blocks } = list;
+---
+
+<ul>
+	{
+		blocks.map((b) => (
+			<li class={b.color.replaceAll('_', '-')}>
+				{b.richTexts.map((richText) => (
+					<RichText {richText} />
+				))}
+
+				{b.hasChildren && b.children && <NotionBlocks blocks={b.children} {headings} />}
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	ul {
+		font-size: 1rem;
+	}
+</style>

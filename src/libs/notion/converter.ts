@@ -65,7 +65,7 @@ for (let post of posts) {
 		var stringValue = value instanceof Object ? JSON.stringify(value) : `"${value}"`;
 		metadata.push(`${key}: ${stringValue}\n`);
 	}
-	
+
 	blocks.map((block: Block) => metadata.push(`${block.id}: ${JSON.stringify(block)}`));
 
 	metadata.push('---\n');

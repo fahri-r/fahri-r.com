@@ -1,0 +1,69 @@
+---
+import type {
+	Callout,
+	Emoji,
+	FileObject,
+	Heading1,
+	Heading2,
+	Heading3
+} from '~/interfaces/notion/block.interface';
+import RichText from './rich-text.astro';
+import NotionBlocks from './notion-block.astro';
+
+interface Props {
+	block: Callout;
+	headings: (Heading1 | Heading2 | Heading3)[];
+}
+
+const { block, headings }: Props = Astro.props;
+---
+
+<div class={`callout ${block.color.replaceAll('_', '-')}`}>
+	{
+		block.icon && (
+			<div class="icon">
+				{block.icon.type === 'emoji' ? (
+					(block.icon as Emoji).emoji
+				) : block.icon.type === 'external' ? (
+					<img src={(block.icon as FileObject).url} alt="Icon in a callout block" />
+				) : null}
+			</div>
+		)
+	}
+	<div>
+		{block.richTexts.map((richText) => <RichText richText={richText} />)}
+		{
+			block.hasChildren && block.children && (
+				<NotionBlocks blocks={block.children} headings={headings} />
+			)
+		}
+	</div>
+</div>
+
+<style>
+	.callout {
+		display: flex;
+		margin: 0.4rem auto;
+		padding: 16px 12px;
+		width: 100%;
+		font-size: 1rem;
+		font-weight: 400;
+		line-height: 1.6rem;
+		border-radius: 3px;
+		border-width: 1px;
+		border-style: solid;
+		border-color: transparent;
+		background: rgba(235, 236, 237, 0.6);
+	}
+	.callout > div {
+		margin: 0;
+		line-height: 1.5rem;
+	}
+	.callout > div.icon {
+		margin-right: 0.7rem;
+	}
+	.callout > div.icon > img {
+		width: 1.2rem;
+		height: 1.2rem;
+	}
+</style>

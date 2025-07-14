@@ -1,0 +1,52 @@
+---
+import type { Table } from '~/interfaces/notion/block.interface';
+import RichText from './rich-text.astro';
+
+export interface Props {
+	block: Table;
+}
+
+const { block }: Props = Astro.props;
+---
+
+<div class="table">
+	<table>
+		<tbody>
+			{
+				block.rows.map((tableRow, j) => {
+					<tr>
+						{tableRow.cells.map((cell, i) => {
+							{
+								(block.hasRowHeader && i === 0) || (block.hasColumnHeader && j === 0) ? (
+									<th>
+										{cell.richTexts.map((richText) => (
+											<RichText {richText} />
+										))}
+									</th>
+								) : (
+									<td>
+										{cell.richTexts.map((richText) => (
+											<RichText {richText} />
+										))}
+									</td>
+								);
+							}
+						})}
+					</tr>;
+				})
+			}
+		</tbody>
+	</table>
+</div>
+
+<style>
+	.table {
+	}
+	.table table {
+		margin: 0.6rem 0;
+	}
+	.table th,
+	.table td {
+		font-weight: normal;
+	}
+</style>

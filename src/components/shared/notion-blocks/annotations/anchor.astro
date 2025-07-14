@@ -1,0 +1,25 @@
+---
+import type { RichText } from '~/interfaces/notion/block.interface';
+
+interface Props {
+	richText: RichText;
+}
+
+const { richText }: Props = Astro.props;
+---
+
+{
+	richText.href && !richText.mention ? (
+		<a href={richText.href}>
+			<slot />
+		</a>
+	) : (
+		<slot />
+	)
+}
+
+<style>
+	a {
+		text-decoration: underline;
+	}
+</style>

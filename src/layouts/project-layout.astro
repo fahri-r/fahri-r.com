@@ -4,7 +4,7 @@ import Layout from './layout.astro';
 import Sidebar from '~/components/projects/sidebar.astro';
 import { Eye, Github } from '@lucide/svelte';
 import { Badge } from '~/components/shared/badge';
-import NotionBlock from '~/components/shared/notion-blocks/notion-block.svelte';
+import NotionBlock from '~/components/shared/notion-blocks/notion-block.astro';
 import type { Block } from '~/interfaces/notion/block.interface';
 
 const { frontmatter } = Astro.props;
@@ -66,7 +66,7 @@ var headings = blocks.filter(
 					}
 				</div>
 
-				<NotionBlock client:load {blocks} {headings} />
+				<NotionBlock {blocks} {headings} />
 			</article>
 
 			<aside class="hidden xl:block xl:w-[350px]">

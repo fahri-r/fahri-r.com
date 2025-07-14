@@ -1,0 +1,49 @@
+---
+import {
+	isTweetURL,
+	isTikTokURL,
+	isInstagramURL,
+	isPinterestURL,
+	isCodePenURL
+} from '~/libs/blog-helper.ts';
+import type { Embed } from '~/interfaces/notion/block.interface';
+import Bookmark from './bookmark.astro';
+import TweetEmbed from './tweet-embed.astro';
+import TikTokEmbed from './tiktok-embed.astro';
+import InstagramEmbed from './instagram-embed.astro';
+import PinterestEmbed from './pinterest-embed.astro';
+import CodePenEmbed from './codepen-embed.astro';
+
+interface Props {
+	block: Embed;
+	urlMap: { [key: string]: string };
+}
+
+const { block, urlMap }: Props = Astro.props;
+
+let url: URL | undefined;
+
+try {
+	url = new URL(block.url);
+} catch (err) {
+	console.log(err);
+}
+---
+
+{
+	url ? (
+		isTweetURL(url) ? (
+			<TweetEmbed url={url} />
+		) : isTikTokURL(url) ? (
+			<TikTokEmbed url={url} />
+		) : isInstagramURL(url) ? (
+			<InstagramEmbed url={url} />
+		) : isPinterestURL(url) ? (
+			<PinterestEmbed url={url} />
+		) : isCodePenURL(url) ? (
+			<CodePenEmbed url={url} />
+		) : (
+			<Bookmark block={block} urlMap={urlMap} />
+		)
+	) : null
+}

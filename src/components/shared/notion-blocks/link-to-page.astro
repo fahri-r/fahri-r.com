@@ -1,0 +1,14 @@
+---
+import type { LinkToPage } from '~/interfaces/notion/block.interface';
+import Mention from './mention.astro';
+
+interface Props {
+	block: LinkToPage;
+}
+
+const { block }: Props = Astro.props;
+---
+
+<p>
+	<Mention pageId={block.pageId} />
+</p>
