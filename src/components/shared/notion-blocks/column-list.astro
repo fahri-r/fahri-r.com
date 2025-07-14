@@ -1,20 +1,20 @@
 ---
-import * as interfaces from '../../lib/interfaces.ts';
-import NotionBlocks from '../NotionBlocks.astro';
+import type { ColumnList, Heading1, Heading2, Heading3 } from '~/interfaces/notion/block.interface';
+import NotionBlock from './notion-block.astro';
 
 export interface Props {
-	block: interfaces.Block;
-	headings: interfaces.Block[];
+	block: ColumnList;
+	headings: (Heading1 | Heading2 | Heading3)[];
 }
 
-const { block, headings } = Astro.props;
+const { block, headings }: Props = Astro.props;
 ---
 
 <div class="column-list">
 	{
-		block.ColumnList.Columns.map((column: interfaces.Column) => (
+		block.columns.map((column) => (
 			<div>
-				<NotionBlocks blocks={column.Children} headings={headings} />
+				<NotionBlock blocks={column.children} headings={headings} />
 			</div>
 		))
 	}

@@ -6,7 +6,7 @@ import type {
 	NumberedList
 } from '~/interfaces/notion/block.interface';
 import RichText from '~/components/shared/notion-blocks/rich-text.astro';
-import NotionBlocks from '~/components/shared/notion-blocks/notion-block.astro';
+import NotionBlock from '~/components/shared/notion-blocks/notion-block.astro';
 import '~/styles/notion-color.css';
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 	headings: (Heading1 | Heading2 | Heading3)[];
 }
 
-const { list, level, headings } = Astro.props;
+const { list, level, headings }: Props = Astro.props;
 const { listItems: blocks } = list;
 
 const listTypes = ['i', '1', 'a'] as const;
@@ -30,7 +30,7 @@ const listTypes = ['i', '1', 'a'] as const;
 				))}
 
 				{b.hasChildren && b.children && (
-					<NotionBlocks blocks={b.children} level={level + 1} headings={headings} />
+					<NotionBlock blocks={b.children} level={level + 1} headings={headings} />
 				)}
 			</li>
 		))

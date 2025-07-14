@@ -5,7 +5,7 @@ import type {
 	Heading3,
 	SyncedBlock
 } from '~/interfaces/notion/block.interface';
-import NotionBlocks from './notion-block.astro';
+import NotionBlock from './notion-block.astro';
 
 interface Props {
 	block: SyncedBlock;
@@ -15,4 +15,4 @@ interface Props {
 const { block, headings }: Props = Astro.props;
 ---
 
-<NotionBlocks blocks={block.children!} {headings} />
+<NotionBlock blocks={block.children!} {headings} />

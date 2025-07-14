@@ -6,7 +6,7 @@ import type {
 	ToDoList
 } from '~/interfaces/notion/block.interface.ts';
 import RichText from './rich-text.astro';
-import NotionBlocks from './notion-block.astro';
+import NotionBlock from './notion-block.astro';
 import '~/styles/notion-color.css';
 
 interface Props {
@@ -33,7 +33,7 @@ const { listItems: blocks } = list;
 					)
 				)}
 
-				{b.hasChildren && b.children && <NotionBlocks blocks={b.children} {headings} />}
+				{b.hasChildren && b.children && <NotionBlock blocks={b.children} {headings} />}
 			</div>
 		))
 	}

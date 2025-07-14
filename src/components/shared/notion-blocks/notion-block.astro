@@ -23,6 +23,7 @@ import Equation from '~/components/shared/notion-blocks/equation.astro';
 import BulletedListItems from '~/components/shared/notion-blocks/bulleted-list.astro';
 import NumberedListItems from '~/components/shared/notion-blocks/numbered-list.astro';
 import ToDoListItems from '~/components/shared/notion-blocks/to-do-list.astro';
+import ColumnList from '~/components/shared/notion-blocks/column-list.astro';
 
 interface Props {
 	blocks: interfaces.Block[];
@@ -30,7 +31,7 @@ interface Props {
 	level?: number;
 }
 
-const { blocks: rawBlocks, headings = [], level = 1 } = Astro.props;
+const { blocks: rawBlocks, headings = [], level = 1 }: Props = Astro.props;
 
 // Process blocks on the server
 let blocks: interfaces.Block[] = [];
@@ -152,6 +153,8 @@ function getListType(itemType: string): 'bulleted_list' | 'numbered_list' | 'to_
 				return <Code block={block} />;
 			case 'equation':
 				return <Equation block={block} />;
+			case 'column_list':
+				return <ColumnList block={block} headings={headings} />;
 			case 'bulleted_list_item': {
 				const bulletedList = listGroups.find(
 					(x) => x.type === 'bulleted_list' && x.listItems.some((item) => item.id === block.id)

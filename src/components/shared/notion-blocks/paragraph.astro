@@ -1,7 +1,7 @@
 ---
 import type { Heading1, Heading2, Heading3, Paragraph } from '~/interfaces/notion/block.interface';
 import RichText from './rich-text.astro';
-import NotionBlocks from './notion-block.astro';
+import NotionBlock from './notion-block.astro';
 import '~/styles/notion-color.css';
 
 interface Props {
@@ -16,7 +16,7 @@ const { block, headings }: Props = Astro.props;
 	{block.richTexts.map((richText) => <RichText richText={richText} />)}
 	{
 		block.hasChildren && block.children && (
-			<NotionBlocks blocks={block.children} headings={headings} />
+			<NotionBlock blocks={block.children} headings={headings} />
 		)
 	}
 </p>

@@ -6,7 +6,7 @@ import type {
 	Heading3
 } from '~/interfaces/notion/block.interface';
 import RichText from './rich-text.astro';
-import NotionBlocks from './notion-block.astro';
+import NotionBlock from './notion-block.astro';
 import '~/styles/notion-color.css';
 
 interface Props {
@@ -26,7 +26,7 @@ const { listItems: blocks } = list;
 					<RichText {richText} />
 				))}
 
-				{b.hasChildren && b.children && <NotionBlocks blocks={b.children} {headings} />}
+				{b.hasChildren && b.children && <NotionBlock blocks={b.children} {headings} />}
 			</li>
 		))
 	}

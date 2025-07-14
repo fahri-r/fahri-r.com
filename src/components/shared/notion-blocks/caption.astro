@@ -5,11 +5,11 @@ interface Props {
 	richTexts: RichText[];
 }
 
-const { richTexts } = Astro.props;
+const { richTexts }: Props = Astro.props;
 ---
 
 {
-	richTexts.length && richTexts[0].text?.content && (
+	richTexts.length > 0 && richTexts[0].text?.content && (
 		<div class="caption">
 			<div>{richTexts[0].text.content}</div>
 		</div>
