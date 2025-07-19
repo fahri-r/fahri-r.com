@@ -1,7 +1,6 @@
 ---
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/shared/card';
 import { Badge } from '~/components/shared/badge';
-import Image from '~/components/image.astro';
 
 const { cover, title, date, href, tools, description } = Astro.props;
 ---
@@ -12,7 +11,7 @@ const { cover, title, date, href, tools, description } = Astro.props;
 	>
 		{
 			cover && (
-				<Image
+				<img
 					src={cover}
 					alt={`${title} Cover`}
 					class="h-40 w-full overflow-hidden object-cover object-top transition-all duration-300 ease-out group-hover:brightness-50"

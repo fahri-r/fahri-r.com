@@ -11,11 +11,11 @@ const menu: Menu[] = [
 		name: 'Projects',
 		icon: 'Cpu'
 	},
-	{
-		path: '/chat',
-		name: 'Guest Book',
-		icon: 'BookText'
-	}
+	// {
+	// 	path: '/chat',
+	// 	name: 'Guest Book',
+	// 	icon: 'BookText'
+	// }
 ];
 
 export default menu;
