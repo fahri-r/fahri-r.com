@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { NOTION_KEY } from '~/constants/global';
-import { getAllBlocksByBlockId, getAllPosts, getFileExtension } from './utils';
+import { getAllBlocksByBlockId, getAllPosts } from './utils';
 import type { Block } from '~/interfaces/notion/block.interface';
 import args from 'args';
 import path from 'path';
@@ -55,7 +55,15 @@ for (let post of posts) {
 	metadata.push('layout: "~/layouts/project-layout.astro"\n');
 	// Loop through each property and add "key: value\n"
 	for (const [key, value] of Object.entries(post)) {
-		if (key == 'cover') continue;
+		if (key == 'cover' && value instanceof Object && 'url' in value) {
+			metadata.push(`${key}: ${value!.url}\n`);
+			continue;
+		}
+
+		if(key == 'content') {
+			metadata.push(`title: ${value}\n`);
+			continue;
+		}
 
 		if (!value) {
 			metadata.push(`${key}: null\n`);

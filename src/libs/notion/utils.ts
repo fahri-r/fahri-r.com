@@ -708,10 +708,17 @@ function _buildPost(pageObject: responses.PageObject, database: DatabaseColumn[]
 
 	let cover: FileObject | null = null;
 	if (pageObject.cover) {
-		cover = {
-			type: pageObject.cover.type,
-			url: pageObject.cover.file?.url || ''
-		};
+		if (pageObject.cover.type === 'external' && pageObject.cover.external) {
+			cover = {
+				type: 'external',
+				url: pageObject.cover.external.url
+			};
+		} else if (pageObject.cover.type === 'file' && pageObject.cover.file) {
+			cover = {
+				type: 'file',
+				url: pageObject.cover.file.url
+			};
+		}
 	}
 
 	var result: any = {
