@@ -28,7 +28,7 @@ pnpm-debug.log*
 
 # blog and projects folder
 src/pages/projects/*.mdx
-src/assets/projects/
+public/projects/
 
 src/pages/blog/*.mdx
-src/assets/blog/
+public/blog/

@@ -9,11 +9,11 @@ import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://www.fahri-r.com',
-    integrations: [svelte(), sitemap(), mdx()],
-    vite: {
-        plugins: [tailwindcss()]
-    },
-    output: 'static',
-    adapter: cloudflare()
+	site: 'https://www.fahri-r.com',
+	integrations: [svelte(), sitemap(), mdx()],
+	vite: {
+		plugins: [tailwindcss()]
+	},
+	output: 'static',
+	adapter: cloudflare()
 });

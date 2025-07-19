@@ -182,9 +182,9 @@ export function getFileExtension(url: string): string | null {
 export async function downloadFile(
 	outputDir: string,
 	url: string,
-	filename: string,
-	fileExtension: string | null
-) {
+	filename: string
+): Promise<string> {
+	var fileExtension = getFileExtension(url);
 	try {
 		const response = await axios({
 			method: 'GET',
@@ -192,10 +192,14 @@ export async function downloadFile(
 			responseType: 'stream'
 		});
 
-		const writer = fs.createWriteStream(`src/assets/${outputDir}/${filename}${fileExtension}`);
+		const output = `/${outputDir}/${filename}${fileExtension}`;
+		const writer = fs.createWriteStream('public' + output);
 		await pipeline(response.data, writer);
+
+		return output;
 	} catch (error) {
 		console.error('Download failed:', error);
+		return '';
 	}
 }
 

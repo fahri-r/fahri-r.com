@@ -1,6 +1,5 @@
 ---
 import type { Image } from '~/interfaces/notion/block.interface';
-import { filePath } from '~/libs/blog-helper.ts';
 import Caption from './caption.astro';
 
 interface Props {
@@ -13,7 +12,7 @@ let image = '';
 if (block.mediaType === 'external') {
 	image = block.external.url;
 } else if (block.mediaType === 'file') {
-	image = filePath(new URL(block.file.url));
+	image = block.file.url;
 }
 ---
 

@@ -10,7 +10,7 @@ const menu: Menu[] = [
 		path: '/projects',
 		name: 'Projects',
 		icon: 'Cpu'
-	},
+	}
 	// {
 	// 	path: '/chat',
 	// 	name: 'Guest Book',
