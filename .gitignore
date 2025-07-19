@@ -24,7 +24,6 @@ pnpm-debug.log*
 .idea/
 .zed/
 .vscode/
-.vercel/
 
 # blog and projects folder
 src/pages/projects/*.mdx
