@@ -27,7 +27,9 @@ pnpm-debug.log*
 
 # blog and projects folder
 src/pages/projects/*.mdx
-public/projects/
+public/projects/*
+!public/projects/.gitkeep
 
 src/pages/blog/*.mdx
-public/blog/
+public/blog/*
+!public/blog/.gitkeep
