@@ -1,6 +1,5 @@
 ---
 import type { File } from '~/interfaces/notion/block.interface';
-import { filePath } from '~/libs/blog-helper.ts';
 import Caption from './caption.astro';
 
 interface Props {
@@ -10,11 +9,14 @@ interface Props {
 const { block }: Props = Astro.props;
 
 let filename = '';
-let url: URL | undefined;
 
 try {
-	url = new URL(block.mediaType === 'external' ? block.external.url : block.file.url);
-	filename = decodeURIComponent(url.pathname.split('/').slice(-1)[0]);
+	if (block.mediaType === 'external') {
+		var url = new URL(block.external.url);
+		filename = decodeURIComponent(url.pathname.split('/').slice(-1)[0]);
+	} else {
+		filename = decodeURIComponent(block.file.url.split('/').slice(-1)[0]);
+	}
 } catch (err) {
 	console.log(err);
 }
@@ -23,9 +25,9 @@ try {
 <div class="file">
 	<div>
 		{
-			url && (
+			filename && (
 				<a
-					href={block.mediaType === 'external' ? url.toString() : filePath(url)}
+					href={block.mediaType === 'external' ? block.external.url : block.file.url}
 					target="_blank"
 					rel="noopener noreferrer"
 				>
