@@ -1,20 +1,8 @@
-import type {
-	Block,
-	Heading1,
-	Heading2,
-	Heading3,
-	RichText,
-	Column
-} from '~/interfaces/notion/block.interface';
+import type { Heading1, Heading2, Heading3, RichText } from '~/interfaces/notion/block.interface';
 import { pathJoin } from './utils';
 
 const REQUEST_TIMEOUT_MS = 10000;
 const BASE_PATH = '';
-
-export const filePath = (url: URL): string => {
-	const [dir, filename] = url.pathname.split('/').slice(-2);
-	return pathJoin(BASE_PATH, `/notion/${dir}/${filename}`);
-};
 
 export const buildURLToHTMLMap = async (urls: URL[]): Promise<{ [key: string]: string }> => {
 	const htmls: string[] = await Promise.all(
@@ -44,6 +32,53 @@ export const buildURLToHTMLMap = async (urls: URL[]): Promise<{ [key: string]: s
 		}
 		return acc;
 	}, {});
+};
+
+export const getStaticFilePath = (path: string): string => {
+	return pathJoin(BASE_PATH, path);
+};
+
+export const getNavLink = (nav: string) => {
+	if ((!nav || nav === '/') && BASE_PATH) {
+		return pathJoin(BASE_PATH, '') + '/';
+	}
+
+	return pathJoin(BASE_PATH, nav);
+};
+
+export const getPostLink = (slug: string) => {
+	return pathJoin(BASE_PATH, `/posts/${slug}`);
+};
+
+export const getTagLink = (tag: string) => {
+	return pathJoin(BASE_PATH, `/posts/tag/${encodeURIComponent(tag)}`);
+};
+
+export const getPageLink = (page: number, tag: string) => {
+	if (page === 1) {
+		return tag ? getTagLink(tag) : pathJoin(BASE_PATH, '/');
+	}
+	return tag
+		? pathJoin(BASE_PATH, `/posts/tag/${encodeURIComponent(tag)}/page/${page.toString()}`)
+		: pathJoin(BASE_PATH, `/posts/page/${page.toString()}`);
+};
+
+export const getDateStr = (date: string) => {
+	const dt = new Date(date);
+
+	if (date.indexOf('T') !== -1) {
+		// Consider timezone
+		const elements = date.split('T')[1].split(/([+-])/);
+		if (elements.length > 1) {
+			const diff = parseInt(`${elements[1]}${elements[2]}`, 10);
+			dt.setHours(dt.getHours() + diff);
+		}
+	}
+
+	const y = dt.getFullYear();
+	const m = ('00' + (dt.getMonth() + 1)).slice(-2);
+	const d = ('00' + dt.getDate()).slice(-2);
+	return y + '-' + m + '-' + d;
 };
 
 export const buildHeadingId = (heading: Heading1 | Heading2 | Heading3) => {

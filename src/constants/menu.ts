@@ -10,6 +10,11 @@ const menu: Menu[] = [
 		path: '/projects',
 		name: 'Projects',
 		icon: 'Cpu'
+	},
+	{
+		path: '/blog',
+		name: 'Blog',
+		icon: 'Newspaper'
 	}
 	// {
 	// 	path: '/chat',

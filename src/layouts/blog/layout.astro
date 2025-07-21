@@ -1,0 +1,73 @@
+---
+import { cn } from '~/libs/utils';
+import Layout from '../layout.astro';
+import Sidebar from '~/components/projects/sidebar.astro';
+import { Eye, Github } from '@lucide/svelte';
+import { Badge } from '~/components/shared/badge';
+import NotionBlock from '~/components/shared/notion-blocks/notion-block.astro';
+import type { Block } from '~/interfaces/notion/block.interface';
+
+const { frontmatter } = Astro.props;
+const { title, tools, site, repository, ...rawBlocks } = frontmatter;
+
+var blocks = Object.values<Block>(rawBlocks).filter((b) => b);
+var headings = blocks.filter(
+	(b) => b.type === 'heading_1' || b.type === 'heading_2' || b.type === 'heading_3'
+);
+---
+
+<Layout title={frontmatter.title} class="lg:max-w-4xl">
+	<main>
+		<div class="mx-auto flex justify-center gap-12 px-4">
+			<article class={cn('space-y-4 xl:space-y-8 z-40 w-full rounded-sm')}>
+				<header class="mb-4 flex justify-between lg:mb-6">
+					<div class="text-2xl leading-tight font-extrabold text-gray-900 dark:text-white">
+						{title}
+					</div>
+					{
+						(site || repository) && (
+							<div class="block flex items-center gap-2 font-sans text-base xl:hidden">
+								{repository && (
+									<a
+										href={repository}
+										class="text-primary flex items-center gap-2"
+										target="_blank"
+										rel="noreferrer"
+									>
+										<Github size={18} />
+										<span class="text-sm hover:underline">Source code</span>
+									</a>
+								)}
+
+								{site && repository && <div class="mx-1 h-4 w-px bg-neutral-800" />}
+
+								{site && (
+									<a
+										href={site}
+										class="text-primary flex items-center gap-2"
+										target="_blank"
+										rel="noreferrer"
+									>
+										<Eye size={18} />
+										<span class="text-sm hover:underline">Site</span>
+									</a>
+								)}
+							</div>
+						)
+					}
+				</header>
+				<div class="block flex flex-wrap gap-2 xl:hidden">
+					{
+						tools.map((tool: any) => (
+							<Badge class="px-1 py-0 text-sm" variant="secondary">
+								{tool.name}
+							</Badge>
+						))
+					}
+				</div>
+
+				<NotionBlock {blocks} {headings} />
+			</article>
+		</div>
+	</main>
+</Layout>

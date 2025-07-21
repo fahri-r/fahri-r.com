@@ -53,7 +53,7 @@ async function main() {
 		let metadata = ['---'];
 		const blocks = await getAllBlocksByBlockId(post.pageId);
 
-		metadata.push('layout: "~/layouts/project-layout.astro"\n');
+		metadata.push(`layout: "~/layouts/${outputDir}/layout.astro"\n`);
 
 		// Loop through each property and add "key: value\n"
 		for (const [key, value] of Object.entries(post)) {
