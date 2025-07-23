@@ -57,12 +57,13 @@ async function main() {
 
 		// Loop through each property and add "key: value\n"
 		for (const [key, value] of Object.entries(post)) {
-			// if (key === 'cover' && value instanceof Object && 'url' in value) {
+			if (key === 'cover' && value instanceof Object && 'url' in value) {
+				continue;
 			// 	console.log(value!.url)
 			// 	var url = await downloadFile(outputDir, `cover-${post.slug}`, value!.url as string)
 			// 	metadata.push(`${key}: ${url}\n`);
 			// 	continue;
-			// }
+			}
 
 			if (key === 'content') {
 				metadata.push(`title: ${value}\n`);
