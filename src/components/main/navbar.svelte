@@ -8,7 +8,7 @@
 	} from '~/components/shared/tooltip';
 	import { Separator } from '~/components/shared/separator';
 	import { Button } from '~/components/shared/button';
-	import ModeToggle from '~/components/mode-toggle.svelte';
+	import ModeToggle from '~/components/main/mode-toggle.svelte';
 	import LucideIcon from '~/components/lucide-icon.svelte';
 	import menu from '~/constants/menu';
 	import profile from '~/constants/profile';
