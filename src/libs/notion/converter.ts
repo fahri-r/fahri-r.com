@@ -57,11 +57,12 @@ async function main() {
 
 		// Loop through each property and add "key: value\n"
 		for (const [key, value] of Object.entries(post)) {
-			if (key === 'cover' && value instanceof Object && 'url' in value) {
-				var url = await downloadFile(outputDir, `cover-${post.slug}`, value!.url as string)
-				metadata.push(`${key}: ${url}\n`);
-				continue;
-			}
+			// if (key === 'cover' && value instanceof Object && 'url' in value) {
+			// 	console.log(value!.url)
+			// 	var url = await downloadFile(outputDir, `cover-${post.slug}`, value!.url as string)
+			// 	metadata.push(`${key}: ${url}\n`);
+			// 	continue;
+			// }
 
 			if (key === 'content') {
 				metadata.push(`title: ${value}\n`);
@@ -77,13 +78,20 @@ async function main() {
 			metadata.push(`${key}: ${stringValue}\n`);
 		}
 
+		var isFirstFile = true;
+		var url = '';
 		for (const block of blocks) {
 			//download file to server
 			if (
 				(block.type === 'file' || block.type === 'image' || block.type === 'video') &&
 				block.mediaType === 'file'
 			) {
-				block.file.url = await downloadFile(outputDir, block.file.url, block.id);
+				var url = await downloadFile(outputDir, block.file.url, block.id)
+				block.file.url = url;
+				if(isFirstFile) {
+					metadata.push(`cover: ${url}\n`);
+					isFirstFile = false;
+				};
 			}
 
 			metadata.push(`${block.id}: ${JSON.stringify(block)}`);
