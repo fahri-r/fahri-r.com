@@ -20,7 +20,7 @@ interface Props {
 }
 
 const {
-	title = SITE.title,
+	title,
 	author = SITE.author,
 	profile = SITE.profile,
 	description = SITE.desc,
@@ -34,10 +34,12 @@ const {
 
 const socialImageURL = new URL(ogImage, Astro.url);
 
+const normalizedTitle = title ? `${title} - ${SITE.author}` : SITE.title;
+
 const structuredData = {
 	'@context': 'https://schema.org',
 	'@type': 'BlogPosting',
-	headline: `${title}`,
+	headline: `${normalizedTitle}`,
 	image: `${socialImageURL}`,
 	datePublished: `${pubDatetime?.toISOString()}`,
 	...(modDatetime && { dateModified: modDatetime.toISOString() }),
@@ -61,14 +63,14 @@ const structuredData = {
 		<meta name="generator" content={Astro.generator} />
 
 		<!-- General Meta Tags -->
-		<title>{title}</title>
-		<meta name="title" content={title} />
+		<title>{normalizedTitle}</title>
+		<meta name="title" content={normalizedTitle} />
 		<meta name="description" content={description} />
 		<meta name="author" content={author} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
 		<!-- Open Graph / Facebook -->
-		<meta property="og:title" content={title} />
+		<meta property="og:title" content={normalizedTitle} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalURL} />
 		<meta property="og:image" content={socialImageURL} />
@@ -80,7 +82,7 @@ const structuredData = {
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image" />
 		<meta property="twitter:url" content={canonicalURL} />
-		<meta property="twitter:title" content={title} />
+		<meta property="twitter:title" content={normalizedTitle} />
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content={socialImageURL} />
 
@@ -92,7 +94,7 @@ const structuredData = {
 		<link
 			rel="alternate"
 			type="application/rss+xml"
-			title={SITE.title}
+			title={normalizedTitle}
 			href={new URL('rss.xml', Astro.site)}
 		/>
 
