@@ -1,0 +1,55 @@
+---
+import Layout from '~/layouts/layout.astro';
+import ProjectCard from '~/components/projects/project-card.astro';
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import { SITE } from '~/constants/global';
+import { Pagination } from '~/components/shared/pagination/index';
+
+const PROJECTS_PATH = 'projects';
+const TITLE = 'Projects';
+const DESCRIPTION = 'Several projects that I have worked on, both private and open source.';
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const projects = (await getCollection('projects')).sort((postA, postB) => {
+		const aDate = new Date(postA.data.date);
+		const bDate = new Date(postB.data.date);
+		return bDate.getTime() - aDate.getTime();
+	});
+	return paginate(projects, { pageSize: SITE.pageSize });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<Layout title={TITLE} description={DESCRIPTION}>
+	<main class="">
+		<h1 class="font-sans text-xl font-bold">{TITLE}</h1>
+		<p class="text-muted-foreground mb-4 text-sm leading-relaxed">
+			{DESCRIPTION}
+		</p>
+
+		<div class="mx-auto mb-4 grid max-w-[800px] grid-cols-1 gap-3 sm:grid-cols-2">
+			{
+				page.data.map(async (project) => {
+					const { cover, title, date, slug, tools, description } = project.data;
+					const href = `/${PROJECTS_PATH}/${slug}`;
+					const dateStr = new Date(date).toLocaleString('en-US', {
+						month: 'short',
+						day: 'numeric',
+						year: 'numeric'
+					});
+
+					return <ProjectCard {href} {cover} {title} {tools} {description} date={dateStr} />;
+				})
+			}
+		</div>
+
+		<Pagination
+			client:load
+			currentPage={page.currentPage}
+			lastPage={page.lastPage}
+			path={PROJECTS_PATH}
+		/>
+	</main>
+</Layout>
