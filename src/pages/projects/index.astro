@@ -1,12 +1,13 @@
 ---
 import Layout from '~/layouts/layout.astro';
 import ProjectCard from '~/components/projects/project-card.astro';
+import { getCollection } from 'astro:content';
 
 const PROJECTS_PATH = 'projects';
 const TITLE = 'Projects';
 const DESCRIPTION = 'Several projects that I have worked on, both private and open source.';
 
-const projects = await Astro.glob('./*.mdx');
+const projects = await getCollection('projects');
 ---
 
 <Layout title={TITLE} description={DESCRIPTION}>
@@ -20,12 +21,12 @@ const projects = await Astro.glob('./*.mdx');
 			{
 				projects
 					.sort((projectA, projectB) => {
-						const aDate = new Date(projectA.frontmatter.date);
-						const bDate = new Date(projectB.frontmatter.date);
+						const aDate = new Date(projectA.data.date);
+						const bDate = new Date(projectB.data.date);
 						return bDate.getTime() - aDate.getTime();
 					})
 					.map(async (project) => {
-						const { cover, title, date, slug, tools, description } = project?.frontmatter;
+						const { cover, title, date, slug, tools, description } = project.data;
 						const href = `/${PROJECTS_PATH}/${slug}`;
 						const dateStr = new Date(date).toLocaleString('en-US', {
 							month: 'short',

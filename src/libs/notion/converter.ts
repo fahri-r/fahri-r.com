@@ -53,16 +53,12 @@ async function main() {
 		let metadata = ['---'];
 		const blocks = await getAllBlocksByBlockId(post.pageId);
 
-		metadata.push(`layout: "~/layouts/${outputDir}/layout.astro"\n`);
-
 		// Loop through each property and add "key: value\n"
 		for (const [key, value] of Object.entries(post)) {
 			if (key === 'cover' && value instanceof Object && 'url' in value) {
+				var url = await downloadFile(outputDir, value!.url as string, `cover-${post.slug}`);
+				metadata.push(`${key}: ${url}\n`);
 				continue;
-			// 	console.log(value!.url)
-			// 	var url = await downloadFile(outputDir, `cover-${post.slug}`, value!.url as string)
-			// 	metadata.push(`${key}: ${url}\n`);
-			// 	continue;
 			}
 
 			if (key === 'content') {
@@ -79,7 +75,6 @@ async function main() {
 			metadata.push(`${key}: ${stringValue}\n`);
 		}
 
-		var isFirstFile = true;
 		var url = '';
 		for (const block of blocks) {
 			//download file to server
@@ -87,12 +82,8 @@ async function main() {
 				(block.type === 'file' || block.type === 'image' || block.type === 'video') &&
 				block.mediaType === 'file'
 			) {
-				var url = await downloadFile(outputDir, block.file.url, block.id)
+				var url = await downloadFile(outputDir, block.file.url, block.id);
 				block.file.url = url;
-				if(isFirstFile) {
-					metadata.push(`cover: ${url}\n`);
-					isFirstFile = false;
-				};
 			}
 
 			metadata.push(`${block.id}: ${JSON.stringify(block)}`);
@@ -101,7 +92,7 @@ async function main() {
 		metadata.push('---\n');
 
 		const data = metadata.join('\n') + header.join('\n');
-		fs.writeFileSync(`src/pages/${outputDir}/${post.slug}.mdx`, data);
+		fs.writeFileSync(`src/content/${outputDir}/${post.slug}.mdx`, data);
 	}
 }
 

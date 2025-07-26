@@ -26,10 +26,10 @@ pnpm-debug.log*
 .vscode/
 
 # blog and projects folder
-src/pages/projects/*.mdx
+src/content/projects/*.mdx
 public/projects/*
 !public/projects/.gitkeep
 
-src/pages/blog/*.mdx
+src/content/blog/*.mdx
 public/blog/*
 !public/blog/.gitkeep

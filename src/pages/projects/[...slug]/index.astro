@@ -1,13 +1,28 @@
 ---
 import { cn } from '~/libs/utils';
-import Layout from '../layout.astro';
+import Sidebar from '~/components/projects/sidebar.astro';
 import { Eye, Github } from '@lucide/svelte';
 import { Badge } from '~/components/shared/badge';
 import NotionBlock from '~/components/shared/notion-blocks/notion-block.astro';
 import type { Block } from '~/interfaces/notion/block.interface';
+import Layout from '~/layouts/layout.astro';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 
-const { frontmatter } = Astro.props;
-const { title, tools, site, repository, ...rawBlocks } = frontmatter;
+export interface Props {
+	project: CollectionEntry<'projects'>;
+}
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+	return projects.map((project) => ({
+		params: { slug: project.data.slug },
+		props: { project }
+	}));
+}
+
+const { project } = Astro.props;
+const { title, tools, site, repository, ...rawBlocks } = project.data;
 
 var blocks = Object.values<Block>(rawBlocks).filter((b) => b);
 var headings = blocks.filter(
@@ -15,7 +30,7 @@ var headings = blocks.filter(
 );
 ---
 
-<Layout title={frontmatter.title} class="lg:max-w-4xl">
+<Layout title={title} class="lg:max-w-4xl">
 	<main>
 		<div class="mx-auto flex justify-center gap-12 px-4">
 			<article class={cn('space-y-4 xl:space-y-8 z-40 w-full rounded-sm')}>
@@ -67,6 +82,10 @@ var headings = blocks.filter(
 
 				<NotionBlock {blocks} {headings} />
 			</article>
+
+			<aside class="hidden xl:block xl:w-[350px]">
+				<Sidebar tools={tools} site={site} repository={repository} class="sticky top-10" />
+			</aside>
 		</div>
 	</main>
 </Layout>
