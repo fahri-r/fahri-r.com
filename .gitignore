@@ -24,12 +24,3 @@ pnpm-debug.log*
 .idea/
 .zed/
 .vscode/
-
-# blog and projects folder
-src/content/projects/*.mdx
-public/projects/*
-!public/projects/.gitkeep
-
-src/content/blog/*.mdx
-public/blog/*
-!public/blog/.gitkeep
