@@ -1,41 +1,53 @@
 ---
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/shared/card';
 import { Badge } from '~/components/shared/badge';
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+	entry: CollectionEntry<'projects'>;
+}
 
-const { cover, title, date, href, tools, description } = Astro.props;
+const { entry } = Astro.props;
+
+const dateStr = new Date(entry.data.date).toLocaleString('en-US', {
+	month: 'short',
+	day: 'numeric',
+	year: 'numeric'
+});
+
 ---
 
-<a {href} class={'h-full'}>
+<a href={`/${entry.collection}/${entry.id}`} class={'h-full'}>
 	<Card
 		class="group hover:bg-accent flex h-full flex-col overflow-hidden border pb-2 transition-all duration-300 ease-out hover:scale-[102%] hover:shadow-lg"
 	>
 		{
-			cover && (
-				<img
-					src={cover}
-					alt={`${title} Cover`}
+			entry.data.cover && (
+				<Image
+					src={entry.data.cover}
+					alt={`${entry.data.title} Cover`}
 					class="h-40 w-full overflow-hidden object-cover object-top transition-all duration-300 ease-out group-hover:brightness-50"
 				/>
 			)
 		}
 		<CardHeader class="px-2">
 			<div class="space-y-1">
-				<CardTitle class="mt-1 text-base">{title}</CardTitle>
-				<time class="font-sans text-xs">{date}</time>
+				<CardTitle class="mt-1 text-base">{entry.data.title}</CardTitle>
+				<time class="font-sans text-xs">{dateStr}</time>
 				<p
 					class="prose text-muted-foreground dark:prose-invert line-clamp-3 max-w-full font-sans text-xs text-pretty"
 				>
-					{description}
+					{entry.data.description}
 				</p>
 			</div>
 		</CardHeader>
 		<CardContent class="mt-auto flex flex-col p-0 px-2">
 			{
-				tools && tools.length > 0 && (
+				entry.data.tools && entry.data.tools.length > 0 && (
 					<div class="mt-2 flex flex-wrap gap-1">
-						{tools?.map((tool: any) => (
+						{entry.data.tools?.map((tool: any) => (
 							<Badge class="px-1 py-0 text-[10px]" variant="secondary">
-								{tool.name}
+								{tool}
 							</Badge>
 						))}
 					</div>

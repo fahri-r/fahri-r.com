@@ -3,47 +3,38 @@ import { cn } from '~/libs/utils';
 import Sidebar from '~/components/projects/sidebar.astro';
 import { Eye, Github } from '@lucide/svelte';
 import { Badge } from '~/components/shared/badge';
-import NotionBlock from '~/components/shared/notion-blocks/notion-block.astro';
-import type { Block } from '~/interfaces/notion/block.interface';
 import Layout from '~/layouts/layout.astro';
 import type { CollectionEntry } from 'astro:content';
-import { getCollection } from 'astro:content';
-
-export interface Props {
-	project: CollectionEntry<'projects'>;
-}
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
-	const projects = await getCollection('projects');
-	return projects.map((project) => ({
-		params: { slug: project.data.slug },
-		props: { project }
+	const posts = await getCollection('projects');
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: post
 	}));
 }
 
-const { project } = Astro.props;
-const { title, tools, site, repository, ...rawBlocks } = project.data;
+type Props = CollectionEntry<'projects'>;
 
-var blocks = Object.values<Block>(rawBlocks).filter((b) => b);
-var headings = blocks.filter(
-	(b) => b.type === 'heading_1' || b.type === 'heading_2' || b.type === 'heading_3'
-);
+const post = Astro.props;
+const { Content } = await render(post);
 ---
 
-<Layout title={title} class="lg:max-w-4xl">
+<Layout title={post.data.title} class="lg:max-w-4xl">
 	<main>
 		<div class="mx-auto flex justify-center gap-12 px-4">
 			<article class={cn('space-y-4 xl:space-y-8 z-40 w-full rounded-sm')}>
 				<header class="mb-4 flex justify-between lg:mb-6">
 					<div class="text-2xl leading-tight font-extrabold text-gray-900 dark:text-white">
-						{title}
+						{post.data.title}
 					</div>
 					{
-						(site || repository) && (
+						(post.data.site || post.data.repository) && (
 							<div class="block flex items-center gap-2 font-sans text-base xl:hidden">
-								{repository && (
+								{post.data.repository && (
 									<a
-										href={repository}
+										href={post.data.repository}
 										class="text-primary flex items-center gap-2"
 										target="_blank"
 										rel="noreferrer"
@@ -53,11 +44,13 @@ var headings = blocks.filter(
 									</a>
 								)}
 
-								{site && repository && <div class="mx-1 h-4 w-px bg-neutral-800" />}
+								{post.data.site && post.data.repository && (
+									<div class="mx-1 h-4 w-px bg-neutral-800" />
+								)}
 
-								{site && (
+								{post.data.site && (
 									<a
-										href={site}
+										href={post.data.site}
 										class="text-primary flex items-center gap-2"
 										target="_blank"
 										rel="noreferrer"
@@ -72,19 +65,24 @@ var headings = blocks.filter(
 				</header>
 				<div class="block flex flex-wrap gap-2 xl:hidden">
 					{
-						tools.map((tool: any) => (
+						post.data.tools.map((tool: any) => (
 							<Badge class="px-1 py-0 text-sm" variant="secondary">
-								{tool.name}
+								{tool}
 							</Badge>
 						))
 					}
 				</div>
 
-				<NotionBlock {blocks} {headings} />
+				<Content />
 			</article>
 
 			<aside class="hidden xl:block xl:w-[350px]">
-				<Sidebar tools={tools} site={site} repository={repository} class="sticky top-10" />
+				<Sidebar
+					tools={post.data.tools}
+					site={post.data.site}
+					repository={post.data.repository}
+					class="sticky top-10"
+				/>
 			</aside>
 		</div>
 	</main>
