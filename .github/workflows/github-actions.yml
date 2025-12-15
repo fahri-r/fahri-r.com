@@ -1,8 +1,9 @@
-name: Sync Posts Everyday
+name: Deploy Website
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -12,26 +13,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install Bun
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
-      - name: Create .env file
-        run: |
-          cat <<EOF > .env
-          PROJECT_DATABASE_ID=${{ secrets.PROJECT_DATABASE_ID }}
-          BLOG_DATABASE_ID=${{ secrets.BLOG_DATABASE_ID }}
-          NOTION_KEY=${{ secrets.NOTION_KEY }}
-          EOF
-        shell: bash
-
       - name: Install dependencies
         run: bun install
-
-      - name: Run generate script
-        run: bun generate-project && bun generate-blog
 
       - name: Build the website
         run: bun run build
