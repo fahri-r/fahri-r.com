@@ -1,14 +1,14 @@
 ---
 import Layout from '../layouts/layout.astro';
-import About from '~/components/home/about.svelte';
-import Hero from '~/components/home/hero.svelte';
-import Work from '~/components/home/work.svelte';
-import Education from '~/components/home/education.svelte';
+import HeroSection from '~/components/home/hero';
+import AboutSection from '~/components/home/about';
+import WorkSection from '~/components/home/work';
+import EducationSection from '~/components/home/education';
 ---
 
 <Layout>
-	<Hero client:load />
-	<About />
-	<Work client:load />
-	<Education client:load />
+	<HeroSection client:load />
+	<AboutSection />
+	<WorkSection client:load />
+	<EducationSection client:load />
 </Layout>

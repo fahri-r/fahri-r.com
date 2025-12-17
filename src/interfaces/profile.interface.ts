@@ -1,3 +1,4 @@
+import type { IconName } from 'lucide-react/dynamic';
 import type { Work } from './work.interface';
 
 interface Education {
@@ -14,7 +15,7 @@ interface Education {
 interface Social {
 	href: string;
 	label: string;
-	icon: string;
+	icon: IconName;
 }
 
 export default interface Profile {
