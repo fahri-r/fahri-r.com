@@ -4,9 +4,8 @@ import ProjectCard from '~/components/projects/project-card.astro';
 import { getCollection } from 'astro:content';
 import type { PaginateFunction } from 'astro';
 import { SITE } from '~/constants/global';
-import { Pagination } from '~/components/shared/pagination';
+import { PaginationComponent } from '~/components/shared/pagination';
 
-const PROJECTS_PATH = 'projects';
 const TITLE = 'Projects';
 const DESCRIPTION = 'Several projects that I have worked on, both private and open source.';
 
@@ -34,11 +33,11 @@ const { page } = Astro.props;
 			{page.data.map(async (project) => <ProjectCard entry={project} />)}
 		</div>
 
-		<Pagination
+		<PaginationComponent
 			client:load
 			currentPage={page.currentPage}
-			lastPage={page.lastPage}
-			path={PROJECTS_PATH}
+			totalPages={page.lastPage}
+			baseUrl={'/projects/'}
 		/>
 	</main>
 </Layout>

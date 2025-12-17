@@ -34,17 +34,17 @@ const profile: Profile = {
 	socials: [
 		{
 			href: 'https://github.com/fahri-r',
-			icon: 'Github',
+			icon: 'github',
 			label: 'GitHub'
 		},
 		{
 			href: 'https://www.linkedin.com/in/fahri-r',
-			icon: 'Linkedin',
+			icon: 'linkedin',
 			label: 'LinkedIn'
 		},
 		{
 			href: 'mailto:00.fahri.r@gmail.com',
-			icon: 'Mail',
+			icon: 'mail',
 			label: 'Email'
 		}
 	],

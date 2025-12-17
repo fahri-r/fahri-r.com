@@ -5,6 +5,7 @@ import { Button } from '../shared/button';
 import { Separator } from '../shared/separator';
 import profile from '~/constants/profile';
 import ModeToggle from './mode-toggle';
+// import { DynamicIcon } from 'lucide-react/dynamic';
 
 export default function Navbar() {
 	return (

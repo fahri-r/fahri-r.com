@@ -4,23 +4,18 @@ const menu: Menu[] = [
 	{
 		path: '/',
 		name: 'Home',
-		icon: 'House'
+		icon: 'house'
 	},
 	{
 		path: '/projects',
 		name: 'Projects',
-		icon: 'Cpu'
+		icon: 'cpu'
 	},
 	{
 		path: '/blog',
 		name: 'Blog',
-		icon: 'Newspaper'
+		icon: 'newspaper'
 	}
-	// {
-	// 	path: '/chat',
-	// 	name: 'Guest Book',
-	// 	icon: 'BookText'
-	// }
 ];
 
 export default menu;

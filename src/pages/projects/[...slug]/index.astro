@@ -1,11 +1,11 @@
 ---
 import { cn } from '~/libs/utils';
 import Sidebar from '~/components/projects/sidebar.astro';
-import { Eye, Github } from '@lucide/svelte';
 import { Badge } from '~/components/shared/badge';
 import Layout from '~/layouts/layout.astro';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection, render } from 'astro:content';
+import { Eye, Github } from 'lucide-react';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('projects');
@@ -66,7 +66,7 @@ const { Content } = await render(post);
 				<div class="block flex flex-wrap gap-2 xl:hidden">
 					{
 						post.data.tools.map((tool: any) => (
-							<Badge class="px-1 py-0 text-sm" variant="secondary">
+							<Badge className="px-1 py-0 text-sm" variant="secondary">
 								{tool}
 							</Badge>
 						))
