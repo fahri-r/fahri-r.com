@@ -8,5 +8,6 @@ export const SITE = {
 	dir: 'ltr', // "rtl" | "auto"
 	lang: 'en', // html lang code. Set this empty and default will be "en"
 	timezone: 'Asia/Jakarta', // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-	pageSize: 10
+	pageSize: 10,
+  	locale: 'en-US',
 } as const;
