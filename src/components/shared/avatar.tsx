@@ -48,4 +48,27 @@ function AvatarFallback({
   )
 }
 
+const AvatarComponent: React.FC<AvatarComponentProps> = ({
+  src,
+  alt,
+  fallback,
+  className,
+}) => {
+  return (
+    <Avatar className={className}>
+      <AvatarImage src={src} alt={alt} />
+      <AvatarFallback>{fallback}</AvatarFallback>
+    </Avatar>
+  )
+}
+
+export default AvatarComponent
+
+interface AvatarComponentProps {
+  src?: string
+  alt?: string
+  fallback: string
+  className?: string
+}
+
 export { Avatar, AvatarImage, AvatarFallback }

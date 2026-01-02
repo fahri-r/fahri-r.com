@@ -1,0 +1,58 @@
+---
+import { Separator } from '../shared/separator';
+import profile from '~/constants/profile';
+import { Button } from '../shared/button';
+import { Icon } from 'astro-icon/components';
+import menu from '~/constants/menu';
+import AvatarComponent from '../shared/avatar';
+---
+
+<div class="sticky top-0 min-w-3xs space-y-6 p-6">
+	{/* Profile */}
+	<div class="flex items-center gap-3">
+		<AvatarComponent
+			client:load
+			src={profile.imgUrl}
+			alt={`Avatar of ${profile.name}`}
+			fallback={profile.initials}
+		/>
+		<div>
+			<p class="font-semibold">{profile.name}</p>
+			<p class="text-sm text-neutral-400">{profile.job}</p>
+		</div>
+	</div>
+
+	<Separator />
+
+	{/* Nav */}
+	<div class="flex flex-col space-y-2">
+		<p class="text-xs text-neutral-400 uppercase">Navigation</p>
+		{
+			menu.map((menu) => (
+				<a href={menu.path}>
+					<Button variant={'link'} className="align-left w-fit text-white p-0">
+						<Icon name={`lucide:${menu.icon}`} size={14} />
+						{menu.name}
+					</Button>
+				</a>
+			))
+		}
+	</div>
+
+	<Separator />
+
+	{/* Socials */}
+	<div class="flex flex-col space-y-2">
+		<p class="text-xs text-neutral-400 uppercase">Stay Connected</p>
+		{
+			profile.socials.map((social) => (
+				<a href={social.href} target="_blank" rel="noopener noreferrer">
+					<Button variant={'link'} className="align-left w-fit text-white p-0">
+						<Icon name={`lucide:${social.icon}`} size={14} />
+						{social.label}
+					</Button>
+				</a>
+			))
+		}
+	</div>
+</div>
