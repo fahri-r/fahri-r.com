@@ -1,10 +1,10 @@
 ---
-import { Separator } from '../shared/separator';
 import profile from '~/constants/profile';
-import { Button } from '../shared/button';
-import { Icon } from 'astro-icon/components';
 import menu from '~/constants/menu';
 import AvatarComponent from '../shared/avatar';
+import { Separator } from '../shared/separator';
+import { Icon } from 'astro-icon/components';
+import { Link } from '../shared/link';
 ---
 
 <div class="sticky top-0 min-w-3xs space-y-6 p-6">
@@ -29,12 +29,10 @@ import AvatarComponent from '../shared/avatar';
 		<p class="text-xs text-neutral-400 uppercase">Navigation</p>
 		{
 			menu.map((menu) => (
-				<a href={menu.path}>
-					<Button variant={'link'} className="align-left w-fit text-white p-0">
-						<Icon name={`lucide:${menu.icon}`} size={14} />
-						{menu.name}
-					</Button>
-				</a>
+				<Link href={menu.path} className="w-fit text-white" underline>
+					<Icon name={`lucide:${menu.icon}`} size={14} />
+					{menu.name}
+				</Link>
 			))
 		}
 	</div>
@@ -46,12 +44,10 @@ import AvatarComponent from '../shared/avatar';
 		<p class="text-xs text-neutral-400 uppercase">Stay Connected</p>
 		{
 			profile.socials.map((social) => (
-				<a href={social.href} target="_blank" rel="noopener noreferrer">
-					<Button variant={'link'} className="align-left w-fit text-white p-0">
-						<Icon name={`lucide:${social.icon}`} size={14} />
-						{social.label}
-					</Button>
-				</a>
+				<Link href={social.href} className="w-fit text-white" external underline>
+					<Icon name={`lucide:${social.icon}`} size={14} />
+					{social.label}
+				</Link>
 			))
 		}
 	</div>

@@ -4,9 +4,11 @@ import HeroSection from '~/components/home/hero';
 import AboutSection from '~/components/home/about';
 import WorkSection from '~/components/home/work';
 import EducationSection from '~/components/home/education';
+import PageHead from '~/components/main/page-head.astro';
 ---
 
-<Layout>
+<Layout class="max-w-3xl">
+	<PageHead slot="head" title="Home" />
 	<HeroSection client:load />
 	<AboutSection />
 	<WorkSection client:load />
