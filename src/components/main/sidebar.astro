@@ -1,36 +1,32 @@
 ---
 import profile from '~/constants/profile';
 import menu from '~/constants/menu';
-import AvatarComponent from '../shared/avatar';
 import { Separator } from '../shared/separator';
 import { Icon } from 'astro-icon/components';
 import { Link } from '../shared/link';
+import ThemeToggle from './theme-toggle.astro';
 ---
 
-<div class="sticky top-0 min-w-3xs space-y-6 p-6">
+<div class="sticky top-0 h-fit min-w-3xs space-y-6 pt-6 p-4">
 	{/* Profile */}
 	<div class="flex items-center gap-3">
-		<AvatarComponent
-			client:load
-			src={profile.imgUrl}
-			alt={`Avatar of ${profile.name}`}
-			fallback={profile.initials}
-		/>
+		<Icon name="cloud" size={36} />
 		<div>
 			<p class="font-semibold">{profile.name}</p>
 			<p class="text-sm text-neutral-400">{profile.job}</p>
 		</div>
+		<ThemeToggle className='self-start' />
 	</div>
 
 	<Separator />
 
 	{/* Nav */}
-	<div class="flex flex-col space-y-2">
+	<div class="flex flex-col space-y-4">
 		<p class="text-xs text-neutral-400 uppercase">Navigation</p>
 		{
 			menu.map((menu) => (
 				<Link href={menu.path} className="w-fit text-white" underline>
-					<Icon name={`lucide:${menu.icon}`} size={14} />
+					<Icon name={`${menu.icon}`} size={24} />
 					{menu.name}
 				</Link>
 			))
@@ -40,12 +36,12 @@ import { Link } from '../shared/link';
 	<Separator />
 
 	{/* Socials */}
-	<div class="flex flex-col space-y-2">
+	<div class="flex flex-col space-y-4">
 		<p class="text-xs text-neutral-400 uppercase">Stay Connected</p>
 		{
 			profile.socials.map((social) => (
 				<Link href={social.href} className="w-fit text-white" external underline>
-					<Icon name={`lucide:${social.icon}`} size={14} />
+					<Icon name={`${social.icon}`} size={24} />
 					{social.label}
 				</Link>
 			))

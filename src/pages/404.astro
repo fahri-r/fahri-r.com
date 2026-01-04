@@ -4,14 +4,14 @@ import { Button } from '~/components/shared/button';
 import Layout from '~/layouts/layout.astro';
 ---
 
-<Layout class="justify-center">
+<Layout>
 	<div class="flex flex-col space-y-4 text-center">
 		<p>Whoops, there doesn&apos;t seem to be anything here!</p>
 		<div class="flex items-center justify-center gap-4">
 			<a href="/">
 				<Button variant="ghost" className="group">
 					<Icon
-						name={`lucide:move-left`}
+						name={`caret-left`}
 						class="transition-transform duration-300 group-hover:-translate-x-0.5"
 						size={14}
 					/>

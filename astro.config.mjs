@@ -10,11 +10,18 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://www.fahri-r.com',
-    integrations: [sitemap(), mdx(), react(), icon()],
-    vite: {
-        plugins: [tailwindcss()]
-    },
-    output: 'static',
-    adapter: cloudflare()
+	site: 'https://www.fahri-r.com',
+	integrations: [
+		sitemap(),
+		mdx(),
+		react(),
+		icon({
+			iconDir: 'src/assets'
+		})
+	],
+	vite: {
+		plugins: [tailwindcss()]
+	},
+	output: 'static',
+	adapter: cloudflare()
 });

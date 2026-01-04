@@ -1,16 +1,86 @@
 ---
 import Layout from '../layouts/layout.astro';
-import HeroSection from '~/components/home/hero';
-import AboutSection from '~/components/home/about';
-import WorkSection from '~/components/home/work';
-import EducationSection from '~/components/home/education';
 import PageHead from '~/components/main/page-head.astro';
+import ProjectCard from '~/components/main/project-card.astro';
+import { Button } from '~/components/shared/button';
+import { Separator } from '~/components/shared/separator';
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+
+const projects = (await getCollection('projects'))
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+	.slice(0, 5);
+
+const blogPosts = [
+	{ date: 'March 31', title: 'Enabling Apache ECharts in React for Data Visualization' },
+	{ date: 'October 19', title: 'Creating a Keyboard Shortcut Hook in React (Deep Dive)' },
+	{ date: 'October 9', title: 'HTML Tables with Horizontal Scroll and Sticky Headers' },
+	{ date: 'February 15', title: 'How to Use WebSockets in a Redux Application' },
+	{ date: 'January 27', title: 'Understanding the GraphQL Type System' }
+];
 ---
 
-<Layout class="max-w-3xl">
+<Layout className="flex flex-col space-y-12">
 	<PageHead slot="head" title="Home" />
-	<HeroSection client:load />
-	<AboutSection />
-	<WorkSection client:load />
-	<EducationSection client:load />
+	{/* Hero */}
+	<section class="grid w-full items-center gap-10 md:grid-cols-2">
+		<div class="space-y-6">
+			<h1 class="text-4xl font-bold">Hey, I&apos;m Fahri!</h1>
+			<p class="max-w-xl text-neutral-400">
+				I’m a software engineer, and this is where I keep my projects, writings, experiments, and
+				thoughts along my learning journey.
+			</p>
+			<p class="text-sm text-neutral-500">Everything on this site is written by me, not AI.</p>
+
+			<div class="flex gap-3">
+				<Button variant="secondary" className="gap-2">
+					About Me
+				</Button>
+			</div>
+		</div>
+
+		<div class="flex justify-center">
+			<Icon
+				name="this-is-fine"
+				size={64}
+				class="flex h-64 w-64 items-center justify-center"
+			/>
+		</div>
+	</section>
+
+	{/* Blog */}
+	<section class="w-full space-y-6">
+		<div class="space-y-2">
+			<h2 class="text-3xl font-semibold">Blog</h2>
+			<p class="text-neutral-400">Writing on topics I am passionate about.</p>
+		</div>
+
+		<ul class="space-y-3">
+			{
+				blogPosts.map((post) => (
+					<li class="grid grid-cols-[90px_1fr] items-center gap-4">
+						<span class="text-sm text-neutral-500">{post.date}</span>
+						<a class="text-blue-400 hover:text-blue-300" href="#">
+							{post.title}
+						</a>
+						<Separator className="col-span-2 bg-neutral-800" />
+					</li>
+				))
+			}
+		</ul>
+	</section>
+
+	{/* Projects */}
+	<section class="w-full space-y-6">
+		<div class="space-y-2">
+			<h2 class="text-3xl font-semibold">Projects</h2>
+			<p class="text-neutral-400">
+				Several projects that I have worked on, both private and open source.
+			</p>
+		</div>
+
+		<div class="grid gap-6">
+			{projects.map((project) => <ProjectCard entry={project} />)}
+		</div>
+	</section>
 </Layout>

@@ -9,12 +9,12 @@ const menu: Menu[] = [
 	{
 		path: '/projects',
 		name: 'Projects',
-		icon: 'cpu'
+		icon: 'folder'
 	},
 	{
 		path: '/blog',
 		name: 'Blog',
-		icon: 'newspaper'
+		icon: 'file-text'
 	}
 ];
 
