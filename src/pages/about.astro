@@ -1,0 +1,129 @@
+---
+import { Icon } from 'astro-icon/components';
+import Image from 'astro/components/Image.astro';
+import PageHead from '~/components/main/page-head.astro';
+import { Link } from '~/components/shared/link';
+import { Separator } from '~/components/shared/separator';
+import profile from '~/constants/profile';
+import type { WorkDate } from '~/interfaces/work.interface';
+import Layout from '~/layouts/layout.astro';
+
+function workPeriod(entry: WorkDate, resign?: WorkDate): string {
+	const dateOut = resign
+		? new Date(resign.year, resign.month - 1).toLocaleString('en-US', {
+				month: 'short',
+				year: 'numeric'
+			})
+		: 'Present';
+
+	const dateIn = new Date(entry.year, entry.month - 1).toLocaleString('en-US', {
+		month: 'short',
+		year: 'numeric'
+	});
+
+	return `${dateIn} - ${dateOut}`;
+}
+---
+
+<Layout className="flex flex-col space-y-12">
+	<PageHead slot="head" title="About Me" />
+	{/* About Me */}
+	<section class="grid w-full place-items-center items-center gap-10 lg:grid-cols-[60%_1fr]">
+		<h1 class="order-1 w-full text-left text-4xl font-bold lg:hidden">About Me</h1>
+		<div class="order-3 space-y-6 lg:order-1">
+			<h1 class="hidden pb-6 text-4xl font-bold lg:block">About Me</h1>
+			<p>
+				Hey, I&apos;m Fahri! Welcome to my spot where I keep my projects, writings, experiments, and
+				thoughts along my learning journey.
+			</p>
+			<p>
+				I am a versatile software engineer with strong experience in full-stack development,
+				covering backend systems, frontend interfaces, and deployment pipelines. Over the years, I
+				have contributed to projects ranging from enterprise applications to university platforms
+				and organizational websites, always with the goal of solving real-world problems through
+				technology. I treat programming languages as tools—not limits. Depending on the problem, I
+				have worked extensively with C#, .NET, JavaScript/TypeScript, and SQL.
+			</p>
+			<p>If you want to stay up to date, please subscribe to the RSS feed.</p>
+		</div>
+
+		{/* Image */}
+
+		<div class="order-2 h-full lg:order-2">
+			<Image
+				src={'/images/avatar.png'}
+				alt={'About Me Image'}
+				width={630}
+				height={630}
+				class="h-64 w-full object-contain lg:h-full"
+			/>
+		</div>
+	</section>
+
+	<Separator />
+
+	{/* Work Experience */}
+	<section class="w-full space-y-6">
+		<h2 class="text-3xl font-semibold">Work Experience</h2>
+
+		<div class="space-y-6">
+			{
+				profile.works.map((job) => (
+					<div class="space-y-1">
+						<div class="flex flex-wrap items-center gap-2">
+							<h3 class="font-semibold text-blue-400">{job.company}</h3>
+							<Separator orientation="vertical" className="hidden md:block h-4!" />
+							<span class="text-xs text-neutral-500">{workPeriod(job.entry, job.resign)}</span>
+						</div>
+						<p class="text-sm text-neutral-300">{job.role}</p>
+						<p class="text-sm text-neutral-400">{job.description}</p>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<Separator />
+
+	{/* Education */}
+	<section class="w-full space-y-6">
+		<h2 class="text-3xl font-semibold">Education</h2>
+
+		<div class="space-y-6">
+			{
+				profile.education.map((education) => (
+					<div class="space-y-1">
+						<div class="flex flex-wrap items-center gap-2">
+							<h3 class="font-semibold text-blue-400">{education.institution}</h3>
+							<Separator orientation="vertical" className="hidden md:block h-4!" />
+							<span class="text-xs text-neutral-500">
+								{education.entry} - {education.resign}
+							</span>
+						</div>
+						<p class="text-sm text-neutral-300">
+							{education.degree} - {education.major}
+						</p>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<Separator />
+
+	{/* Contact */}
+	<section class="w-full space-y-6">
+		<h2 class="text-3xl font-semibold">Contact</h2>
+		<p class="text-neutral-400">Feel free to reach out through any of these channels.</p>
+		{
+			profile.socials.map((social) => (
+				<div class="space-y-1">
+					<Link href={social.href} className="w-fit text-white" external underline>
+						<Icon name={`${social.icon}`} size={24} />
+						{social.label}
+					</Link>
+				</div>
+			))
+		}
+	</section>
+</Layout>

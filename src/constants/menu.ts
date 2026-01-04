@@ -15,6 +15,11 @@ const menu: Menu[] = [
 		path: '/blog',
 		name: 'Blog',
 		icon: 'file-text'
+	},
+	{
+		path: '/about',
+		name: 'About Me',
+		icon: 'save'
 	}
 ];
 

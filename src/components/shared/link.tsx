@@ -7,7 +7,7 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 	underline?: boolean;
 }
 
-export function Link({ href, external, underline, className, ...rest }: LinkProps) {
+export function Link({ href, external, underline, className, children, ...props }: LinkProps) {
 	return (
 		<a
 			href={href}
@@ -21,9 +21,9 @@ export function Link({ href, external, underline, className, ...rest }: LinkProp
 						underline
 				}
 			)}
-			{...rest}
+			{...props}
 		>
-			{rest.children}
+			{children}
 		</a>
 	);
 }
