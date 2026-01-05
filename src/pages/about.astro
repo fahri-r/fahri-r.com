@@ -1,6 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
-import Image from 'astro/components/Image.astro';
+import { Image } from 'astro:assets';
 import PageHead from '~/components/main/page-head.astro';
 import { Link } from '~/components/shared/link';
 import { Separator } from '~/components/shared/separator';
@@ -50,13 +50,13 @@ function workPeriod(entry: WorkDate, resign?: WorkDate): string {
 		{/* Image */}
 
 		<div class="order-2 lg:order-2">
-			<!-- <Image
+			<Image
 				src={'/images/avatar.png'}
 				alt={'About Me Image'}
 				width={630}
 				height={630}
 				class="h-64 w-full overflow-clip rounded-lg lg:h-full object-cover"
-			/> -->
+			/>
 		</div>
 	</section>
 
