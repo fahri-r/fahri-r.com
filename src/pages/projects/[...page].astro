@@ -1,10 +1,11 @@
 ---
 import Layout from '~/layouts/layout.astro';
-import ProjectCard from '~/components/projects/project-card.astro';
 import { getCollection } from 'astro:content';
 import type { PaginateFunction } from 'astro';
 import { SITE } from '~/constants/global';
 import { PaginationComponent } from '~/components/shared/pagination';
+import PageHead from '~/components/main/page-head.astro';
+import ProjectCard from '~/components/main/project-card.astro';
 
 const TITLE = 'Projects';
 const DESCRIPTION = 'Several projects that I have worked on, both private and open source.';
@@ -22,22 +23,21 @@ export async function getStaticPaths({ paginate }: { paginate: PaginateFunction 
 const { page } = Astro.props;
 ---
 
-<Layout title={TITLE} description={DESCRIPTION}>
-	<main class="">
-		<h1 class="font-sans text-xl font-bold">{TITLE}</h1>
-		<p class="text-muted-foreground mb-4 text-sm leading-relaxed">
-			{DESCRIPTION}
-		</p>
+<Layout className="flex flex-col space-y-12">
+	<PageHead slot="head" title={TITLE} description={DESCRIPTION} />
+	<div class="space-y-2 w-full">
+		<h2 class="text-3xl font-semibold">{TITLE}</h2>
+		<p class="text-neutral-400">{DESCRIPTION}</p>
+	</div>
 
-		<div class="mx-auto mb-4 grid max-w-[800px] grid-cols-1 gap-3 sm:grid-cols-2">
-			{page.data.map(async (project) => <ProjectCard entry={project} />)}
-		</div>
+	<div class="grid gap-6">
+		{page.data.map((project) => <ProjectCard entry={project} />)}
+	</div>
 
-		<PaginationComponent
-			client:load
-			currentPage={page.currentPage}
-			totalPages={page.lastPage}
-			baseUrl={'/projects/'}
-		/>
-	</main>
+	<PaginationComponent
+		client:load
+		currentPage={page.currentPage}
+		totalPages={page.lastPage}
+		baseUrl={'/projects/'}
+	/>
 </Layout>
