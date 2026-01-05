@@ -24,13 +24,13 @@ const formattedDate = new Date(entry.data.date).toLocaleString('en-US', {
         {
             entry.data.cover && (
                 <div class="max-h-36 w-full overflow-clip rounded-lg border border-border/50 sm:max-w-3xs sm:shrink-0">
-                    <Image
+                    {/* <Image
                         src={entry.data.cover}
                         alt={entry.data.title}
                         width={1200}
                         height={630}
                         class="object-cover w-full h-full grayscale-[0.2] group-hover:grayscale-0 transition-all"
-                    />
+                    /> */}
                 </div>
             )
         }
