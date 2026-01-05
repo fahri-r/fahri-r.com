@@ -6,16 +6,7 @@ main {
 	--color-accent-fg: oklch(0.55 0.12 40);
 	--color-accent-emphasis: oklch(0.55 0.12 40);
 	--color-border-default: oklch(0.82 0.02 80);
-	--color-border-muted: oklch(0.82 0.02 80 / 50%);
-	--color-btn-bg: oklch(0.78 0.16 95 / 20%);
+	--color-border-muted: oklch(0.45 0.05 130);
+	--color-btn-bg: oklch(0.78 0.16 95);
 	--color-btn-text: oklch(0.28 0.08 50);
-}
-
-[data-theme='dark'] main {
-	--color-canvas-default: oklch(0.22 0.04 250);
-	--color-canvas-subtle: oklch(0.26 0.04 250);
-	--color-fg-default: oklch(0.92 0.02 250);
-	--color-fg-muted: oklch(0.7 0.03 250);
-	--color-accent-fg: oklch(0.65 0.08 240);
-	--color-border-default: oklch(0.38 0.03 250 / 40%);
 }

@@ -5,7 +5,9 @@
 
 <script>
 	function getGiscusTheme() {
-		return `${window.location.origin}/giscus-theme.css`;
+  		const theme = document.documentElement.getAttribute('data-theme');
+		const file = theme === 'dark' ? 'giscus-theme-dark.css' : 'giscus-theme.css';
+		return `${window.location.origin}/${file}`;
 	}
 
 	function loadGiscus() {
