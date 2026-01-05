@@ -13,7 +13,7 @@ import ThemeToggle from './theme-toggle.astro';
 		<Icon name="cloud" size={36} />
 		<div>
 			<p class="font-semibold">{profile.name}</p>
-			<p class="text-sm text-neutral-400">{profile.job}</p>
+			<p class="text-sm text-muted-foreground">{profile.job}</p>
 		</div>
 		<ThemeToggle className='self-start' />
 	</div>
@@ -22,10 +22,10 @@ import ThemeToggle from './theme-toggle.astro';
 
 	{/* Nav */}
 	<div class="flex flex-col space-y-4">
-		<p class="text-xs text-neutral-400 uppercase">Navigation</p>
+		<p class="text-xs text-muted-foreground uppercase">Navigation</p>
 		{
 			menu.map((menu) => (
-				<Link href={menu.path} className="w-fit text-white" underline>
+				<Link href={menu.path} className="w-fit text-primary" underline>
 					<Icon name={`${menu.icon}`} size={24} />
 					{menu.name}
 				</Link>
@@ -37,10 +37,10 @@ import ThemeToggle from './theme-toggle.astro';
 
 	{/* Socials */}
 	<div class="flex flex-col space-y-4">
-		<p class="text-xs text-neutral-400 uppercase">Stay Connected</p>
+		<p class="text-xs text-muted-foreground uppercase">Stay Connected</p>
 		{
 			profile.socials.map((social) => (
-				<Link href={social.href} className="w-fit text-white" external underline>
+				<Link href={social.href} className="w-fit text-primary" external underline>
 					<Icon name={`${social.icon}`} size={24} />
 					{social.label}
 				</Link>

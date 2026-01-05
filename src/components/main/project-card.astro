@@ -1,9 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import { Link } from '../shared/link';
-import { Separator } from '../shared/separator';
 import type { CollectionEntry } from 'astro:content';
 import { Badge } from '../shared/badge';
+import { Separator } from '../shared/separator';
 
 interface Props {
 	entry: CollectionEntry<'projects'>;
@@ -17,45 +17,50 @@ const formattedDate = new Date(entry.data.date).toLocaleString('en-US', {
 	year: 'numeric'
 });
 ---
-
 <div
-	class="hover:bg-muted/50 rounded-xl border border-neutral-800 bg-neutral-900 p-4 transition-colors duration-300 ease-in-out"
+    class="group hover:bg-muted/10 rounded-xl border border-border bg-card p-4 transition-all duration-300 ease-in-out hover:shadow-md hover:-translate-y-0.5"
 >
-	<Link href={`/${entry.collection}/${entry.id}`} className="flex flex-col gap-4 sm:flex-row">
-		{
-			entry.data.cover && (
-				<div class="max-h-36 w-full overflow-clip sm:max-w-3xs sm:shrink-0">
-					<Image
-						src={entry.data.cover}
-						alt={entry.data.title}
-						width={1200}
-						height={630}
-						class="object-contain"
-					/>
-				</div>
-			)
-		}
+    <Link href={`/${entry.collection}/${entry.id}`} className="flex flex-col gap-4 sm:flex-row">
+        {
+            entry.data.cover && (
+                <div class="max-h-36 w-full overflow-clip rounded-lg border border-border/50 sm:max-w-3xs sm:shrink-0">
+                    <Image
+                        src={entry.data.cover}
+                        alt={entry.data.title}
+                        width={1200}
+                        height={630}
+                        class="object-cover w-full h-full grayscale-[0.2] group-hover:grayscale-0 transition-all"
+                    />
+                </div>
+            )
+        }
 
-		<div class="grow text-neutral-400">
-			<h3 class="mb-1 text-lg font-medium">{entry.data.title}</h3>
-			<p class="mb-2 text-sm">{entry.data.description}</p>
+        <div class="grow text-muted-foreground">
+            <h3 class="mb-1 line-clamp-2 text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                {entry.data.title}
+            </h3>
+            <p class="mb-3 line-clamp-2 text-sm leading-relaxed">
+                {entry.data.description}
+            </p>
 
-			<div class="mb-2 flex flex-wrap items-center gap-x-2 text-xs">
-				<span>{formattedDate}</span>
-				<Separator orientation="vertical" className="h-4!" />
-			</div>
-
-			{
-				entry.data.tools && (
-					<div class="flex flex-wrap gap-2">
-						{entry.data.tools.map((tool) => (
-							<Badge variant="secondary" className="flex items-center gap-x-1">
-								{tool}
-							</Badge>
-						))}
-					</div>
-				)
-			}
-		</div>
-	</Link>
+            <div class="flex flex-wrap items-center gap-3 text-xs font-medium uppercase tracking-wider">
+                <span class="opacity-80">{formattedDate}</span>
+                
+                {
+                    entry.data.tools && (
+                        <div class="flex flex-wrap gap-2">
+                            {entry.data.tools.map((tool) => (
+                                <Badge 
+                                    variant="secondary" 
+                                    className="bg-secondary/20 text-secondary-foreground border-secondary/30 rounded-md px-2 py-0.5"
+                                >
+                                    {tool}
+                                </Badge>
+                            ))}
+                        </div>
+                    )
+                }
+            </div>
+        </div>
+    </Link>
 </div>

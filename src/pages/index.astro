@@ -6,44 +6,39 @@ import { Button } from '~/components/shared/button';
 import { Separator } from '~/components/shared/separator';
 import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
+import { Link } from '~/components/shared/link';
 
 const projects = (await getCollection('projects'))
 	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 	.slice(0, 5);
 
-const blogPosts = [
-	{ date: 'March 31', title: 'Enabling Apache ECharts in React for Data Visualization' },
-	{ date: 'October 19', title: 'Creating a Keyboard Shortcut Hook in React (Deep Dive)' },
-	{ date: 'October 9', title: 'HTML Tables with Horizontal Scroll and Sticky Headers' },
-	{ date: 'February 15', title: 'How to Use WebSockets in a Redux Application' },
-	{ date: 'January 27', title: 'Understanding the GraphQL Type System' }
-];
+const blog = (await getCollection('blog'))
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+	.slice(0, 5);
 ---
 
 <Layout className="flex flex-col space-y-12">
 	<PageHead slot="head" title="Home" />
 	{/* Hero */}
-	<section class="grid w-full items-center gap-10 md:grid-cols-2">
-		<div class="space-y-6">
+	<section class="grid w-full lg:place-items-center gap-10 lg:grid-cols-2">
+		<div class="order-2 space-y-6 lg:order-1">
 			<h1 class="text-4xl font-bold">Hey, I&apos;m Fahri!</h1>
-			<p class="max-w-xl text-neutral-400">
+			<p class="max-w-xl">
 				I’m a software engineer, and this is where I keep my projects, writings, experiments, and
 				thoughts along my learning journey.
 			</p>
-			<p class="text-sm text-neutral-500">Everything on this site is written by me, not AI.</p>
+			<p class="text-sm">Everything on this site is written by me, not AI.</p>
 
 			<div class="flex gap-3">
-				<Button variant="secondary" className="gap-2">
-					About Me
-				</Button>
+				<Button variant="secondary" className="gap-2"> About Me </Button>
 			</div>
 		</div>
 
-		<div class="flex justify-center">
+		<div class="order-1 lg:order-2">
 			<Icon
 				name="this-is-fine"
 				size={64}
-				class="flex h-64 w-64 items-center justify-center"
+				class="flex h-32 w-32 lg:h-64 lg:w-64"
 			/>
 		</div>
 	</section>
@@ -52,20 +47,27 @@ const blogPosts = [
 	<section class="w-full space-y-6">
 		<div class="space-y-2">
 			<h2 class="text-3xl font-semibold">Blog</h2>
-			<p class="text-neutral-400">Writing on topics I am passionate about.</p>
+			<p class="text-muted-foreground">Writing on topics I am passionate about.</p>
 		</div>
 
 		<ul class="space-y-3">
 			{
-				blogPosts.map((post) => (
-					<li class="grid grid-cols-[90px_1fr] items-center gap-4">
-						<span class="text-sm text-neutral-500">{post.date}</span>
-						<a class="text-blue-400 hover:text-blue-300" href="#">
-							{post.title}
-						</a>
-						<Separator className="col-span-2 bg-neutral-800" />
-					</li>
-				))
+				blog.map((post) => {
+					const formattedDate = new Date(post.data.date).toLocaleString('en-US', {
+						month: 'long',
+						year: 'numeric'
+					});
+
+					return (
+						<li class="grid gap-2 md:grid-cols-[90px_1fr] items-end">
+							<span class="text-muted-foreground h-fit">{formattedDate}</span>
+							<Link href={`/${post.collection}/${post.id}`} className="line-clamp-3" underline>
+								{post.data.title}
+							</Link>
+							<Separator className="md:col-span-2" />
+						</li>
+					);
+				})
 			}
 		</ul>
 	</section>
@@ -74,7 +76,7 @@ const blogPosts = [
 	<section class="w-full space-y-6">
 		<div class="space-y-2">
 			<h2 class="text-3xl font-semibold">Projects</h2>
-			<p class="text-neutral-400">
+			<p class="text-muted-foreground">
 				Several projects that I have worked on, both private and open source.
 			</p>
 		</div>

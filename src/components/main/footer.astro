@@ -1,13 +1,14 @@
 ---
 import { Icon } from 'astro-icon/components';
 import profile from '~/constants/profile';
+import { Link } from '../shared/link';
 ---
 
-<footer class="border-t p-10 text-sm text-neutral-400">
+<footer class="border-t p-10 text-sm text-primary">
 	<div class="flex flex-wrap items-center justify-between gap-4">
 		<div class="space-x-4">
-			<a class="hover:text-white" href="/rss.xml"> RSS feed </a>
-			<a class="hover:text-white" href="#"> Buy me a coffee </a>
+			<Link href="/rss.xml">RSS feed</Link>
+			<Link href="#">Buy me a coffee</Link>
 		</div>
 
 		<div class="flex items-center gap-1">

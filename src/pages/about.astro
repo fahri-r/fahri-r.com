@@ -28,7 +28,7 @@ function workPeriod(entry: WorkDate, resign?: WorkDate): string {
 <Layout className="flex flex-col space-y-12">
 	<PageHead slot="head" title="About Me" />
 	{/* About Me */}
-	<section class="grid w-full place-items-center items-center gap-10 lg:grid-cols-[60%_1fr]">
+	<section class="grid w-full gap-10 lg:grid-cols-[60%_1fr]">
 		<h1 class="order-1 w-full text-left text-4xl font-bold lg:hidden">About Me</h1>
 		<div class="order-3 space-y-6 lg:order-1">
 			<h1 class="hidden pb-6 text-4xl font-bold lg:block">About Me</h1>
@@ -49,13 +49,13 @@ function workPeriod(entry: WorkDate, resign?: WorkDate): string {
 
 		{/* Image */}
 
-		<div class="order-2 h-full lg:order-2">
+		<div class="order-2 lg:order-2">
 			<Image
 				src={'/images/avatar.png'}
 				alt={'About Me Image'}
 				width={630}
 				height={630}
-				class="h-64 w-full object-contain lg:h-full"
+				class="h-64 w-full overflow-clip rounded-lg lg:h-full object-cover"
 			/>
 		</div>
 	</section>
@@ -71,12 +71,12 @@ function workPeriod(entry: WorkDate, resign?: WorkDate): string {
 				profile.works.map((job) => (
 					<div class="space-y-1">
 						<div class="flex flex-wrap items-center gap-2">
-							<h3 class="font-semibold text-blue-400">{job.company}</h3>
+							<h3 class="text-primary font-semibold">{job.company}</h3>
 							<Separator orientation="vertical" className="hidden md:block h-4!" />
-							<span class="text-xs text-neutral-500">{workPeriod(job.entry, job.resign)}</span>
+							<span class="text-muted-foreground text-xs">{workPeriod(job.entry, job.resign)}</span>
 						</div>
-						<p class="text-sm text-neutral-300">{job.role}</p>
-						<p class="text-sm text-neutral-400">{job.description}</p>
+						<p class="text-muted-foreground text-sm">{job.role}</p>
+						<p class="text-sm">{job.description}</p>
 					</div>
 				))
 			}
@@ -94,13 +94,13 @@ function workPeriod(entry: WorkDate, resign?: WorkDate): string {
 				profile.education.map((education) => (
 					<div class="space-y-1">
 						<div class="flex flex-wrap items-center gap-2">
-							<h3 class="font-semibold text-blue-400">{education.institution}</h3>
+							<h3 class="text-primary font-semibold">{education.institution}</h3>
 							<Separator orientation="vertical" className="hidden md:block h-4!" />
-							<span class="text-xs text-neutral-500">
+							<span class="text-muted-foreground text-xs">
 								{education.entry} - {education.resign}
 							</span>
 						</div>
-						<p class="text-sm text-neutral-300">
+						<p class="text-sm">
 							{education.degree} - {education.major}
 						</p>
 					</div>
@@ -114,11 +114,11 @@ function workPeriod(entry: WorkDate, resign?: WorkDate): string {
 	{/* Contact */}
 	<section class="w-full space-y-6">
 		<h2 class="text-3xl font-semibold">Contact</h2>
-		<p class="text-neutral-400">Feel free to reach out through any of these channels.</p>
+		<p class="text-muted-foreground">Feel free to reach out through any of these channels.</p>
 		{
 			profile.socials.map((social) => (
 				<div class="space-y-1">
-					<Link href={social.href} className="w-fit text-white" external underline>
+					<Link href={social.href} className="w-fit text-primary" external underline>
 						<Icon name={`${social.icon}`} size={24} />
 						{social.label}
 					</Link>
