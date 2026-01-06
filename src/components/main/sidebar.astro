@@ -7,44 +7,58 @@ import { Link } from '../shared/link';
 import ThemeToggle from './theme-toggle.astro';
 ---
 
-<div class="sticky top-0 h-fit min-w-3xs space-y-6 pt-6 p-4">
-	{/* Profile */}
-	<div class="flex items-center gap-3">
-		<Icon name="cloud" size={36} />
-		<div>
-			<p class="font-semibold">{profile.name}</p>
-			<p class="text-sm text-muted-foreground">{profile.job}</p>
+<div class="sticky top-0 flex h-screen min-w-3xs flex-col justify-between p-4 pt-6">
+	<section class="space-y-6">
+		{/* Profile */}
+		<div class="relative flex items-center gap-3">
+			<Icon name="cloud" size={36} />
+			<div>
+				<p class="font-heading text-[0.7rem] font-semibold">{profile.name}</p>
+				<p class="text-muted-foreground text-sm">{profile.job}</p>
+			</div>
 		</div>
-		<ThemeToggle className='self-start' />
-	</div>
 
-	<Separator />
+		<Separator />
 
-	{/* Nav */}
-	<div class="flex flex-col space-y-4">
-		<p class="text-xs text-muted-foreground uppercase">Navigation</p>
-		{
-			menu.map((menu) => (
-				<Link href={menu.path} className="w-fit text-primary" underline>
-					<Icon name={`${menu.icon}`} size={24} />
-					{menu.name}
-				</Link>
-			))
-		}
-	</div>
+		{/* Nav */}
+		<div class="flex flex-col space-y-4">
+			<p class="text-muted-foreground text-xs uppercase">Navigation</p>
+			{
+				menu.map((menu) => (
+					<Link
+						href={menu.path}
+						className="w-fit text-primary font-heading text-[0.7rem]"
+						underline
+					>
+						<Icon name={`${menu.icon}`} size={24} />
+						{menu.name}
+					</Link>
+				))
+			}
+		</div>
 
-	<Separator />
+		<Separator />
 
-	{/* Socials */}
-	<div class="flex flex-col space-y-4">
-		<p class="text-xs text-muted-foreground uppercase">Stay Connected</p>
-		{
-			profile.socials.map((social) => (
-				<Link href={social.href} className="w-fit text-primary" external underline>
-					<Icon name={`${social.icon}`} size={24} />
-					{social.label}
-				</Link>
-			))
-		}
-	</div>
+		{/* Socials */}
+		<div class="flex flex-col space-y-4">
+			<p class="text-muted-foreground text-xs uppercase">Stay Connected</p>
+			{
+				profile.socials.map((social) => (
+					<Link
+						href={social.href}
+						className="w-fit text-primary font-heading text-[0.7rem]"
+						external
+						underline
+					>
+						<Icon name={`${social.icon}`} size={24} />
+						{social.label}
+					</Link>
+				))
+			}
+		</div>
+	</section>
+	<section class="space-y-6">
+		<Separator />
+		<ThemeToggle />
+	</section>
 </div>

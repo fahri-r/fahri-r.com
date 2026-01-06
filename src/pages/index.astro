@@ -20,7 +20,7 @@ const blog = (await getCollection('blog'))
 <Layout className="flex flex-col space-y-12">
 	<PageHead slot="head" title="Home" />
 	{/* Hero */}
-	<section class="grid w-full lg:place-items-center gap-10 lg:grid-cols-2">
+	<section class="grid w-full gap-10 lg:grid-cols-2 lg:place-items-center">
 		<div class="order-2 space-y-6 lg:order-1">
 			<h1 class="text-4xl font-bold">Hey, I&apos;m Fahri!</h1>
 			<p class="max-w-xl">
@@ -30,16 +30,14 @@ const blog = (await getCollection('blog'))
 			<p class="text-sm">Everything on this site is written by me, not AI.</p>
 
 			<div class="flex gap-3">
-				<Button variant="secondary" className="gap-2"> About Me </Button>
+				<Link href={'/about'}>
+					<Button variant="secondary" className="gap-2"> About Me </Button>
+				</Link>
 			</div>
 		</div>
 
 		<div class="order-1 lg:order-2">
-			<Icon
-				name="this-is-fine"
-				size={64}
-				class="flex h-32 w-32 lg:h-64 lg:w-64"
-			/>
+			<Icon name="this-is-fine" size={64} class="flex h-32 w-32 lg:h-64 lg:w-64" />
 		</div>
 	</section>
 
@@ -59,7 +57,7 @@ const blog = (await getCollection('blog'))
 					});
 
 					return (
-						<li class="grid gap-2 md:grid-cols-[90px_1fr] items-end">
+						<li class="grid items-end gap-2 md:grid-cols-[90px_1fr]">
 							<span class="text-muted-foreground h-fit">{formattedDate}</span>
 							<Link href={`/${post.collection}/${post.id}`} className="line-clamp-3" underline>
 								{post.data.title}

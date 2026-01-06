@@ -71,7 +71,7 @@ function workPeriod(entry: WorkDate, resign?: WorkDate): string {
 				profile.works.map((job) => (
 					<div class="space-y-1">
 						<div class="flex flex-wrap items-center gap-2">
-							<h3 class="text-primary font-semibold">{job.company}</h3>
+							<span class="text-primary font-heading text-[0.6rem]">{job.company}</span>
 							<Separator orientation="vertical" className="hidden md:block h-4!" />
 							<span class="text-muted-foreground text-xs">{workPeriod(job.entry, job.resign)}</span>
 						</div>
@@ -94,7 +94,7 @@ function workPeriod(entry: WorkDate, resign?: WorkDate): string {
 				profile.education.map((education) => (
 					<div class="space-y-1">
 						<div class="flex flex-wrap items-center gap-2">
-							<h3 class="text-primary font-semibold">{education.institution}</h3>
+							<span class="text-primary font-heading text-[0.7rem]">{education.institution}</span>
 							<Separator orientation="vertical" className="hidden md:block h-4!" />
 							<span class="text-muted-foreground text-xs">
 								{education.entry} - {education.resign}
