@@ -34,15 +34,15 @@ const posts = (await getCollection('blog'))
 		<p class="text-neutral-400">{DESCRIPTION}</p>
 	</div>
 
-	<div class="grid gap-6">
+	<div class="w-full grid gap-6">
 		{
-			Object.entries(posts).map(([year, items]) => (
+			Object.entries(posts).toReversed().map(([year, items]) => (
 				<ul class="space-y-3">
 					<h2>{year}</h2>
 					{items.map((item) => {
 						const formattedDate = new Date(item.data.date).toLocaleString('en-US', {
 							month: 'long',
-							year: 'numeric'
+							day: 'numeric'
 						});
 
 						return (
