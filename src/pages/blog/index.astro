@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import type { PaginateFunction } from 'astro';
+import { SITE } from '~/constants/global';
+import Layout from '~/layouts/layout.astro';
+import PageHead from '~/components/main/page-head.astro';
+import { PaginationComponent } from '~/components/shared/pagination';
+import type { CollectionEntry } from 'astro:content';
+import type { InferEntrySchema } from 'astro:content';
+import type { RenderedContent } from 'astro:content';
+import { Link } from '~/components/shared/link';
+import { Separator } from '~/components/shared/separator';
+
+const TITLE = 'Blog';
+const DESCRIPTION = 'Writing on topics I am passionate about.';
+
+const posts = (await getCollection('blog'))
+	.sort((postA, postB) => {
+		const aDate = new Date(postA.data.date);
+		const bDate = new Date(postB.data.date);
+		return bDate.getTime() - aDate.getTime();
+	})
+	.reduce((acc: Record<string, CollectionEntry<'blog'>[]>, post) => {
+		const year = post.data.date.getFullYear().toString();
+		(acc[year] ??= []).push(post);
+		return acc;
+	}, {});
+---
+
+<Layout className="flex flex-col space-y-12 justify-start">
+	<PageHead slot="head" title={TITLE} description={DESCRIPTION} />
+	<div class="w-full space-y-2">
+		<h1 class="text-4xl font-semibold">{TITLE}</h1>
+		<p class="text-neutral-400">{DESCRIPTION}</p>
+	</div>
+
+	<div class="grid gap-6">
+		{
+			Object.entries(posts).map(([year, items]) => (
+				<ul class="space-y-3">
+					<h2>{year}</h2>
+					{items.map((item) => {
+						const formattedDate = new Date(item.data.date).toLocaleString('en-US', {
+							month: 'long',
+							year: 'numeric'
+						});
+
+						return (
+							<li class="grid items-end gap-2 md:grid-cols-[90px_1fr]">
+								<span class="text-muted-foreground">{formattedDate}</span>
+								<Link href={`/${item.collection}/${item.id}`} className="line-clamp-3" underline>
+									{item.data.title}
+								</Link>
+								<Separator className="md:col-span-2" />
+							</li>
+						);
+					})}
+				</ul>
+			))
+		}
+		<!-- {page.data.map((project) => <ProjectCard entry={project} />)} -->
+	</div>
+
+	<!-- <PaginationComponent
+		client:load
+		currentPage={page.currentPage}
+		totalPages={page.lastPage}
+		baseUrl={'/projects/'}
+	/> -->
+</Layout>

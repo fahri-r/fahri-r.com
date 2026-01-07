@@ -58,7 +58,7 @@ const blog = (await getCollection('blog'))
 
 					return (
 						<li class="grid items-end gap-2 md:grid-cols-[90px_1fr]">
-							<span class="text-muted-foreground h-fit">{formattedDate}</span>
+							<span class="text-muted-foreground">{formattedDate}</span>
 							<Link href={`/${post.collection}/${post.id}`} className="line-clamp-3" underline>
 								{post.data.title}
 							</Link>

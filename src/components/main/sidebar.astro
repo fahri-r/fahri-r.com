@@ -27,7 +27,7 @@ import ThemeToggle from './theme-toggle.astro';
 				menu.map((menu) => (
 					<Link
 						href={menu.path}
-						className="w-fit text-primary font-heading text-[0.7rem]"
+						className="w-fit text-primary font-heading text-[0.7rem] flex items-end"
 						underline
 					>
 						<Icon name={`${menu.icon}`} size={24} />
@@ -46,7 +46,7 @@ import ThemeToggle from './theme-toggle.astro';
 				profile.socials.map((social) => (
 					<Link
 						href={social.href}
-						className="w-fit text-primary font-heading text-[0.7rem]"
+						className="w-fit text-primary font-heading text-[0.7rem] flex items-end"
 						external
 						underline
 					>

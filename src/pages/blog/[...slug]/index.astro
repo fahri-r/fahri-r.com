@@ -7,14 +7,14 @@ import Giscus from '~/components/main/giscus.astro';
 import PageHead from '~/components/main/page-head.astro';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('projects');
+	const posts = await getCollection('blog');
 	return posts.map((post) => ({
 		params: { slug: post.id },
 		props: post
 	}));
 }
 
-type Props = CollectionEntry<'projects'>;
+type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await render(post);
