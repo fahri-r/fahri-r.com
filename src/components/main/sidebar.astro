@@ -10,13 +10,13 @@ import ThemeToggle from './theme-toggle.astro';
 <div class="sticky top-0 flex h-screen min-w-3xs flex-col justify-between p-4 pt-6">
 	<section class="space-y-6">
 		{/* Profile */}
-		<div class="relative flex items-center gap-3">
+		<a href="/" class="relative flex items-center gap-3">
 			<Icon name="cloud" size={36} />
 			<div>
 				<p class="font-heading text-[0.7rem] font-semibold">{profile.name}</p>
 				<p class="text-muted-foreground text-sm">{profile.job}</p>
 			</div>
-		</div>
+		</a>
 
 		<Separator />
 
