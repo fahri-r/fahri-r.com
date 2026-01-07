@@ -18,7 +18,7 @@ const { className } = Astro.props;
 	<Head>
 		<slot name="head" />
 	</Head>
-	<body class={"bg-background text-foreground relative flex w-7xl max-w-7xl"}>
+	<body class={"bg-background text-foreground relative flex flex-col md:flex-row w-7xl max-w-7xl"}>
 		<header class="bg-background/50 sticky top-0 z-50 divide-y backdrop-blur-sm xl:divide-none">
 			<slot name="subposts-navigation" />
 			<slot name="table-of-contents" />

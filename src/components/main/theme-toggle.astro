@@ -12,13 +12,13 @@ const { className } = Astro.props;
 ---
 
 <ButtonGroup className={cn('font-heading w-full', className)}>
-	<Button id="dark-button" variant="outline" className="w-[50%] text-[0.6rem]">
+	<Button id="dark-button" variant="outline" className="dark-button w-[50%] text-[0.6rem]">
 		<Icon name="moon" class="size-4" />
-		<span class="self-center">Dark</span>
+		<span class="hidden self-center md:block">Dark</span>
 	</Button>
-	<Button id="light-button" variant="outline" className="w-[50%] text-[0.6rem]">
+	<Button id="light-button" variant="outline" className="light-button w-[50%] text-[0.6rem]">
 		<Icon name="sun" class="size-4" />
-		<span class="self-center">Light</span>
+		<span class="hidden self-center md:block">Light</span>
 	</Button>
 </ButtonGroup>
 
@@ -34,11 +34,15 @@ const { className } = Astro.props;
 		window.localStorage.setItem('theme', theme);
 
 		if (theme === 'dark') {
-			const btn = document.getElementById('dark-button');
-			btn.disabled = true;
+			const darkBtn = document.querySelectorAll('.dark-button');
+			darkBtn.forEach((element) => {
+				element.disabled = true;
+			});
 		} else {
-			const btn = document.getElementById('light-button');
-			btn.disabled = true;
+			const lightBtn = document.querySelectorAll('.light-button');
+			lightBtn.forEach((element) => {
+				element.disabled = true;
+			});
 		}
 	})();
 </script>
@@ -58,27 +62,39 @@ const { className } = Astro.props;
 		localStorage.setItem('theme', theme);
 
 		if (theme === 'dark') {
-			const darkBtn = document.getElementById('dark-button') as HTMLButtonElement;
-			darkBtn.disabled = true;
+			const darkBtn = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
+			darkBtn.forEach((element) => {
+				element.disabled = true;
+			});
 
-			const lightBtn = document.getElementById('light-button') as HTMLButtonElement;
-			lightBtn.disabled = false;
+			const lightBtn = document.querySelectorAll('.light-button') as NodeListOf<HTMLButtonElement>;
+			lightBtn.forEach((element) => {
+				element.disabled = false;
+			});
 		} else {
-			const darkBtn = document.getElementById('light-button') as HTMLButtonElement;
-			darkBtn.disabled = true;
+			const darkBtn = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
+			darkBtn.forEach((element) => {
+				element.disabled = false;
+			});
 
-			const lightBtn = document.getElementById('dark-button') as HTMLButtonElement;
-			lightBtn.disabled = false;
+			const lightBtn = document.querySelectorAll('.light-button') as NodeListOf<HTMLButtonElement>;
+			lightBtn.forEach((element) => {
+				element.disabled = true;
+			});
 		}
 	}
 
 	function initThemeToggle() {
-		document
-			.getElementById('dark-button')
-			?.addEventListener('click', () => handleToggleClick('dark'));
-		document
-			.getElementById('light-button')
-			?.addEventListener('click', () => handleToggleClick('light'));
+		const lightBtn = document.querySelectorAll('.light-button') as NodeListOf<HTMLButtonElement>;
+
+		lightBtn.forEach((element) => {
+			element.addEventListener('click', () => handleToggleClick('light'));
+		});
+
+		const darkBtn = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
+		darkBtn.forEach((element) => {
+			element.addEventListener('click', () => handleToggleClick('dark'));
+		});
 	}
 
 	initThemeToggle();
