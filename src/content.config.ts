@@ -12,7 +12,7 @@ const projects = defineCollection({
 			repository: z.string().nullable(),
 			site: z.string().nullable(),
 			tools: z.array(z.string()),
-			category: z.string(),
+			category: z.string()
 		})
 });
 
@@ -24,7 +24,7 @@ const blog = defineCollection({
 			title: z.string(),
 			description: z.string().nullable(),
 			date: z.coerce.date(),
-			tags: z.array(z.string()),
+			tags: z.array(z.string())
 		})
 });
 

@@ -1,11 +1,12 @@
 ---
 
 ---
+
 <div class="giscus w-full"></div>
 
 <script>
 	function getGiscusTheme() {
-  		const theme = document.documentElement.getAttribute('data-theme');
+		const theme = document.documentElement.getAttribute('data-theme');
 		const file = theme === 'dark' ? 'giscus-theme-dark.css' : 'giscus-theme.css';
 		return `${window.location.origin}/themes/${file}`;
 	}

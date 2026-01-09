@@ -17,50 +17,53 @@ const formattedDate = new Date(entry.data.date).toLocaleString('en-US', {
 	year: 'numeric'
 });
 ---
+
 <div
-    class="group hover:bg-muted/10 rounded-xl border border-border bg-card p-4 transition-all duration-300 ease-in-out hover:shadow-md hover:-translate-y-0.5"
+	class="group hover:bg-muted/10 border-border bg-card rounded-xl border p-4 transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-md"
 >
-    <Link href={`/${entry.collection}/${entry.id}`} className="flex flex-col gap-4 sm:flex-row">
-        {
-            entry.data.cover && (
-                <div class="max-h-36 w-full overflow-clip rounded-lg border border-border/50 sm:max-w-3xs sm:shrink-0">
-                    <Image
-                        src={entry.data.cover}
-                        alt={entry.data.title}
-                        width={1200}
-                        height={630}
-                        class="object-cover w-full h-full grayscale-[0.2] group-hover:grayscale-0 transition-all"
-                    />
-                </div>
-            )
-        }
+	<Link href={`/${entry.collection}/${entry.id}`} className="flex flex-col gap-4 sm:flex-row">
+		{
+			entry.data.cover && (
+				<div class="border-border/50 max-h-36 w-full overflow-clip rounded-lg border sm:max-w-3xs sm:shrink-0">
+					<Image
+						src={entry.data.cover}
+						alt={entry.data.title}
+						width={1200}
+						height={630}
+						class="h-full w-full object-cover grayscale-[0.2] transition-all group-hover:grayscale-0"
+					/>
+				</div>
+			)
+		}
 
-        <div class="grow text-muted-foreground">
-            <h3 class="mb-1 line-clamp-2 text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-                {entry.data.title}
-            </h3>
-            <p class="mb-3 line-clamp-2 text-sm leading-relaxed">
-                {entry.data.description}
-            </p>
+		<div class="text-muted-foreground grow">
+			<h3
+				class="text-foreground group-hover:text-primary mb-1 line-clamp-2 text-lg font-bold transition-colors"
+			>
+				{entry.data.title}
+			</h3>
+			<p class="mb-3 line-clamp-2 text-sm leading-relaxed">
+				{entry.data.description}
+			</p>
 
-            <div class="flex flex-wrap items-center gap-3 text-xs font-medium uppercase tracking-wider">
-                <span class="opacity-80">{formattedDate}</span>
-                
-                {
-                    entry.data.tools && (
-                        <div class="flex flex-wrap gap-2">
-                            {entry.data.tools.map((tool) => (
-                                <Badge 
-                                    variant="secondary" 
-                                    className="bg-secondary/20 text-secondary-foreground border-secondary/30 rounded-md px-2 py-0.5"
-                                >
-                                    {tool}
-                                </Badge>
-                            ))}
-                        </div>
-                    )
-                }
-            </div>
-        </div>
-    </Link>
+			<div class="flex flex-wrap items-center gap-3 text-xs font-medium tracking-wider uppercase">
+				<span class="opacity-80">{formattedDate}</span>
+
+				{
+					entry.data.tools && (
+						<div class="flex flex-wrap gap-2">
+							{entry.data.tools.map((tool) => (
+								<Badge
+									variant="secondary"
+									className="bg-secondary/20 text-secondary-foreground border-secondary/30 rounded-md px-2 py-0.5"
+								>
+									{tool}
+								</Badge>
+							))}
+						</div>
+					)
+				}
+			</div>
+		</div>
+	</Link>
 </div>

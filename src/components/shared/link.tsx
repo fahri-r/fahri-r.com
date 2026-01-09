@@ -17,8 +17,7 @@ export function Link({ href, external, underline, className, children, ...props 
 				'text-primary inline-flex items-center justify-center gap-2 transition-colors duration-300 ease-in-out',
 				className,
 				{
-					'underline-offset-4 hover:underline':
-						underline
+					'underline-offset-4 hover:underline': underline
 				}
 			)}
 			{...props}

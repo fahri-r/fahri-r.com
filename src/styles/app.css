@@ -1,5 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @import 'tailwindcss';
 
@@ -91,11 +90,16 @@
 }
 
 .font-heading {
-  font-family: "Press Start 2P", cursive;
+	font-family: 'Press Start 2P', cursive;
 }
 
 .font-body {
-  font-family: "Inter", system-ui, -apple-system, Segoe UI, sans-serif;
+	font-family:
+		'Geist',
+		system-ui,
+		-apple-system,
+		Segoe UI,
+		sans-serif;
 }
 
 h1,
@@ -104,19 +108,31 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Press Start 2P", cursive;
+	font-family: 'Press Start 2P', cursive;
 }
 
-h1 { font-size: 1.3rem; }
-h2 { font-size: 1.2rem; }
-h3 { font-size: 1.1rem; }
-h4 { font-size: 1.0rem; }
-h5 { font-size: 0.95rem; }
-h6 { font-size: 0.9rem; }
+h1 {
+	font-size: 1.3rem;
+}
+h2 {
+	font-size: 1.2rem;
+}
+h3 {
+	font-size: 1.1rem;
+}
+h4 {
+	font-size: 1rem;
+}
+h5 {
+	font-size: 0.95rem;
+}
+h6 {
+	font-size: 0.9rem;
+}
 
 body {
 	font-family:
-		'Rubik',
+		'Geist',
 		system-ui,
 		-apple-system,
 		Segoe UI,

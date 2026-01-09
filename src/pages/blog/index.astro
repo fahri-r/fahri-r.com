@@ -27,36 +27,38 @@ const posts = (await getCollection('blog'))
 	}, {});
 ---
 
-<Layout className="flex flex-col space-y-12 justify-start">
+<Layout className="flex flex-col justify-start space-y-12">
 	<PageHead slot="head" title={TITLE} description={DESCRIPTION} />
 	<div class="w-full space-y-2">
 		<h1 class="text-4xl font-semibold">{TITLE}</h1>
 		<p class="text-neutral-400">{DESCRIPTION}</p>
 	</div>
 
-	<div class="w-full grid gap-6">
+	<div class="grid w-full gap-6">
 		{
-			Object.entries(posts).toReversed().map(([year, items]) => (
-				<ul class="space-y-3">
-					<h2>{year}</h2>
-					{items.map((item) => {
-						const formattedDate = new Date(item.data.date).toLocaleString('en-US', {
-							month: 'long',
-							day: 'numeric'
-						});
+			Object.entries(posts)
+				.toReversed()
+				.map(([year, items]) => (
+					<ul class="space-y-3">
+						<h2>{year}</h2>
+						{items.map((item) => {
+							const formattedDate = new Date(item.data.date).toLocaleString('en-US', {
+								month: 'long',
+								day: 'numeric'
+							});
 
-						return (
-							<li class="grid items-end gap-2 md:grid-cols-[90px_1fr]">
-								<span class="text-muted-foreground">{formattedDate}</span>
-								<Link href={`/${item.collection}/${item.id}`} className="line-clamp-3" underline>
-									{item.data.title}
-								</Link>
-								<Separator className="md:col-span-2" />
-							</li>
-						);
-					})}
-				</ul>
-			))
+							return (
+								<li class="grid items-end gap-2 md:grid-cols-[90px_1fr]">
+									<span class="text-muted-foreground">{formattedDate}</span>
+									<Link href={`/${item.collection}/${item.id}`} className="line-clamp-3" underline>
+										{item.data.title}
+									</Link>
+									<Separator className="md:col-span-2" />
+								</li>
+							);
+						})}
+					</ul>
+				))
 		}
 		<!-- {page.data.map((project) => <ProjectCard entry={project} />)} -->
 	</div>

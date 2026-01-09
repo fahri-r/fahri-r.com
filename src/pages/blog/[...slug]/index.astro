@@ -20,7 +20,7 @@ const post = Astro.props;
 const { Content } = await render(post);
 ---
 
-<Layout className="w-full flex flex-col space-y-12">
+<Layout className="flex w-full flex-col space-y-12">
 	<PageHead slot="head" title={post.data.title} description={post.data.description || undefined} />
 	<article class={cn('space-y-4 xl:space-y-8 z-40 w-full rounded-sm')}>
 		<header class="mb-4 flex justify-between lg:mb-6">

@@ -10,7 +10,7 @@ import { Button } from '../shared/button';
 
 <div
 	id="sidebar"
-	class="sticky top-0 z-10 m-4 mt-6 flex min-w-3xs flex-col md:h-screen md:justify-between"
+	class="sticky top-0 z-90 flex min-w-3xs flex-col md:h-screen md:justify-between md:p-4 md:pt-6"
 >
 	<!-- Main Menu -->
 	<section class="hidden space-y-6 md:block">
@@ -68,7 +68,7 @@ import { Button } from '../shared/button';
 	</section>
 
 	<!-- Overlay -->
-	<div class="bg-background flex h-14 items-center justify-between px-4 md:hidden">
+	<div class="bg-background flex items-center justify-between p-4 pt-6 md:hidden">
 		<a href="/" class="relative flex w-fit items-center gap-3">
 			<Icon name="cloud" size={36} />
 			<div>
@@ -83,11 +83,12 @@ import { Button } from '../shared/button';
 
 	<div
 		id="overlay"
-		class="bg-background pointer-events-none fixed top-0 flex h-screen w-1/2 -translate-x-full flex-col justify-between p-4 pt-6 opacity-0 transition-all duration-300 ease-in-out md:hidden"
+		class="bg-background pointer-events-none fixed top-0 flex h-screen w-fit -translate-x-full flex-col justify-between p-4 pt-6 opacity-0 transition-all duration-300 ease-in-out md:hidden"
 	>
 		<section class="space-y-6">
 			{/* Profile */}
-			<a href="/" class="relative items-center gap-3 md:flex">
+			<a href="/" class="relative flex items-center gap-3">
+				<Icon name="cloud" size={36} />
 				<div>
 					<p class="font-heading text-[0.7rem] font-semibold">{profile.name}</p>
 					<p class="text-muted-foreground text-sm">{profile.job}</p>
