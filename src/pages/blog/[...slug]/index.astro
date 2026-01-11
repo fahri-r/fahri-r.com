@@ -26,7 +26,7 @@ const { Content, headings } = await render(post);
 	<PageHead slot="head" title={post.data.title} description={post.data.description || undefined} />
 	<TOCHeader slot="table-of-contents" headings={headings} />
 
-	<div class="relative flex gap-6 flex-row">
+	<div class="relative flex flex-row gap-6">
 		<article class={cn('space-y-4 xl:space-y-8 z-40 rounded-sm flex-1')}>
 			<header class="mb-4 flex justify-between lg:mb-6">
 				<h1 class="text-4xl font-semibold">

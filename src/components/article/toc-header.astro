@@ -13,7 +13,7 @@ const { headings } = Astro.props;
 
 {
 	headings && headings.length > 0 && (
-		<div id="mobile-toc-container" class="w-full xl:hidden">
+		<div id="mobile-toc-container" class="w-full lg:hidden">
 			<details class="group">
 				<summary class="flex w-full cursor-pointer items-center justify-between">
 					<div class="mx-auto flex w-full items-center px-4 py-3">
@@ -119,11 +119,7 @@ const { headings } = Astro.props;
 
 	class HeadingRegions {
 		static build() {
-			state.headings = Array.from(
-				document.querySelectorAll<HTMLElement>(
-					'h2, h3, h4, h5, h6'
-				)
-			);
+			state.headings = Array.from(document.querySelectorAll<HTMLElement>('h2, h3, h4, h5, h6'));
 
 			if (state.headings.length === 0) {
 				state.regions = [];
