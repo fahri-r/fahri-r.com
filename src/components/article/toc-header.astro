@@ -83,7 +83,6 @@ const { headings } = Astro.props;
 }
 
 <script>
-	const INITIAL_OVERVIEW_TEXT = 'Overview';
 	const HEADER_OFFSET = 102 + 36;
 	const PROGRESS_CIRCLE_RADIUS = 10;
 	const PROGRESS_CIRCLE_CIRCUMFERENCE = 2 * Math.PI * PROGRESS_CIRCLE_RADIUS;
@@ -122,7 +121,7 @@ const { headings } = Astro.props;
 		static build() {
 			state.headings = Array.from(
 				document.querySelectorAll<HTMLElement>(
-					'.prose h2, .prose h3, .prose h4, .prose h5, .prose h6'
+					'h2, h3, h4, h5, h6'
 				)
 			);
 
@@ -210,26 +209,6 @@ const { headings } = Astro.props;
 			if (headingIds.length > 0) {
 				this.scrollToActive(headingIds[0]);
 			}
-
-			this.updateCurrentSectionText(headingIds);
-		}
-
-		static updateCurrentSectionText(headingIds: string[]) {
-			if (!state.currentSectionText) return;
-
-			let textToShow = INITIAL_OVERVIEW_TEXT;
-
-			if (headingIds.length > 0) {
-				const activeTexts = state.headings
-					.filter((heading) => headingIds.includes(heading.id) && heading.textContent)
-					.map((heading) => heading.textContent!.trim());
-
-				if (activeTexts.length > 0) {
-					textToShow = activeTexts.join(', ');
-				}
-			}
-
-			state.currentSectionText.textContent = textToShow;
 		}
 
 		static scrollToActive(activeHeadingId: string) {
@@ -330,7 +309,6 @@ const { headings } = Astro.props;
 			if (!state.currentSectionText) return;
 
 			if (state.headings.length === 0) {
-				state.currentSectionText.textContent = INITIAL_OVERVIEW_TEXT;
 				window.addEventListener('scroll', ProgressCircle.update, {
 					passive: true
 				});

@@ -6,6 +6,7 @@ import { getCollection, render } from 'astro:content';
 import Giscus from '~/components/main/giscus.astro';
 import PageHead from '~/components/main/page-head.astro';
 import TOCHeader from '~/components/article/toc-header.astro';
+import TOCSidebar from '~/components/article/toc-sidebar.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -24,15 +25,19 @@ const { Content, headings } = await render(post);
 <Layout className="flex w-full flex-col space-y-12">
 	<PageHead slot="head" title={post.data.title} description={post.data.description || undefined} />
 	<TOCHeader slot="table-of-contents" headings={headings} />
-	<article class={cn('space-y-4 xl:space-y-8 z-40 w-full rounded-sm')}>
-		<header class="mb-4 flex justify-between lg:mb-6">
-			<h1 class="text-4xl font-semibold">
-				{post.data.title}
-			</h1>
-		</header>
 
-		<Content />
-	</article>
+	<div class="relative flex gap-6 flex-row">
+		<article class={cn('space-y-4 xl:space-y-8 z-40 rounded-sm flex-1')}>
+			<header class="mb-4 flex justify-between lg:mb-6">
+				<h1 class="text-4xl font-semibold">
+					{post.data.title}
+				</h1>
+			</header>
+
+			<Content />
+		</article>
+		<TOCSidebar headings={headings} />
+	</div>
 
 	<Giscus />
 </Layout>
