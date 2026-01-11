@@ -10,10 +10,10 @@ import { Button } from '../shared/button';
 
 <div
 	id="sidebar"
-	class="sticky top-0 z-90 flex min-w-3xs flex-col md:h-screen md:justify-between md:p-4 md:pt-6"
+	class="sticky top-0 z-90 flex min-w-3xs flex-col lg:h-screen lg:justify-between lg:p-4 lg:pt-6"
 >
 	<!-- Main Menu -->
-	<section class="hidden space-y-6 md:block">
+	<section class="hidden space-y-6 lg:block">
 		{/* Profile */}
 		<a href="/" class="relative flex items-center gap-3">
 			<Icon name="cloud" size={36} />
@@ -23,10 +23,10 @@ import { Button } from '../shared/button';
 			</div>
 		</a>
 
-		<Separator className="hidden md:block" />
+		<Separator className="hidden lg:block" />
 
 		{/* Nav */}
-		<div class="flex hidden flex-col space-y-4 md:block">
+		<div class="flex hidden flex-col space-y-4 lg:block">
 			<p class="text-muted-foreground text-xs uppercase">Navigation</p>
 			{
 				menu.map((menu) => (
@@ -42,10 +42,10 @@ import { Button } from '../shared/button';
 			}
 		</div>
 
-		<Separator className="hidden md:block" />
+		<Separator className="hidden lg:block" />
 
 		{/* Socials */}
-		<div class="hidden flex-col space-y-4 md:flex">
+		<div class="hidden flex-col space-y-4 lg:flex">
 			<p class="text-muted-foreground text-xs uppercase">Stay Connected</p>
 			{
 				profile.socials.map((social) => (
@@ -62,13 +62,13 @@ import { Button } from '../shared/button';
 			}
 		</div>
 	</section>
-	<section class="hidden space-y-6 md:block">
+	<section class="hidden space-y-6 lg:block">
 		<Separator />
 		<ThemeToggle />
 	</section>
 
 	<!-- Overlay -->
-	<div class="bg-background flex items-center justify-between p-4 pt-6 md:hidden">
+	<div class="bg-background flex items-center justify-between p-4 pt-6 lg:hidden">
 		<a href="/" class="relative flex w-fit items-center gap-3">
 			<Icon name="cloud" size={36} />
 			<div>
@@ -76,14 +76,14 @@ import { Button } from '../shared/button';
 				<p class="text-muted-foreground text-sm">{profile.job}</p>
 			</div>
 		</a>
-		<Button id="burger" variant={'ghost'}>
+		<Button id="burger" variant={'outline'}>
 			<Icon name={'burger'} size={24} />
 		</Button>
 	</div>
 
 	<div
 		id="overlay"
-		class="bg-background pointer-events-none fixed top-0 flex h-screen w-fit -translate-x-full flex-col justify-between p-4 pt-6 opacity-0 transition-all duration-300 ease-in-out md:hidden"
+		class="bg-background pointer-events-none fixed top-0 flex h-screen w-fit -translate-x-full flex-col justify-between p-4 pt-6 opacity-0 transition-all duration-300 ease-in-out lg:hidden"
 	>
 		<section class="space-y-6">
 			{/* Profile */}

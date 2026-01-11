@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { cn } from '~/lib/utils';
+import { cn } from '~/libs/utils';
 
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 	href: string;
