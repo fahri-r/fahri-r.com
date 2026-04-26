@@ -5,7 +5,7 @@ import ProjectCard from '~/components/main/project-card.astro';
 import { Button } from '~/components/shared/button';
 import { Separator } from '~/components/shared/separator';
 import { getCollection } from 'astro:content';
-import { Icon } from 'astro-icon/components';
+import { Icon } from '@twodft/astro-icon/components';
 import { Link } from '~/components/shared/link';
 
 const projects = (await getCollection('projects'))
