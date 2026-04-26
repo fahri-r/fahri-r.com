@@ -2,6 +2,7 @@
 import { ClientRouter } from 'astro:transitions';
 import { SITE } from '~/constants/global';
 import Favicon from './favicon.astro';
+import { Font } from 'astro:assets';
 ---
 
 <head>
@@ -25,11 +26,13 @@ import Favicon from './favicon.astro';
 		rel="alternate"
 		type="application/rss+xml"
 		title={SITE.title}
-		href={new URL('rss.xml', Astro.site)}
+		href={new URL('rss.xml', import.meta.env.SITE)}
 	/>
 
 	<Favicon />
 	<ClientRouter />
+	<Font cssVariable="--font-heading" />
+	<Font cssVariable="--font-body" />
 
 	<slot />
 </head>

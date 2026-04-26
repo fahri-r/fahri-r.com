@@ -1,7 +1,5 @@
 export const SITE = {
-	website: 'https://fahri-r.com/', // replace this with your deployed domain
 	author: 'Fahri Ramadhan',
-	profile: 'https://fahri-r.com/',
 	desc: 'Building scalable solutions and sharing tech insights. Explore my code, tutorials, and thoughts on modern software development.',
 	title: 'Fahri Ramadhan - Personal Website',
 	ogImage: 'og-image.jpeg',

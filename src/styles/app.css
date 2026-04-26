@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @import 'tailwindcss';
 
 @plugin "tailwindcss-animate";
@@ -90,12 +88,12 @@
 }
 
 .font-heading {
-	font-family: 'Press Start 2P', cursive;
+	font-family: var(--font-heading), cursive;
 }
 
 .font-body {
 	font-family:
-		'Geist',
+		var(--font-body),
 		system-ui,
 		-apple-system,
 		Segoe UI,
@@ -108,7 +106,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: 'Press Start 2P', cursive;
+	font-family: var(--font-heading), cursive;
 }
 
 h1 {
@@ -132,7 +130,7 @@ h6 {
 
 body {
 	font-family:
-		'Geist',
+		var(--font-body),
 		system-ui,
 		-apple-system,
 		Segoe UI,
