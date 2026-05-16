@@ -1,0 +1,48 @@
+---
+interface Props {
+	src: string;
+	poster?: string;
+	width?: number;
+	height?: number;
+	muted?: boolean;
+}
+
+const { src, poster, width = 640, height = 360, muted = false } = Astro.props;
+const playerId = `video-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class="max-w-full">
+	<video
+		id={playerId}
+		class="video-js vjs-default-skin"
+		controls
+		preload="auto"
+		width={width}
+		height={height}
+		poster={poster}
+		data-src={src}
+		muted={muted}
+	>
+		<source src={src} type="video/mp4" />
+	</video>
+</div>
+
+<script>
+	import videojs from 'video.js';
+	import 'video.js/dist/video-js.css';
+
+	// Initialize all video players on the page
+	document.querySelectorAll('.video-js').forEach((element) => {
+		if (element instanceof HTMLVideoElement && !element.hasAttribute('data-vjs-player')) {
+			const player = videojs(element, {
+				fluid: true,
+				playbackRates: [0.5, 1, 1.5, 2]
+			});
+
+			// Cleanup on navigation (for Astro view transitions)
+			document.addEventListener('astro:before-swap', () => {
+				player.dispose();
+			});
+		}
+	});
+</script>

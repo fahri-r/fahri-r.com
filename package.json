@@ -33,7 +33,8 @@
 		"tailwind-variants": "^1.0.0",
 		"tailwindcss": "^4.2.4",
 		"tailwindcss-animate": "^1.0.7",
-		"typescript": "^5.9.3"
+		"typescript": "^5.9.3",
+		"video.js": "^8.23.7"
 	},
 	"devDependencies": {
 		"@internationalized/date": "^3.12.1",
