@@ -2,10 +2,10 @@
 import profile from '~/constants/profile';
 import menu from '~/constants/menu';
 import { Separator } from '../shared/separator';
-import { Icon } from '@twodft/astro-icon/components';
 import { Link } from '../shared/link';
 import ThemeToggle from './theme-toggle.astro';
 import { Button } from '../shared/button';
+import Icon from '~/components/shared/icon.astro';
 ---
 
 <div
@@ -35,7 +35,7 @@ import { Button } from '../shared/button';
 						className="w-fit text-primary font-heading text-[0.7rem] flex items-end"
 						underline
 					>
-						<Icon name={`${menu.icon}`} size={24} />
+						<Icon name={menu.icon} size={24} />
 						{menu.name}
 					</Link>
 				))
@@ -55,7 +55,7 @@ import { Button } from '../shared/button';
 						external
 						underline
 					>
-						<Icon name={`${social.icon}`} size={24} />
+						<Icon name={social.icon} size={24} />
 						{social.label}
 					</Link>
 				))
@@ -107,7 +107,7 @@ import { Button } from '../shared/button';
 							className="w-fit text-primary font-heading text-[0.7rem] flex items-end"
 							underline
 						>
-							<Icon name={`${menu.icon}`} size={24} />
+							<Icon name={menu.icon} size={24} />
 							{menu.name}
 						</Link>
 					))
@@ -127,7 +127,7 @@ import { Button } from '../shared/button';
 							external
 							underline
 						>
-							<Icon name={`${social.icon}`} size={24} />
+							<Icon name={social.icon} size={24} />
 							{social.label}
 						</Link>
 					))

@@ -3,9 +3,9 @@ import { ScrollArea } from '~/components/shared/scroll-area';
 import { cn, getHeadingMargin } from '~/libs/utils';
 import type { MarkdownHeading } from 'astro';
 
-type Props = {
+interface Props {
 	headings: MarkdownHeading[];
-};
+}
 
 const { headings } = Astro.props;
 ---

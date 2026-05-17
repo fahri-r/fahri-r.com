@@ -1,5 +1,5 @@
 ---
-import { Icon } from '@twodft/astro-icon/components';
+import Icon from '~/components/shared/icon.astro';
 import { Button } from '~/components/shared/button';
 import Layout from '~/layouts/layout.astro';
 ---
@@ -12,7 +12,7 @@ import Layout from '~/layouts/layout.astro';
 				<Button variant="ghost" className="group">
 					<Icon
 						name={`caret-left`}
-						class="transition-transform duration-300 group-hover:-translate-x-0.5"
+						className="transition-transform duration-300 group-hover:-translate-x-0.5"
 						size={14}
 					/>
 					Home

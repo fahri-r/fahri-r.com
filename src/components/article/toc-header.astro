@@ -2,11 +2,11 @@
 import { ScrollArea } from '~/components/shared/scroll-area';
 import { cn, getHeadingMargin } from '~/libs/utils';
 import type { MarkdownHeading } from 'astro';
-import { Icon } from '@twodft/astro-icon/components';
+import Icon from '~/components/shared/icon.astro';
 
-type Props = {
+interface Props {
 	headings: MarkdownHeading[];
-};
+}
 
 const { headings } = Astro.props;
 ---

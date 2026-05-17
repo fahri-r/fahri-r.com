@@ -3,7 +3,6 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
-import icon from '@twodft/astro-icon';
 
 import { rehypeHeadingIds } from '@astrojs/markdown-remark';
 import rehypeExpressiveCode from 'rehype-expressive-code';
@@ -18,14 +17,7 @@ import type { ExpressiveCodeTheme } from 'rehype-expressive-code';
 
 export default defineConfig({
 	site: 'https://www.fahri-r.com',
-	integrations: [
-		sitemap(),
-		mdx(),
-		react(),
-		icon({
-			iconDir: 'src/assets'
-		})
-	],
+	integrations: [sitemap(), mdx(), react()],
 	output: 'static',
 	vite: {
 		plugins: [tailwindcss()]

@@ -1,0 +1,69 @@
+---
+import type { SvgComponent } from 'astro/types';
+import AstroIcon from '~/assets/astro.svg';
+import BackgroundIcon from '~/assets/background.svg';
+import BurgerIcon from '~/assets/burger.svg';
+import CaretDownIcon from '~/assets/caret-down.svg';
+import CaretLeftIcon from '~/assets/caret-left.svg';
+import CaretRightIcon from '~/assets/caret-right.svg';
+import CloudIcon from '~/assets/cloud.svg';
+import FileTextIcon from '~/assets/file-text.svg';
+import FolderIcon from '~/assets/folder.svg';
+import GithubIcon from '~/assets/github.svg';
+import HeartIcon from '~/assets/heart.svg';
+import HouseIcon from '~/assets/house.svg';
+import InstagramIcon from '~/assets/instagram.svg';
+import LinkedinIcon from '~/assets/linkedin.svg';
+import MagnifierIcon from '~/assets/magnifier.svg';
+import MailIcon from '~/assets/mail.svg';
+import MoonIcon from '~/assets/moon.svg';
+import RssIcon from '~/assets/rss.svg';
+import SaveIcon from '~/assets/save.svg';
+import SunIcon from '~/assets/sun.svg';
+import ThisIsFineIcon from '~/assets/this-is-fine.svg';
+
+const icons: Record<string, SvgComponent> = {
+	astro: AstroIcon,
+	background: BackgroundIcon,
+	burger: BurgerIcon,
+	'caret-down': CaretDownIcon,
+	'caret-left': CaretLeftIcon,
+	'caret-right': CaretRightIcon,
+	cloud: CloudIcon,
+	'file-text': FileTextIcon,
+	folder: FolderIcon,
+	github: GithubIcon,
+	heart: HeartIcon,
+	house: HouseIcon,
+	instagram: InstagramIcon,
+	linkedin: LinkedinIcon,
+	magnifier: MagnifierIcon,
+	mail: MailIcon,
+	moon: MoonIcon,
+	rss: RssIcon,
+	save: SaveIcon,
+	sun: SunIcon,
+	'this-is-fine': ThisIsFineIcon
+};
+
+export type IconType = keyof typeof icons;
+
+interface Props {
+	name: IconType;
+	className?: string;
+	size?: number;
+	width?: number;
+	height?: number;
+}
+
+const { name, className, size, ...props }: Props = Astro.props;
+
+if (size) {
+	props.width = size;
+	props.height = size;
+}
+
+const IconComponent = icons[name];
+---
+
+<IconComponent {...props} class={className} />

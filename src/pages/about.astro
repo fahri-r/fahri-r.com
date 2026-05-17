@@ -1,5 +1,5 @@
 ---
-import { Icon } from '@twodft/astro-icon/components';
+import Icon from '~/components/shared/icon.astro';
 import { Image } from 'astro:assets';
 import PageHead from '~/components/main/page-head.astro';
 import { Link } from '~/components/shared/link';
@@ -119,7 +119,7 @@ function workPeriod(entry: WorkDate, resign?: WorkDate): string {
 			profile.socials.map((social) => (
 				<div class="space-y-1">
 					<Link href={social.href} className="w-fit text-primary" external underline>
-						<Icon name={`${social.icon}`} size={24} />
+						<Icon name={social.icon} size={24} />
 						{social.label}
 					</Link>
 				</div>

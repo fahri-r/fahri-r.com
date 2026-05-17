@@ -10,15 +10,14 @@
 		"format": "prettier --write ."
 	},
 	"dependencies": {
-		"@astrojs/mdx": "5.0.4",
-		"@astrojs/react": "5.0.4",
+		"@astrojs/mdx": "5.0.6",
+		"@astrojs/react": "5.0.5",
 		"@astrojs/rss": "4.0.18",
 		"@astrojs/sitemap": "3.7.2",
 		"@expressive-code/plugin-line-numbers": "^0.41.7",
 		"@shikijs/rehype": "^4.0.2",
 		"@tailwindcss/vite": "^4.2.4",
-		"@twodft/astro-icon": "^1.2.4",
-		"astro": "6.1.9",
+		"astro": "6.3.3",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"radix-ui": "^1.4.3",

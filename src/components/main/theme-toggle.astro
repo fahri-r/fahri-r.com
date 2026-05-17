@@ -1,5 +1,5 @@
 ---
-import { Icon } from '@twodft/astro-icon/components';
+import Icon from '~/components/shared/icon.astro';
 import { Button } from '../shared/button';
 import { cn } from '~/libs/utils';
 import { ButtonGroup } from '../shared/button-group';
@@ -13,11 +13,11 @@ const { className } = Astro.props;
 
 <ButtonGroup className={cn('font-heading w-full', className)}>
 	<Button id="dark-button" variant="outline" className="dark-button w-[50%] text-[0.6rem]">
-		<Icon name="moon" class="size-4" />
+		<Icon name="moon" className="size-4" />
 		<span class="hidden self-center md:block">Dark</span>
 	</Button>
 	<Button id="light-button" variant="outline" className="light-button w-[50%] text-[0.6rem]">
-		<Icon name="sun" class="size-4" />
+		<Icon name="sun" className="size-4" />
 		<span class="hidden self-center md:block">Light</span>
 	</Button>
 </ButtonGroup>
