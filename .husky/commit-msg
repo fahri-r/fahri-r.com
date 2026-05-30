@@ -1,0 +1,22 @@
+#!/bin/sh
+
+commit_msg_file="$1"
+commit_msg=$(head -n 1 "$commit_msg_file")
+
+pattern='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-zA-Z0-9_-]+\))?: .+'
+
+if ! echo "$commit_msg" | grep -Eq "$pattern"; then
+  echo ""
+  echo "❌ Invalid commit message"
+  echo ""
+  echo "Expected:"
+  echo "  feat: add search feature"
+  echo "  fix(auth): handle expired token"
+  echo "  docs: update README"
+  echo ""
+  echo "Allowed types:"
+  echo "  feat, fix, docs, style, refactor,"
+  echo "  perf, test, build, ci, chore, revert"
+  echo ""
+  exit 1
+fi

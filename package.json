@@ -7,7 +7,9 @@
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
-		"format": "prettier --write ."
+		"format": "prettier . --write",
+		"format:check": "prettier . --check",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "5.0.6",
@@ -41,6 +43,8 @@
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"bits-ui": "^2.18.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^17.0.6",
 		"prettier": "^3.8.3",
 		"prettier-plugin-astro": "^0.14.1",
 		"prettier-plugin-tailwindcss": "^0.7.3",
