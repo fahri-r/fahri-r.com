@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 9 9">
+  <path d="
+    M1 1H2V2H1Z
+    M2 2H3V3H2Z
+    M3 3H4V4H3Z
+    M4 4H5V5H4Z
+    M5 5H6V6H5Z
+    M6 6H7V7H6Z
+    M7 7H8V8H7Z
+
+    M7 1H8V2H7Z
+    M6 2H7V3H6Z
+    M5 3H6V4H5Z
+    M4 4H5V5H4Z
+    M3 5H4V6H3Z
+    M2 6H3V7H2Z
+    M1 7H2V8H1Z
+  " />
+</svg>
