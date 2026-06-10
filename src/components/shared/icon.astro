@@ -21,7 +21,6 @@ import RssIcon from '~/assets/rss.svg';
 import SaveIcon from '~/assets/save.svg';
 import SunIcon from '~/assets/sun.svg';
 import ThisIsFineIcon from '~/assets/this-is-fine.svg';
-import CloseIcon from '~/assets/close.svg';
 
 const icons: Record<string, SvgComponent> = {
 	astro: AstroIcon,
@@ -30,7 +29,6 @@ const icons: Record<string, SvgComponent> = {
 	'caret-down': CaretDownIcon,
 	'caret-left': CaretLeftIcon,
 	'caret-right': CaretRightIcon,
-	close: CloseIcon,
 	cloud: CloudIcon,
 	'file-text': FileTextIcon,
 	folder: FolderIcon,
@@ -51,7 +49,6 @@ const icons: Record<string, SvgComponent> = {
 export type IconType = keyof typeof icons;
 
 interface Props {
-	id?: string;
 	name: IconType;
 	className?: string;
 	size?: number;

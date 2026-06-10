@@ -1,0 +1,172 @@
+---
+import profile from '~/constants/profile';
+import menu from '~/constants/menu';
+import { Separator } from '../shared/separator';
+import { Link } from '../shared/link';
+import ThemeToggle from './theme-toggle.astro';
+import { Button } from '../shared/button';
+import Icon from '~/components/shared/icon.astro';
+---
+
+<div
+	id="sidebar"
+	class="sticky top-0 z-90 flex min-w-3xs flex-col lg:h-screen lg:justify-between lg:p-4 lg:pt-6"
+>
+	<!-- Main Menu -->
+	<section class="hidden space-y-6 lg:block">
+		{/* Profile */}
+		<a href="/" class="relative flex items-center gap-3">
+			<Icon name="cloud" size={36} />
+			<div>
+				<p class="font-heading text-[0.7rem] font-semibold">{profile.name}</p>
+				<p class="text-muted-foreground text-sm">{profile.job}</p>
+			</div>
+		</a>
+
+		<Separator className="hidden lg:block" />
+
+		{/* Nav */}
+		<div class="flex hidden flex-col space-y-4 lg:block">
+			<p class="text-muted-foreground text-xs uppercase">Navigation</p>
+			{
+				menu.map((menu) => (
+					<Link
+						href={menu.path}
+						className="w-fit text-primary font-heading text-[0.7rem] flex items-end"
+						underline
+					>
+						<Icon name={menu.icon} size={24} />
+						{menu.name}
+					</Link>
+				))
+			}
+		</div>
+
+		<Separator className="hidden lg:block" />
+
+		{/* Socials */}
+		<div class="hidden flex-col space-y-4 lg:flex">
+			<p class="text-muted-foreground text-xs uppercase">Stay Connected</p>
+			{
+				profile.socials.map((social) => (
+					<Link
+						href={social.href}
+						className="w-fit text-primary font-heading text-[0.7rem] flex items-end"
+						external
+						underline
+					>
+						<Icon name={social.icon} size={24} />
+						{social.label}
+					</Link>
+				))
+			}
+		</div>
+	</section>
+	<section class="hidden space-y-6 lg:block">
+		<Separator />
+		<ThemeToggle />
+	</section>
+
+	<!-- Overlay -->
+	<div class="bg-background flex items-center justify-between p-4 pt-6 lg:hidden">
+		<a href="/" class="relative flex w-fit items-center gap-3">
+			<Icon name="cloud" size={36} />
+			<div>
+				<p class="font-heading text-[0.7rem] font-semibold">{profile.name}</p>
+				<p class="text-muted-foreground text-sm">{profile.job}</p>
+			</div>
+		</a>
+		<Button id="burger" variant={'outline'}>
+			<Icon name={'burger'} size={24} />
+		</Button>
+	</div>
+
+	<div
+		id="overlay"
+		class="bg-background pointer-events-none fixed top-0 flex h-screen w-fit -translate-x-full flex-col justify-between p-4 pt-6 opacity-0 transition-all duration-300 ease-in-out lg:hidden"
+	>
+		<section class="space-y-6">
+			{/* Profile */}
+			<a href="/" class="relative flex items-center gap-3">
+				<Icon name="cloud" size={36} />
+				<div>
+					<p class="font-heading text-[0.7rem] font-semibold">{profile.name}</p>
+					<p class="text-muted-foreground text-sm">{profile.job}</p>
+				</div>
+			</a>
+
+			<Separator />
+
+			{/* Nav */}
+			<div class="flex flex-col space-y-4">
+				<p class="text-muted-foreground text-xs uppercase">Navigation</p>
+				{
+					menu.map((menu) => (
+						<Link
+							href={menu.path}
+							className="w-fit text-primary font-heading text-[0.7rem] flex items-end"
+							underline
+						>
+							<Icon name={menu.icon} size={24} />
+							{menu.name}
+						</Link>
+					))
+				}
+			</div>
+
+			<Separator />
+
+			{/* Socials */}
+			<div class="flex flex-col space-y-4">
+				<p class="text-muted-foreground text-xs uppercase">Stay Connected</p>
+				{
+					profile.socials.map((social) => (
+						<Link
+							href={social.href}
+							className="w-fit text-primary font-heading text-[0.7rem] flex items-end"
+							external
+							underline
+						>
+							<Icon name={social.icon} size={24} />
+							{social.label}
+						</Link>
+					))
+				}
+			</div>
+		</section>
+		<section class="space-y-6">
+			<Separator />
+			<ThemeToggle />
+		</section>
+	</div>
+</div>
+
+<script>
+	function init() {
+		const overlay = document.getElementById('overlay');
+		const burger = document.getElementById('burger');
+		const sidebar = document.getElementById('sidebar');
+
+		burger?.addEventListener('click', () => {
+			overlay?.classList.toggle('opacity-0');
+			overlay?.classList.toggle('-translate-x-full');
+			overlay?.classList.toggle('pointer-events-none');
+		});
+
+		document.body.addEventListener('click', (e) => {
+			if (!(e.target instanceof HTMLElement)) return;
+
+			if (!sidebar?.contains(e.target)) {
+				overlay?.classList.add('opacity-0');
+				overlay?.classList.add('-translate-x-full');
+				overlay?.classList.add('pointer-events-none');
+			}
+		});
+	}
+
+	init();
+
+	document.addEventListener('astro:after-swap', () => {
+		init();
+	});
+</script>

@@ -2,6 +2,7 @@
 import Icon from '~/components/shared/icon.astro';
 import { Button } from '../shared/button';
 import { cn } from '~/libs/utils';
+import { ButtonGroup } from '../shared/button-group';
 
 interface Props {
 	className?: string;
@@ -10,12 +11,16 @@ interface Props {
 const { className } = Astro.props;
 ---
 
-<div class={cn('font-heading w-full', className)}>
-	<Button id="button" variant="outline" className="text-[0.6rem]">
-		<Icon id="dark-icon" name="moon" className="hidden size-4" />
-		<Icon id="light-icon" name="sun" className="hidden size-4" />
+<ButtonGroup className={cn('font-heading w-full', className)}>
+	<Button id="dark-button" variant="outline" className="dark-button w-[50%] text-[0.6rem]">
+		<Icon name="moon" className="size-4" />
+		<span class="hidden self-center md:block">Dark</span>
 	</Button>
-</div>
+	<Button id="light-button" variant="outline" className="light-button w-[50%] text-[0.6rem]">
+		<Icon name="sun" className="size-4" />
+		<span class="hidden self-center md:block">Light</span>
+	</Button>
+</ButtonGroup>
 
 <script is:inline data-astro-rerun>
 	(() => {
@@ -29,66 +34,78 @@ const { className } = Astro.props;
 		window.localStorage.setItem('theme', theme);
 
 		if (theme === 'dark') {
-			const lightBtn = document.getElementById('light-icon');
-			lightBtn.classList.remove('hidden');
+			const darkBtn = document.querySelectorAll('.dark-button');
+			darkBtn.forEach((element) => {
+				element.disabled = true;
+			});
 		} else {
-			const darkBtn = document.getElementById('dark-icon');
-			darkBtn.classList.remove('hidden');
+			const lightBtn = document.querySelectorAll('.light-button');
+			lightBtn.forEach((element) => {
+				element.disabled = true;
+			});
 		}
 	})();
 </script>
 
 <script>
-	const storedTheme = (): 'dark' | 'light' => {
-		const stored = localStorage?.getItem('theme') ?? '';
-
-		if (stored == 'dark' || stored == 'light') return stored;
-
-		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-	};
-
-	function handleToggleClick() {
-		const newTheme = storedTheme() == 'dark' ? 'light' : 'dark';
+	function handleToggleClick(theme: 'dark' | 'light') {
 		const element = document.documentElement;
 
 		element.classList.add('[&_*]:transition-none');
-		element.setAttribute('data-theme', newTheme);
+		element.setAttribute('data-theme', theme);
 		window.getComputedStyle(element).getPropertyValue('opacity');
 
 		requestAnimationFrame(() => {
 			element.classList.remove('[&_*]:transition-none');
 		});
 
-		localStorage.setItem('theme', newTheme);
+		localStorage.setItem('theme', theme);
 
-		if (newTheme === 'dark') {
-			const darkIcon = document.getElementById('dark-icon');
-			darkIcon?.classList.add('hidden');
+		if (theme === 'dark') {
+			const darkBtn = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
+			darkBtn.forEach((element) => {
+				element.disabled = true;
+			});
 
-			const lightIcon = document.getElementById('light-icon');
-			lightIcon?.classList.remove('hidden');
+			const lightBtn = document.querySelectorAll('.light-button') as NodeListOf<HTMLButtonElement>;
+			lightBtn.forEach((element) => {
+				element.disabled = false;
+			});
 		} else {
-			const darkIcon = document.getElementById('dark-icon');
-			darkIcon?.classList.remove('hidden');
+			const darkBtn = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
+			darkBtn.forEach((element) => {
+				element.disabled = false;
+			});
 
-			const lightIcon = document.getElementById('light-icon');
-			lightIcon?.classList.add('hidden');
+			const lightBtn = document.querySelectorAll('.light-button') as NodeListOf<HTMLButtonElement>;
+			lightBtn.forEach((element) => {
+				element.disabled = true;
+			});
 		}
 	}
 
 	function initThemeToggle() {
-		const btn = document.getElementById('button');
-		btn?.addEventListener('click', () => handleToggleClick());
+		const lightBtn = document.querySelectorAll('.light-button') as NodeListOf<HTMLButtonElement>;
+
+		lightBtn.forEach((element) => {
+			element.addEventListener('click', () => handleToggleClick('light'));
+		});
+
+		const darkBtn = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
+		darkBtn.forEach((element) => {
+			element.addEventListener('click', () => handleToggleClick('dark'));
+		});
 	}
 
 	initThemeToggle();
 
 	document.addEventListener('astro:after-swap', () => {
+		const storedTheme = localStorage.getItem('theme') || 'light';
 		const element = document.documentElement;
 
 		element.classList.add('[&_*]:transition-none');
 		window.getComputedStyle(element).getPropertyValue('opacity');
-		element.setAttribute('data-theme', storedTheme());
+		element.setAttribute('data-theme', storedTheme);
 
 		requestAnimationFrame(() => {
 			element.classList.remove('[&_*]:transition-none');

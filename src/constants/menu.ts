@@ -3,22 +3,22 @@ import type Menu from '~/interfaces/menu.interface';
 const menu: Menu[] = [
 	{
 		path: '/',
-		name: 'home',
+		name: 'Home',
 		icon: 'house'
 	},
 	{
 		path: '/projects',
-		name: 'projects',
+		name: 'Projects',
 		icon: 'folder'
 	},
 	{
 		path: '/blog',
-		name: 'blog',
+		name: 'Blog',
 		icon: 'file-text'
 	},
 	{
 		path: '/about',
-		name: 'about',
+		name: 'About Me',
 		icon: 'save'
 	}
 ];
