@@ -8,7 +8,6 @@ import { rehypeHeadingIds } from '@astrojs/markdown-remark';
 import rehypeExpressiveCode from 'rehype-expressive-code';
 import rehypeExternalLinks from 'rehype-external-links';
 import rehypeKatex from 'rehype-katex';
-import rehypeShiki from '@shikijs/rehype';
 import remarkEmoji from 'remark-emoji';
 import remarkMath from 'remark-math';
 
@@ -37,6 +36,13 @@ export default defineConfig({
 	],
 	markdown: {
 		syntaxHighlight: false,
+		shikiConfig: {
+			themes: {
+				light: 'github-light',
+				dark: 'github-dark'
+			},
+			wrap: false
+		},
 		rehypePlugins: [
 			[
 				rehypeExternalLinks,
@@ -89,16 +95,6 @@ export default defineConfig({
 						},
 						uiFontFamily: 'var(--font-sans)'
 					}
-				}
-			],
-			[
-				rehypeShiki,
-				{
-					themes: {
-						light: 'github-light',
-						dark: 'github-dark'
-					},
-					inline: 'tailing-curly-colon'
 				}
 			]
 		],
