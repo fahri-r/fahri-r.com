@@ -23,10 +23,11 @@ export default defineConfig({
 	},
 	fonts: [
 		{
-			name: 'Geist',
+			name: 'Gelasio',
 			cssVariable: '--font-body',
 			provider: fontProviders.google(),
-			weights: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+			weights: ['400', '500', '600', '700'],
+			styles: ['normal', 'italic']
 		},
 		{
 			name: 'Press Start 2P',

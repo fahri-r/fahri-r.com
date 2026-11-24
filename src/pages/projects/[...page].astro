@@ -23,21 +23,45 @@ export async function getStaticPaths({ paginate }: { paginate: PaginateFunction 
 const { page } = Astro.props;
 ---
 
-<Layout className="flex flex-col space-y-12">
+<Layout className="flex flex-col gap-8">
 	<PageHead slot="head" title={TITLE} description={DESCRIPTION} />
-	<div class="w-full space-y-2">
-		<h1 class="text-4xl font-semibold">{TITLE}</h1>
-		<p class="text-neutral-400">{DESCRIPTION}</p>
+
+	<div class="space-y-2">
+		<h1 class="page-title">{TITLE}</h1>
+		<p class="page-lede">{DESCRIPTION}</p>
 	</div>
 
-	<div class="grid gap-6">
-		{page.data.map((project) => <ProjectCard entry={project} />)}
-	</div>
+	<section class="panel">
+		<div class="panel-head">
+			<h2>Catalog</h2>
+			<span class="panel-note">
+				{page.data.length > 0 ? `page ${page.currentPage} of ${page.lastPage}` : 'nothing yet'}
+			</span>
+		</div>
 
-	<PaginationComponent
-		client:load
-		currentPage={page.currentPage}
-		totalPages={page.lastPage}
-		baseUrl={'/projects/'}
-	/>
+		<div class="panel-body">
+			{
+				page.data.length > 0 ? (
+					<div>
+						{page.data.map((project) => (
+							<ProjectCard entry={project} />
+						))}
+					</div>
+				) : (
+					<p class="text-muted-foreground text-sm">No projects yet. Check back soon.</p>
+				)
+			}
+		</div>
+	</section>
+
+	{
+		page.lastPage > 1 && (
+			<PaginationComponent
+				client:load
+				currentPage={page.currentPage}
+				totalPages={page.lastPage}
+				baseUrl={'/projects/'}
+			/>
+		)
+	}
 </Layout>

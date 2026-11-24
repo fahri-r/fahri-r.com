@@ -2,17 +2,21 @@
 import Icon from '~/components/shared/icon.astro';
 import profile from '~/constants/profile';
 import { Link } from '../shared/link';
+
+const year = new Date().getFullYear();
 ---
 
-<footer class="text-primary border-t p-10 text-sm">
-	<div class="flex flex-wrap items-center justify-between gap-4">
-		<div class="space-x-4">
-			<Link href="/rss.xml">RSS feed</Link>
-			<Link href="#">Buy me a coffee</Link>
+<footer class="border-t px-6 py-5 text-[0.82rem] sm:px-8 lg:px-10">
+	<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+		<div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+			<Link href="/rss.xml" underline>RSS feed</Link>
+			<Link href={profile.socials[0].href} external underline>{profile.socials[0].label}</Link>
+			<Link href={profile.socials[2].href} external underline>{profile.socials[2].label}</Link>
+			<a href="#top">Back to top ↑</a>
 		</div>
 
-		<div class="flex items-center gap-1">
-			Made with <Icon name="heart" size={16} /> by {profile.name}
-		</div>
+		<p class="text-muted-foreground flex items-center gap-1">
+			Made with <Icon name="heart" size={14} /> by {profile.name}.
+		</p>
 	</div>
 </footer>

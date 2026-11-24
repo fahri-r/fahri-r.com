@@ -3,7 +3,6 @@ import { Image } from 'astro:assets';
 import { Link } from '../shared/link';
 import type { CollectionEntry } from 'astro:content';
 import { Badge } from '../shared/badge';
-import { Separator } from '../shared/separator';
 
 interface Props {
 	entry: CollectionEntry<'projects'>;
@@ -18,47 +17,39 @@ const formattedDate = new Date(entry.data.date).toLocaleString('en-US', {
 });
 ---
 
-<div
-	class="group hover:bg-muted/10 border-border bg-card rounded-xl border p-4 transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-md"
->
-	<Link href={`/${entry.collection}/${entry.id}`} className="flex flex-col gap-4 sm:flex-row">
+<article class="project-entry">
+	<Link
+		href={`/${entry.collection}/${entry.id}`}
+		className="flex flex-col items-start justify-start gap-4 no-underline sm:flex-row"
+	>
 		{
 			entry.data.cover && (
-				<div class="border-border/50 max-h-36 w-full overflow-clip rounded-lg border sm:max-w-3xs sm:shrink-0">
+				<div class="project-thumb">
 					<Image
 						src={entry.data.cover}
 						alt={entry.data.title}
 						width={1200}
 						height={630}
-						class="h-full w-full object-cover grayscale-[0.2] transition-all group-hover:grayscale-0"
+						class="object-cover"
 					/>
 				</div>
 			)
 		}
 
 		<div class="text-muted-foreground grow">
-			<h3
-				class="text-foreground group-hover:text-primary mb-1 line-clamp-2 text-lg font-bold transition-colors"
-			>
-				{entry.data.title}
-			</h3>
-			<p class="mb-3 line-clamp-2 text-sm leading-relaxed">
-				{entry.data.description}
-			</p>
+			<h3 class="project-title text-foreground">{entry.data.title}</h3>
+			{entry.data.description && <p class="project-desc">{entry.data.description}</p>}
 
-			<div class="flex flex-wrap items-center gap-3 text-xs font-medium tracking-wider uppercase">
-				<span class="opacity-80">{formattedDate}</span>
+			<div class="entry-meta">
+				<time datetime={entry.data.date.toISOString()}>{formattedDate}</time>
+
+				{entry.data.category && <span>{entry.data.category}</span>}
 
 				{
-					entry.data.tools && (
-						<div class="flex flex-wrap gap-2">
+					entry.data.tools && entry.data.tools.length > 0 && (
+						<div class="tag-row">
 							{entry.data.tools.map((tool) => (
-								<Badge
-									variant="secondary"
-									className="bg-secondary/20 text-secondary-foreground border-secondary/30 rounded-md px-2 py-0.5"
-								>
-									{tool}
-								</Badge>
+								<Badge variant="outline">{tool}</Badge>
 							))}
 						</div>
 					)
@@ -66,4 +57,4 @@ const formattedDate = new Date(entry.data.date).toLocaleString('en-US', {
 			</div>
 		</div>
 	</Link>
-</div>
+</article>

@@ -3,7 +3,6 @@ import Layout from '../layouts/layout.astro';
 import PageHead from '~/components/main/page-head.astro';
 import ProjectCard from '~/components/main/project-card.astro';
 import { Button } from '~/components/shared/button';
-import { Separator } from '~/components/shared/separator';
 import { getCollection } from 'astro:content';
 import Icon from '~/components/shared/icon.astro';
 import { Link } from '~/components/shared/link';
@@ -17,70 +16,112 @@ const blog = (await getCollection('blog'))
 	.slice(0, 5);
 ---
 
-<Layout className="flex flex-col space-y-12">
+<Layout className="flex flex-col gap-8">
 	<PageHead slot="head" title="Home" />
-	{/* Hero */}
-	<section class="grid w-full gap-10 lg:grid-cols-2 lg:place-items-center">
-		<div class="order-2 space-y-6 lg:order-1">
-			<h1 class="text-4xl font-bold">Hey, I&apos;m Fahri!</h1>
-			<p class="max-w-xl">
-				I’m a software engineer, and this is where I keep my projects, writings, experiments, and
-				thoughts along my learning journey.
-			</p>
-			<p class="text-sm">Everything on this site is written by me, not AI.</p>
 
-			<div class="flex gap-3">
-				<Link href={'/about'}>
-					<Button variant="secondary" className="gap-2"> About Me </Button>
-				</Link>
-			</div>
+	{/* Welcome */}
+	<section class="panel">
+		<div class="panel-head">
+			<h2>Welcome</h2>
 		</div>
+		<div class="panel-body">
+			<div class="grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+				<div class="space-y-4">
+					<h1 class="page-title">Hey, I&apos;m Fahri!</h1>
+					<p class="max-w-[62ch]">
+						I&apos;m a software engineer, and this is where I keep my projects, writings,
+						experiments, and thoughts along my learning journey.
+					</p>
+					<p class="text-muted-foreground text-sm italic">
+						Everything on this site is written by me, not AI.
+					</p>
 
-		<div class="order-1 lg:order-2">
-			<Icon name="this-is-fine" size={64} className="flex h-32 w-32 lg:h-64 lg:w-64" />
+					<div class="pt-1">
+						<Link href="/about" className="no-underline">
+							<Button variant="secondary">About Me</Button>
+						</Link>
+					</div>
+				</div>
+
+				<div class="flex justify-center md:justify-end">
+					<Icon
+						name="this-is-fine"
+						className="h-28 w-28 [shape-rendering:crispEdges] sm:h-36 sm:w-36"
+					/>
+				</div>
+			</div>
 		</div>
 	</section>
 
 	{/* Blog */}
-	<section class="w-full space-y-6">
-		<div class="space-y-2">
-			<h2 class="text-3xl font-semibold">Blog</h2>
-			<p class="text-muted-foreground">Writing on topics I am passionate about.</p>
+	<section class="panel">
+		<div class="panel-head">
+			<h2>Blog</h2>
+			<span class="panel-note">
+				{blog.length > 0 ? `${blog.length} entries` : 'nothing yet'}
+			</span>
 		</div>
+		<div class="panel-body">
+			<p class="text-muted-foreground mb-3 text-[0.88rem] italic">
+				Writing on topics I am passionate about.
+			</p>
 
-		<ul class="space-y-3">
 			{
-				blog.map((post) => {
-					const formattedDate = new Date(post.data.date).toLocaleString('en-US', {
-						month: 'long',
-						year: 'numeric'
-					});
+				blog.length > 0 ? (
+					<ul class="entry-list">
+						{blog.map((post) => {
+							const formattedDate = new Date(post.data.date).toLocaleString('en-US', {
+								month: 'long',
+								year: 'numeric'
+							});
 
-					return (
-						<li class="grid items-end gap-2 md:grid-cols-[90px_1fr]">
-							<span class="text-muted-foreground">{formattedDate}</span>
-							<Link href={`/${post.collection}/${post.id}`} className="line-clamp-3" underline>
-								{post.data.title}
-							</Link>
-							<Separator className="md:col-span-2" />
-						</li>
-					);
-				})
+							return (
+								<li class="entry-row">
+									<time class="entry-date" datetime={post.data.date.toISOString()}>
+										{formattedDate}
+									</time>
+									<Link
+										href={`/${post.collection}/${post.id}`}
+										className="entry-link justify-start"
+										underline
+									>
+										{post.data.title}
+									</Link>
+								</li>
+							);
+						})}
+					</ul>
+				) : (
+					<p class="text-muted-foreground text-sm">No posts yet. Check back soon.</p>
+				)
 			}
-		</ul>
+		</div>
 	</section>
 
 	{/* Projects */}
-	<section class="w-full space-y-6">
-		<div class="space-y-2">
-			<h2 class="text-3xl font-semibold">Projects</h2>
-			<p class="text-muted-foreground">
+	<section class="panel">
+		<div class="panel-head">
+			<h2>Projects</h2>
+			<span class="panel-note">
+				{projects.length > 0 ? `${projects.length} entries` : 'nothing yet'}
+			</span>
+		</div>
+		<div class="panel-body">
+			<p class="text-muted-foreground mb-1 text-[0.88rem] italic">
 				Several projects that I have worked on, both private and open source.
 			</p>
-		</div>
 
-		<div class="grid gap-6">
-			{projects.map((project) => <ProjectCard entry={project} />)}
+			{
+				projects.length > 0 ? (
+					<div>
+						{projects.map((project) => (
+							<ProjectCard entry={project} />
+						))}
+					</div>
+				) : (
+					<p class="text-muted-foreground text-sm">No projects yet. Check back soon.</p>
+				)
+			}
 		</div>
 	</section>
 </Layout>

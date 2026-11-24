@@ -1,5 +1,4 @@
 ---
-import { cn } from '~/libs/utils';
 import Layout from '~/layouts/layout.astro';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection, render } from 'astro:content';
@@ -7,6 +6,7 @@ import Giscus from '~/components/main/giscus.astro';
 import PageHead from '~/components/main/page-head.astro';
 import TOCHeader from '~/components/article/toc-header.astro';
 import TOCSidebar from '~/components/article/toc-sidebar.astro';
+import { Link } from '~/components/shared/link';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
@@ -20,24 +20,46 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content, headings } = await render(post);
+
+const published = post.data.date.toLocaleString('en-US', {
+	month: 'long',
+	day: 'numeric',
+	year: 'numeric'
+});
 ---
 
-<Layout className="flex w-full flex-col space-y-12">
+<Layout className="flex w-full flex-col gap-8">
 	<PageHead slot="head" title={post.data.title} description={post.data.description || undefined} />
 	<TOCHeader slot="table-of-contents" headings={headings} />
 
+	<div class="article-nav">
+		<Link href="/blog" underline>← All posts</Link>
+	</div>
+
 	<div class="relative flex flex-row gap-6">
-		<article class={cn('space-y-4 xl:space-y-8 z-40 rounded-sm flex-1')}>
-			<header class="mb-4 flex justify-between lg:mb-6">
-				<h1 class="text-4xl font-semibold">
-					{post.data.title}
-				</h1>
+		<article class="min-w-0 flex-1">
+			<header class="space-y-4">
+				<h1 class="article-title">{post.data.title}</h1>
+				{post.data.description && <p class="article-lede">{post.data.description}</p>}
+				<p class="article-meta">
+					Published <time datetime={post.data.date.toISOString()}>{published}</time>
+				</p>
 			</header>
 
-			<Content />
+			<div class="article-body mt-8">
+				<Content />
+			</div>
 		</article>
 		<TOCSidebar headings={headings} />
 	</div>
 
-	<Giscus />
+	<section class="panel">
+		<div class="panel-head">
+			<h2>Comments</h2>
+			<span class="panel-note">via giscus</span>
+		</div>
+		<div class="panel-body">
+			<Giscus />
+		</div>
+	</section>
 </Layout>

@@ -1,172 +1,187 @@
 ---
 import profile from '~/constants/profile';
 import menu from '~/constants/menu';
-import { Separator } from '../shared/separator';
-import { Link } from '../shared/link';
 import ThemeToggle from './theme-toggle.astro';
 import { Button } from '../shared/button';
 import Icon from '~/components/shared/icon.astro';
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) =>
+	href === '/' ? currentPath === '/' : currentPath === href || currentPath.startsWith(`${href}/`);
 ---
 
 <div
 	id="sidebar"
-	class="sticky top-0 z-90 flex min-w-3xs flex-col lg:h-screen lg:justify-between lg:p-4 lg:pt-6"
+	class="flex flex-col lg:min-h-[calc(100vh-4rem)] lg:justify-between lg:p-5 lg:pt-6"
 >
-	<!-- Main Menu -->
 	<section class="hidden space-y-6 lg:block">
-		{/* Profile */}
-		<a href="/" class="relative flex items-center gap-3">
-			<Icon name="cloud" size={36} />
-			<div>
-				<p class="font-heading text-[0.7rem] font-semibold">{profile.name}</p>
-				<p class="text-muted-foreground text-sm">{profile.job}</p>
-			</div>
+		<!-- Profile -->
+		<a href="/" class="flex items-center gap-3 no-underline">
+			<span class="brand-plate grid size-11 shrink-0 place-items-center">
+				<Icon name="cloud" size={28} />
+			</span>
+			<span class="min-w-0">
+				<span class="font-heading text-foreground block text-[0.62rem] leading-[1.9]">
+					{profile.name}
+				</span>
+				<span class="text-muted-foreground block text-[0.82rem] italic">{profile.job}</span>
+			</span>
 		</a>
 
-		<Separator className="hidden lg:block" />
+		<!-- Nav -->
+		<nav aria-label="Main" class="border-t border-dashed pt-4">
+			<p class="rail-label">Navigation</p>
+			<div class="space-y-1">
+				{
+					menu.map((item) => (
+						<a
+							href={item.path}
+							class="rail-link"
+							aria-current={isActive(item.path) ? 'page' : undefined}
+						>
+							<Icon name={item.icon} size={18} className="shrink-0" />
+							{item.name}
+						</a>
+					))
+				}
+			</div>
+		</nav>
 
-		{/* Nav */}
-		<div class="flex hidden flex-col space-y-4 lg:block">
-			<p class="text-muted-foreground text-xs uppercase">Navigation</p>
-			{
-				menu.map((menu) => (
-					<Link
-						href={menu.path}
-						className="w-fit text-primary font-heading text-[0.7rem] flex items-end"
-						underline
-					>
-						<Icon name={menu.icon} size={24} />
-						{menu.name}
-					</Link>
-				))
-			}
-		</div>
-
-		<Separator className="hidden lg:block" />
-
-		{/* Socials */}
-		<div class="hidden flex-col space-y-4 lg:flex">
-			<p class="text-muted-foreground text-xs uppercase">Stay Connected</p>
-			{
-				profile.socials.map((social) => (
-					<Link
-						href={social.href}
-						className="w-fit text-primary font-heading text-[0.7rem] flex items-end"
-						external
-						underline
-					>
-						<Icon name={social.icon} size={24} />
-						{social.label}
-					</Link>
-				))
-			}
-		</div>
+		<!-- Socials -->
+		<nav aria-label="Elsewhere" class="border-t border-dashed pt-4">
+			<p class="rail-label">Stay connected</p>
+			<div class="space-y-1">
+				{
+					profile.socials.map((social) => (
+						<a href={social.href} class="rail-link" target="_blank" rel="noopener noreferrer">
+							<Icon name={social.icon} size={18} className="shrink-0" />
+							{social.label}
+						</a>
+					))
+				}
+			</div>
+		</nav>
 	</section>
-	<section class="hidden space-y-6 lg:block">
-		<Separator />
+
+	<section class="hidden border-t border-dashed pt-4 lg:block">
 		<ThemeToggle />
 	</section>
 
-	<!-- Overlay -->
-	<div class="bg-background flex items-center justify-between p-4 pt-6 lg:hidden">
-		<a href="/" class="relative flex w-fit items-center gap-3">
-			<Icon name="cloud" size={36} />
-			<div>
-				<p class="font-heading text-[0.7rem] font-semibold">{profile.name}</p>
-				<p class="text-muted-foreground text-sm">{profile.job}</p>
-			</div>
+	<!-- Compact header -->
+	<div class="flex items-center justify-between gap-3 p-4 pt-5 lg:hidden">
+		<a href="/" class="flex min-w-0 items-center gap-3 no-underline">
+			<span class="brand-plate grid size-10 shrink-0 place-items-center">
+				<Icon name="cloud" size={26} />
+			</span>
+			<span class="min-w-0">
+				<span class="font-heading text-foreground block text-[0.58rem] leading-[1.9]">
+					{profile.name}
+				</span>
+				<span class="text-muted-foreground block text-[0.78rem] italic">{profile.job}</span>
+			</span>
 		</a>
-		<Button id="burger" variant={'outline'}>
-			<Icon name={'burger'} size={24} />
+
+		<Button
+			id="burger"
+			variant="outline"
+			size="icon"
+			aria-label="Open menu"
+			aria-controls="overlay"
+			aria-expanded="false"
+		>
+			<Icon name="burger" size={20} />
 		</Button>
 	</div>
 
+	<!-- Mobile menu -->
 	<div
 		id="overlay"
-		class="bg-background pointer-events-none fixed top-0 flex h-screen w-fit -translate-x-full flex-col justify-between p-4 pt-6 opacity-0 transition-all duration-300 ease-in-out lg:hidden"
+		class="bg-background fixed inset-y-0 left-0 z-50 hidden w-72 max-w-[85vw] flex-col justify-between overflow-y-auto border-r p-5"
+		role="dialog"
+		aria-modal="true"
+		aria-label="Site menu"
 	>
-		<section class="space-y-6">
-			{/* Profile */}
-			<a href="/" class="relative flex items-center gap-3">
-				<Icon name="cloud" size={36} />
-				<div>
-					<p class="font-heading text-[0.7rem] font-semibold">{profile.name}</p>
-					<p class="text-muted-foreground text-sm">{profile.job}</p>
+		<div class="space-y-6">
+			<div class="flex items-center justify-between gap-3">
+				<p class="font-heading text-[0.6rem]">Menu</p>
+				<Button id="close-menu" variant="outline" size="sm">Close</Button>
+			</div>
+
+			<nav aria-label="Main" class="border-t border-dashed pt-4">
+				<p class="rail-label">Navigation</p>
+				<div class="space-y-1">
+					{
+						menu.map((item) => (
+							<a
+								href={item.path}
+								class="rail-link"
+								aria-current={isActive(item.path) ? 'page' : undefined}
+							>
+								<Icon name={item.icon} size={18} className="shrink-0" />
+								{item.name}
+							</a>
+						))
+					}
 				</div>
-			</a>
+			</nav>
 
-			<Separator />
+			<nav aria-label="Elsewhere" class="border-t border-dashed pt-4">
+				<p class="rail-label">Stay connected</p>
+				<div class="space-y-1">
+					{
+						profile.socials.map((social) => (
+							<a href={social.href} class="rail-link" target="_blank" rel="noopener noreferrer">
+								<Icon name={social.icon} size={18} className="shrink-0" />
+								{social.label}
+							</a>
+						))
+					}
+				</div>
+			</nav>
+		</div>
 
-			{/* Nav */}
-			<div class="flex flex-col space-y-4">
-				<p class="text-muted-foreground text-xs uppercase">Navigation</p>
-				{
-					menu.map((menu) => (
-						<Link
-							href={menu.path}
-							className="w-fit text-primary font-heading text-[0.7rem] flex items-end"
-							underline
-						>
-							<Icon name={menu.icon} size={24} />
-							{menu.name}
-						</Link>
-					))
-				}
-			</div>
-
-			<Separator />
-
-			{/* Socials */}
-			<div class="flex flex-col space-y-4">
-				<p class="text-muted-foreground text-xs uppercase">Stay Connected</p>
-				{
-					profile.socials.map((social) => (
-						<Link
-							href={social.href}
-							className="w-fit text-primary font-heading text-[0.7rem] flex items-end"
-							external
-							underline
-						>
-							<Icon name={social.icon} size={24} />
-							{social.label}
-						</Link>
-					))
-				}
-			</div>
-		</section>
-		<section class="space-y-6">
-			<Separator />
+		<div class="border-t border-dashed pt-4">
 			<ThemeToggle />
-		</section>
+		</div>
 	</div>
 </div>
 
 <script>
-	function init() {
+	function initMenu() {
 		const overlay = document.getElementById('overlay');
 		const burger = document.getElementById('burger');
-		const sidebar = document.getElementById('sidebar');
+		const closeButton = document.getElementById('close-menu');
 
-		burger?.addEventListener('click', () => {
-			overlay?.classList.toggle('opacity-0');
-			overlay?.classList.toggle('-translate-x-full');
-			overlay?.classList.toggle('pointer-events-none');
+		if (!overlay || !burger) return;
+
+		const setOpen = (open: boolean) => {
+			overlay.classList.toggle('hidden', !open);
+			overlay.classList.toggle('flex', open);
+			burger.setAttribute('aria-expanded', String(open));
+			burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+			if (open) closeButton?.focus();
+			else burger.focus();
+		};
+
+		burger.addEventListener('click', () => setOpen(overlay.classList.contains('hidden')));
+		closeButton?.addEventListener('click', () => setOpen(false));
+
+		overlay.querySelectorAll('a').forEach((link) => {
+			link.addEventListener('click', () => setOpen(false));
 		});
 
-		document.body.addEventListener('click', (e) => {
-			if (!(e.target instanceof HTMLElement)) return;
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape') setOpen(false);
+		});
 
-			if (!sidebar?.contains(e.target)) {
-				overlay?.classList.add('opacity-0');
-				overlay?.classList.add('-translate-x-full');
-				overlay?.classList.add('pointer-events-none');
-			}
+		document.body.addEventListener('click', (event) => {
+			if (!(event.target instanceof Node)) return;
+			if (overlay.contains(event.target) || burger.contains(event.target)) return;
+			setOpen(false);
 		});
 	}
 
-	init();
+	initMenu();
 
-	document.addEventListener('astro:after-swap', () => {
-		init();
-	});
+	document.addEventListener('astro:after-swap', initMenu);
 </script>

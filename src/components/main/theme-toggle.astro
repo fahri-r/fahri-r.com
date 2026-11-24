@@ -12,13 +12,21 @@ const { className } = Astro.props;
 ---
 
 <ButtonGroup className={cn('font-heading w-full', className)}>
-	<Button id="dark-button" variant="outline" className="dark-button w-[50%] text-[0.6rem]">
+	<Button
+		id="dark-button"
+		variant="outline"
+		className="dark-button disabled:border-primary disabled:bg-primary disabled:text-primary-foreground w-1/2 text-[0.55rem] disabled:opacity-100"
+	>
 		<Icon name="moon" className="size-4" />
-		<span class="hidden self-center md:block">Dark</span>
+		<span>Dark</span>
 	</Button>
-	<Button id="light-button" variant="outline" className="light-button w-[50%] text-[0.6rem]">
+	<Button
+		id="light-button"
+		variant="outline"
+		className="light-button disabled:border-primary disabled:bg-primary disabled:text-primary-foreground w-1/2 text-[0.55rem] disabled:opacity-100"
+	>
 		<Icon name="sun" className="size-4" />
-		<span class="hidden self-center md:block">Light</span>
+		<span>Light</span>
 	</Button>
 </ButtonGroup>
 
@@ -33,66 +41,38 @@ const { className } = Astro.props;
 		document.documentElement.setAttribute('data-theme', theme);
 		window.localStorage.setItem('theme', theme);
 
-		if (theme === 'dark') {
-			const darkBtn = document.querySelectorAll('.dark-button');
-			darkBtn.forEach((element) => {
-				element.disabled = true;
-			});
-		} else {
-			const lightBtn = document.querySelectorAll('.light-button');
-			lightBtn.forEach((element) => {
-				element.disabled = true;
-			});
-		}
+		const selected = theme === 'dark' ? '.dark-button' : '.light-button';
+		document.querySelectorAll(selected).forEach((element) => {
+			element.disabled = true;
+		});
 	})();
 </script>
 
 <script>
 	function handleToggleClick(theme: 'dark' | 'light') {
-		const element = document.documentElement;
-
-		element.classList.add('[&_*]:transition-none');
-		element.setAttribute('data-theme', theme);
-		window.getComputedStyle(element).getPropertyValue('opacity');
-
-		requestAnimationFrame(() => {
-			element.classList.remove('[&_*]:transition-none');
-		});
-
+		document.documentElement.setAttribute('data-theme', theme);
 		localStorage.setItem('theme', theme);
 
-		if (theme === 'dark') {
-			const darkBtn = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
-			darkBtn.forEach((element) => {
-				element.disabled = true;
-			});
+		const darkButtons = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
+		const lightButtons = document.querySelectorAll(
+			'.light-button'
+		) as NodeListOf<HTMLButtonElement>;
 
-			const lightBtn = document.querySelectorAll('.light-button') as NodeListOf<HTMLButtonElement>;
-			lightBtn.forEach((element) => {
-				element.disabled = false;
-			});
-		} else {
-			const darkBtn = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
-			darkBtn.forEach((element) => {
-				element.disabled = false;
-			});
-
-			const lightBtn = document.querySelectorAll('.light-button') as NodeListOf<HTMLButtonElement>;
-			lightBtn.forEach((element) => {
-				element.disabled = true;
-			});
-		}
+		darkButtons.forEach((element) => (element.disabled = theme === 'dark'));
+		lightButtons.forEach((element) => (element.disabled = theme === 'light'));
 	}
 
 	function initThemeToggle() {
-		const lightBtn = document.querySelectorAll('.light-button') as NodeListOf<HTMLButtonElement>;
+		const lightButtons = document.querySelectorAll(
+			'.light-button'
+		) as NodeListOf<HTMLButtonElement>;
+		const darkButtons = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
 
-		lightBtn.forEach((element) => {
+		lightButtons.forEach((element) => {
 			element.addEventListener('click', () => handleToggleClick('light'));
 		});
 
-		const darkBtn = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
-		darkBtn.forEach((element) => {
+		darkButtons.forEach((element) => {
 			element.addEventListener('click', () => handleToggleClick('dark'));
 		});
 	}
@@ -101,15 +81,15 @@ const { className } = Astro.props;
 
 	document.addEventListener('astro:after-swap', () => {
 		const storedTheme = localStorage.getItem('theme') || 'light';
-		const element = document.documentElement;
+		document.documentElement.setAttribute('data-theme', storedTheme);
 
-		element.classList.add('[&_*]:transition-none');
-		window.getComputedStyle(element).getPropertyValue('opacity');
-		element.setAttribute('data-theme', storedTheme);
+		const darkButtons = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
+		const lightButtons = document.querySelectorAll(
+			'.light-button'
+		) as NodeListOf<HTMLButtonElement>;
 
-		requestAnimationFrame(() => {
-			element.classList.remove('[&_*]:transition-none');
-		});
+		darkButtons.forEach((element) => (element.disabled = storedTheme === 'dark'));
+		lightButtons.forEach((element) => (element.disabled = storedTheme === 'light'));
 
 		initThemeToggle();
 	});

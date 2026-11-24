@@ -1,10 +1,11 @@
 ---
-import { cn } from '~/libs/utils';
 import Layout from '~/layouts/layout.astro';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection, render } from 'astro:content';
 import Giscus from '~/components/main/giscus.astro';
 import PageHead from '~/components/main/page-head.astro';
+import { Badge } from '~/components/shared/badge';
+import { Link } from '~/components/shared/link';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('projects');
@@ -18,19 +19,71 @@ type Props = CollectionEntry<'projects'>;
 
 const post = Astro.props;
 const { Content } = await render(post);
+
+const published = post.data.date.toLocaleString('en-US', {
+	month: 'long',
+	day: 'numeric',
+	year: 'numeric'
+});
 ---
 
-<Layout className="flex flex-col space-y-12">
+<Layout className="flex flex-col gap-8">
 	<PageHead slot="head" title={post.data.title} description={post.data.description || undefined} />
-	<article class={cn('space-y-4 xl:space-y-8 z-40 w-full rounded-sm')}>
-		<header class="mb-4 flex justify-between lg:mb-6">
-			<h1 class="text-4xl font-semibold">
-				{post.data.title}
-			</h1>
+
+	<div class="article-nav">
+		<Link href="/projects" underline>← All projects</Link>
+	</div>
+
+	<article class="w-full">
+		<header class="space-y-4">
+			<h1 class="article-title">{post.data.title}</h1>
+			{post.data.description && <p class="article-lede">{post.data.description}</p>}
+
+			<div class="entry-meta">
+				<time datetime={post.data.date.toISOString()}>{published}</time>
+				{post.data.category && <span>{post.data.category}</span>}
+			</div>
+
+			{
+				post.data.tools.length > 0 && (
+					<div class="tag-row">
+						{post.data.tools.map((tool) => (
+							<Badge variant="outline">{tool}</Badge>
+						))}
+					</div>
+				)
+			}
+
+			{
+				(post.data.repository || post.data.site) && (
+					<div class="flex flex-wrap gap-4 pt-1 text-[0.85rem]">
+						{post.data.repository && (
+							<Link href={post.data.repository} external underline>
+								Repository
+							</Link>
+						)}
+						{post.data.site && (
+							<Link href={post.data.site} external underline>
+								Live site
+							</Link>
+						)}
+					</div>
+				)
+			}
 		</header>
 
-		<Content />
+		<div class="article-body mt-8">
+			<Content />
+		</div>
 	</article>
 
-	<Giscus />
+	<section class="panel">
+		<div class="panel-head">
+			<h2>Comments</h2>
+			<span class="panel-note">via giscus</span>
+		</div>
+		<div class="panel-body">
+			<Giscus />
+		</div>
+	</section>
 </Layout>

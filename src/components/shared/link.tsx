@@ -14,10 +14,10 @@ export function Link({ href, external, underline, className, children, ...props 
 			target={external ? '_blank' : '_self'}
 			rel={external ? 'noopener noreferrer' : undefined}
 			className={cn(
-				'text-primary inline-flex items-center justify-center gap-2 transition-colors duration-300 ease-in-out',
+				'text-primary inline-flex items-center justify-center gap-2 underline-offset-2',
 				className,
 				{
-					'underline-offset-4 hover:underline': underline
+					'underline decoration-1': underline
 				}
 			)}
 			{...props}
