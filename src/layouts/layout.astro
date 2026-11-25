@@ -23,7 +23,9 @@ const { className } = Astro.props;
 		class="bg-background text-foreground relative mx-auto flex w-full max-w-6xl flex-col lg:my-8 lg:flex-row lg:border"
 	>
 		<a class="skip-link" href="#main-content">Skip to content</a>
-		<header class="bg-background z-10 border-b lg:w-64 lg:shrink-0 lg:border-r lg:border-b-0">
+		<header
+			class="bg-background sticky top-0 z-40 border-b lg:static lg:z-auto lg:w-64 lg:shrink-0 lg:border-r lg:border-b-0"
+		>
 			<Sidebar />
 			<slot name="table-of-contents" />
 		</header>

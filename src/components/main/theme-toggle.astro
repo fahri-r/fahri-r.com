@@ -6,29 +6,45 @@ import { ButtonGroup } from '../shared/button-group';
 
 interface Props {
 	className?: string;
+	compact?: boolean;
 }
 
-const { className } = Astro.props;
+const { className, compact = false } = Astro.props;
 ---
 
-<ButtonGroup className={cn('font-heading w-full', className)}>
-	<Button
-		id="dark-button"
-		variant="outline"
-		className="dark-button disabled:border-primary disabled:bg-primary disabled:text-primary-foreground w-1/2 text-[0.55rem] disabled:opacity-100"
-	>
-		<Icon name="moon" className="size-4" />
-		<span>Dark</span>
-	</Button>
-	<Button
-		id="light-button"
-		variant="outline"
-		className="light-button disabled:border-primary disabled:bg-primary disabled:text-primary-foreground w-1/2 text-[0.55rem] disabled:opacity-100"
-	>
-		<Icon name="sun" className="size-4" />
-		<span>Light</span>
-	</Button>
-</ButtonGroup>
+{
+	compact ? (
+		<button
+			type="button"
+			data-theme-toggle
+			class={cn('theme-compact', className)}
+			aria-label="Switch theme"
+			title="Switch theme"
+		>
+			<Icon name="moon" className="theme-icon-dark size-4" />
+			<Icon name="sun" className="theme-icon-light size-4" />
+		</button>
+	) : (
+		<ButtonGroup className={cn('font-heading w-full', className)}>
+			<Button
+				data-theme-choice="dark"
+				variant="outline"
+				className="disabled:border-primary disabled:bg-primary disabled:text-primary-foreground w-1/2 text-[0.55rem] disabled:opacity-100"
+			>
+				<Icon name="moon" className="size-4" />
+				<span>Dark</span>
+			</Button>
+			<Button
+				data-theme-choice="light"
+				variant="outline"
+				className="disabled:border-primary disabled:bg-primary disabled:text-primary-foreground w-1/2 text-[0.55rem] disabled:opacity-100"
+			>
+				<Icon name="sun" className="size-4" />
+				<span>Light</span>
+			</Button>
+		</ButtonGroup>
+	)
+}
 
 <script is:inline data-astro-rerun>
 	(() => {
@@ -41,56 +57,74 @@ const { className } = Astro.props;
 		document.documentElement.setAttribute('data-theme', theme);
 		window.localStorage.setItem('theme', theme);
 
-		const selected = theme === 'dark' ? '.dark-button' : '.light-button';
-		document.querySelectorAll(selected).forEach((element) => {
-			element.disabled = true;
+		document.querySelectorAll('[data-theme-choice]').forEach((element) => {
+			const selected = element.getAttribute('data-theme-choice') === theme;
+			element.disabled = selected;
+			element.setAttribute('aria-pressed', String(selected));
+		});
+
+		document.querySelectorAll('[data-theme-toggle]').forEach((element) => {
+			const label = `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`;
+			element.setAttribute('aria-label', label);
+			element.setAttribute('title', label);
 		});
 	})();
 </script>
 
 <script>
-	function handleToggleClick(theme: 'dark' | 'light') {
+	type Theme = 'dark' | 'light';
+
+	function getTheme(): Theme {
+		return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+	}
+
+	function syncThemeControls(theme: Theme) {
+		document.querySelectorAll<HTMLButtonElement>('[data-theme-choice]').forEach((element) => {
+			const selected = element.dataset.themeChoice === theme;
+			element.disabled = selected;
+			element.setAttribute('aria-pressed', String(selected));
+		});
+
+		const label = `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`;
+		document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((element) => {
+			element.setAttribute('aria-label', label);
+			element.setAttribute('title', label);
+		});
+	}
+
+	function setTheme(theme: Theme) {
 		document.documentElement.setAttribute('data-theme', theme);
 		localStorage.setItem('theme', theme);
-
-		const darkButtons = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
-		const lightButtons = document.querySelectorAll(
-			'.light-button'
-		) as NodeListOf<HTMLButtonElement>;
-
-		darkButtons.forEach((element) => (element.disabled = theme === 'dark'));
-		lightButtons.forEach((element) => (element.disabled = theme === 'light'));
+		syncThemeControls(theme);
 	}
 
 	function initThemeToggle() {
-		const lightButtons = document.querySelectorAll(
-			'.light-button'
-		) as NodeListOf<HTMLButtonElement>;
-		const darkButtons = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
+		const stored = localStorage.getItem('theme');
+		setTheme(stored === 'dark' || stored === 'light' ? stored : getTheme());
 
-		lightButtons.forEach((element) => {
-			element.addEventListener('click', () => handleToggleClick('light'));
-		});
+		if (document.documentElement.dataset.themeBound === 'true') return;
+		document.documentElement.dataset.themeBound = 'true';
 
-		darkButtons.forEach((element) => {
-			element.addEventListener('click', () => handleToggleClick('dark'));
+		document.addEventListener('click', (event) => {
+			if (!(event.target instanceof Element)) return;
+
+			const choice = event.target.closest<HTMLElement>('[data-theme-choice]');
+			if (choice) {
+				const theme = choice.dataset.themeChoice;
+				if (theme === 'dark' || theme === 'light') setTheme(theme);
+				return;
+			}
+
+			if (event.target.closest('[data-theme-toggle]')) {
+				setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+			}
 		});
 	}
 
 	initThemeToggle();
 
 	document.addEventListener('astro:after-swap', () => {
-		const storedTheme = localStorage.getItem('theme') || 'light';
-		document.documentElement.setAttribute('data-theme', storedTheme);
-
-		const darkButtons = document.querySelectorAll('.dark-button') as NodeListOf<HTMLButtonElement>;
-		const lightButtons = document.querySelectorAll(
-			'.light-button'
-		) as NodeListOf<HTMLButtonElement>;
-
-		darkButtons.forEach((element) => (element.disabled = storedTheme === 'dark'));
-		lightButtons.forEach((element) => (element.disabled = storedTheme === 'light'));
-
-		initThemeToggle();
+		const stored = localStorage.getItem('theme');
+		setTheme(stored === 'dark' || stored === 'light' ? stored : getTheme());
 	});
 </script>

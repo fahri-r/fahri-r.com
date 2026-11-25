@@ -74,111 +74,158 @@ const isActive = (href: string) =>
 				<Icon name="cloud" size={26} />
 			</span>
 			<span class="min-w-0">
-				<span class="font-heading text-foreground block text-[0.58rem] leading-[1.9]">
+				<span class="font-heading text-foreground block truncate text-[0.58rem] leading-[1.9]">
 					{profile.name}
 				</span>
-				<span class="text-muted-foreground block text-[0.78rem] italic">{profile.job}</span>
+				<span class="text-muted-foreground block truncate text-[0.78rem] italic">
+					{profile.job}
+				</span>
 			</span>
 		</a>
 
-		<Button
-			id="burger"
-			variant="outline"
-			size="icon"
-			aria-label="Open menu"
-			aria-controls="overlay"
-			aria-expanded="false"
-		>
-			<Icon name="burger" size={20} />
-		</Button>
+		<div class="flex shrink-0 items-center gap-2">
+			<ThemeToggle compact />
+			<Button
+				id="burger"
+				variant="outline"
+				size="icon"
+				className="menu-toggle text-primary hover:text-foreground"
+				aria-label="Open menu"
+				aria-controls="mobile-menu"
+				aria-expanded="false"
+			>
+				<Icon name="burger" size={20} className="menu-toggle-burger" />
+				<Icon name="close" size={20} className="menu-toggle-close" />
+			</Button>
+		</div>
 	</div>
 
 	<!-- Mobile menu -->
 	<div
-		id="overlay"
-		class="bg-background fixed inset-y-0 left-0 z-50 hidden w-72 max-w-[85vw] flex-col justify-between overflow-y-auto border-r p-5"
-		role="dialog"
-		aria-modal="true"
+		id="mobile-menu"
+		class="bg-background fixed inset-x-0 bottom-0 z-50 hidden flex-col lg:hidden"
+		role="region"
 		aria-label="Site menu"
 	>
-		<div class="space-y-6">
-			<div class="flex items-center justify-between gap-3">
-				<p class="font-heading text-[0.6rem]">Menu</p>
-				<Button id="close-menu" variant="outline" size="sm">Close</Button>
-			</div>
-
-			<nav aria-label="Main" class="border-t border-dashed pt-4">
+		<div class="min-h-0 flex-1 overflow-y-auto overscroll-contain p-5">
+			<nav aria-label="Main">
 				<p class="rail-label">Navigation</p>
 				<div class="space-y-1">
 					{
 						menu.map((item) => (
 							<a
 								href={item.path}
-								class="rail-link"
+								class="mobile-menu-link"
 								aria-current={isActive(item.path) ? 'page' : undefined}
 							>
-								<Icon name={item.icon} size={18} className="shrink-0" />
-								{item.name}
+								<Icon name={item.icon} size={24} className="shrink-0" />
+								<span>{item.name}</span>
 							</a>
 						))
 					}
 				</div>
 			</nav>
 
-			<nav aria-label="Elsewhere" class="border-t border-dashed pt-4">
+			<nav aria-label="Elsewhere" class="mt-8">
 				<p class="rail-label">Stay connected</p>
 				<div class="space-y-1">
 					{
 						profile.socials.map((social) => (
-							<a href={social.href} class="rail-link" target="_blank" rel="noopener noreferrer">
-								<Icon name={social.icon} size={18} className="shrink-0" />
-								{social.label}
+							<a
+								href={social.href}
+								class="mobile-menu-link"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<Icon name={social.icon} size={24} className="shrink-0" />
+								<span>{social.label}</span>
 							</a>
 						))
 					}
 				</div>
 			</nav>
-		</div>
-
-		<div class="border-t border-dashed pt-4">
-			<ThemeToggle />
 		</div>
 	</div>
 </div>
 
 <script>
 	function initMenu() {
-		const overlay = document.getElementById('overlay');
+		const mobileMenu = document.getElementById('mobile-menu');
 		const burger = document.getElementById('burger');
 		const closeButton = document.getElementById('close-menu');
+		const header = document.querySelector<HTMLElement>('body > header');
+		const main = document.getElementById('main-content');
 
-		if (!overlay || !burger) return;
+		if (!mobileMenu || !burger) return;
 
-		const setOpen = (open: boolean) => {
-			overlay.classList.toggle('hidden', !open);
-			overlay.classList.toggle('flex', open);
-			burger.setAttribute('aria-expanded', String(open));
-			burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-			if (open) closeButton?.focus();
-			else burger.focus();
+		const desktop = window.matchMedia('(min-width: 1024px)');
+		let isOpen = false;
+
+		const positionMenu = () => {
+			if (!header) return;
+			mobileMenu.style.top = `${Math.ceil(header.getBoundingClientRect().height)}px`;
 		};
 
-		burger.addEventListener('click', () => setOpen(overlay.classList.contains('hidden')));
-		closeButton?.addEventListener('click', () => setOpen(false));
+		const setOpen = (open: boolean, restoreFocus = false) => {
+			if (open === isOpen) return;
 
-		overlay.querySelectorAll('a').forEach((link) => {
+			isOpen = open;
+
+			if (open) {
+				document
+					.querySelector<HTMLDetailsElement>('#mobile-toc-container details')
+					?.removeAttribute('open');
+				positionMenu();
+				mobileMenu.classList.remove('hidden');
+				mobileMenu.classList.add('flex');
+				main?.toggleAttribute('inert', true);
+				document.body.classList.add('menu-open');
+				closeButton?.focus({ preventScroll: true });
+			} else {
+				mobileMenu.classList.add('hidden');
+				mobileMenu.classList.remove('flex');
+				main?.toggleAttribute('inert', false);
+				document.body.classList.remove('menu-open');
+
+				if (restoreFocus) burger.focus({ preventScroll: true });
+			}
+
+			burger.setAttribute('aria-expanded', String(open));
+			burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+		};
+
+		burger.addEventListener('click', () => setOpen(!isOpen));
+		closeButton?.addEventListener('click', () => setOpen(false, true));
+
+		mobileMenu.querySelectorAll('a').forEach((link) => {
 			link.addEventListener('click', () => setOpen(false));
 		});
 
 		document.addEventListener('keydown', (event) => {
-			if (event.key === 'Escape') setOpen(false);
+			if (!isOpen || event.key !== 'Escape') return;
+
+			setOpen(false, true);
 		});
 
-		document.body.addEventListener('click', (event) => {
-			if (!(event.target instanceof Node)) return;
-			if (overlay.contains(event.target) || burger.contains(event.target)) return;
-			setOpen(false);
+		document.addEventListener('click', (event) => {
+			if (!isOpen || !(event.target instanceof Element)) return;
+			if (event.target.closest('#mobile-menu') || event.target.closest('#burger')) return;
+			if (event.target.closest('a[href]')) setOpen(false);
 		});
+
+		const closeOnDesktop = () => {
+			if (desktop.matches) setOpen(false);
+		};
+
+		if (header) {
+			const resizeObserver = new ResizeObserver(positionMenu);
+			resizeObserver.observe(header);
+		}
+
+		window.addEventListener('resize', positionMenu, { passive: true });
+		desktop.addEventListener('change', closeOnDesktop);
+		positionMenu();
+		closeOnDesktop();
 	}
 
 	initMenu();
